@@ -178,9 +178,9 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .ttsmall svg{width:22px;height:22px}
 .ttcount{display:flex;flex-direction:column;align-items:center;line-height:1}
 .ttcount b{font-size:40px;font-weight:800;letter-spacing:-.04em}
-.ttcount span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#C9C9CE;margin-top:4px}
+.ttcount span{font-size:14px;color:#C9C9CE;margin-top:4px}
 .ttgo{height:52px;border:0;border-radius:12px;background:var(--accent);color:#0A0A0A;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.ttgo .mono{font-size:11px}
+.ttgo .mono{font-size:15px}
 .ttnote{background:rgba(255,212,0,.16);border:1px solid rgba(255,212,0,.45);color:#fff;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.4}
 /* feed */
 .feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none}
@@ -217,9 +217,9 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .swipehint{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;pointer-events:none}
 /* swipe-kaarten */
 .tfeed{position:absolute;inset:0;background:#0A0A0A;display:flex;flex-direction:column}
-.moods{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:calc(env(safe-area-inset-top,0px) + 62px) 12px 0;flex:none}
+.moods{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:calc(env(safe-area-inset-top,0px) + 66px) 14px 0;flex:none}
 .moods::-webkit-scrollbar{display:none}
-.moods button{flex:none;height:34px;padding:0 12px;border-radius:17px;border:1px solid #3A3B3F;background:none;color:#fff;font-weight:600;font-size:14px}
+.moods button{flex:none;height:38px;padding:0 14px;border-radius:19px;border:1px solid #3A3B3F;background:none;color:#fff;font-weight:600;font-size:15px}
 .moods button.on{background:#fff;color:#0A0A0A;border-color:#fff;font-weight:700}
 .stack{position:relative;flex:1;min-height:0;margin:12px 14px 0}
 .tcard{position:absolute;inset:0;border-radius:18px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;transition:transform .25s ease}
@@ -234,7 +234,16 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .stamp.no{right:20px;color:#B45309;transform:rotate(16deg)}
 .s-k .stamp.yes{color:#7BD17B}.s-k .stamp.no{color:#F2A65A}
 .labels{display:flex;gap:6px;flex-wrap:wrap}
-.lab{height:26px;padding:0 9px;border-radius:4px;display:inline-flex;align-items:center;font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor}
+.mealseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1;min-width:0;margin-right:10px;background:rgba(30,31,34,.92);border-radius:22px;padding:3px}
+.mealseg button{height:38px;border:0;border-radius:19px;background:none;color:rgba(255,255,255,.7);font-weight:700;font-size:15px}
+.mealseg button.on{background:#FFD400;color:#0A0A0A}
+.tcard .tphoto{position:absolute;left:0;right:0;top:0;height:56%;background:#2A2B2F}
+.tcard .tphoto img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.tcard.hasimg .cap h2{font-size:clamp(26px,7.6vw,32px)}
+.tcard .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:15px;font-weight:600;opacity:.85}
+.tcard .cap p{font-size:16px;-webkit-line-clamp:2}
+.tcard .credit{position:absolute;right:8px;top:calc(56% - 30px);font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lab{height:30px;padding:0 12px;border-radius:15px;display:inline-flex;align-items:center;font-weight:700;font-size:14px;border:1px solid currentColor}
 .lab.ok{background:#2F6B2F;color:#fff;border-color:#2F6B2F}
 .lab.warn{background:#B45309;color:#fff;border-color:#B45309}
 .lab.acc{background:#0A0A0A;color:#FFD400;border-color:#0A0A0A}
@@ -248,8 +257,8 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .thint{flex:none;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#8A8B90;padding-bottom:10px}
 .mealpill{height:36px;padding:0 12px;border-radius:18px;border:0;background:rgba(30,31,34,.9);color:#fff;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
 /* scan-modi */
-.modes{display:flex;justify-content:center;gap:4px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.modes button{padding:7px 10px;border-radius:999px;border:0;background:none;color:#C9C9CE}
+.modes{display:flex;justify-content:center;gap:4px;font-weight:700;font-size:14px}
+.modes button{padding:9px 12px;border-radius:999px;border:0;background:none;color:#C9C9CE}
 .modes button.on{background:#fff;color:#0A0A0A}
 .ttcam .tag.add{background:#fff;padding:6px 6px 6px 12px;display:inline-flex;align-items:center;gap:6px;border:0;pointer-events:auto}
 .ttcam .tag.add i{width:24px;height:24px;border-radius:12px;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:16px}
@@ -520,7 +529,7 @@ function makeWebSample() {
 }
 async function initCaps() {
   if (!window.claude || typeof window.claude.use !== 'function') {
-    if (WEB_READY) { sample = makeWebSample(); S.ai = 'on'; S.canImg = true; S.web = true; render(); return; }
+    if (WEB_READY) { sample = makeWebSample(); S.ai = 'on'; S.canImg = true; S.web = true; render(); S.recipes.forEach(loadImage); return; }
     S.ai = 'off'; S.canImg = false; S.imgWhy = 'A1'; render(); return;
   }
   claude.use('sample').then(async s => {
@@ -858,7 +867,7 @@ async function readTht(ctx, id, file) {
   } catch (e) { toast(errCopy(e)); }
   S.thtBusy = null; render();
 }
-const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet.","spice":1,"allergens":["ei","melk"],"diet":["vega","glutenvrij"]}';
+const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet.","spice":1,"allergens":["ei","melk"],"diet":["vega","glutenvrij"],"imageQuery":"shakshuka"}';
 const ALLERGENS = ['Gluten','Ei','Melk','Pinda','Noten','Soja','Vis','Schaaldieren','Weekdieren','Selderij','Mosterd','Sesam','Sulfiet','Lupine'];
 const DIETS = ['Vega','Vegan','Pescotariër','Glutenvrij','Lactosevrij','Zonder toegevoegde suikers','Koolhydraatarm','Eiwitrijk','Halal'];
 const SPICE = ['Niet pittig','Mild','Pittig','Heet'];
@@ -902,7 +911,7 @@ function recipePrompt(n) {
     (p.level !== 'Elk niveau' ? '- Moeilijkheid: ' + p.level.toLowerCase() + '.\n' : '') +
     '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n' + profileText() + tasteText() + '\n' +
     'Antwoord alleen met een JSON-array van objecten, precies in deze vorm:\n' + RECIPE_SHAPE +
-    '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- spice: 0 tot 3.\n- allergens: welke van deze 14 erin zitten (kleine letters): gluten, ei, melk, pinda, noten, soja, vis, schaaldieren, weekdieren, selderij, mosterd, sesam, sulfiet, lupine. Wees eerlijk en volledig.\n- diet: welke passen: vega, vegan, pescotariër, glutenvrij, lactosevrij, zonder toegevoegde suikers, koolhydraatarm, eiwitrijk, halal.\n- Sorteer van beste match naar minste.';
+    '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- imageQuery: 2 tot 4 Engelse woorden waarmee je een foto van dit gerecht vindt, bijv. "thai red curry" of "shakshuka".\n- spice: 0 tot 3.\n- allergens: welke van deze 14 erin zitten (kleine letters): gluten, ei, melk, pinda, noten, soja, vis, schaaldieren, weekdieren, selderij, mosterd, sesam, sulfiet, lupine. Wees eerlijk en volledig.\n- diet: welke passen: vega, vegan, pescotariër, glutenvrij, lactosevrij, zonder toegevoegde suikers, koolhydraatarm, eiwitrijk, halal.\n- Sorteer van beste match naar minste.';
 }
 function normRecipe(r) {
   if (!r || !r.title) return null;
@@ -912,8 +921,41 @@ function normRecipe(r) {
     steps: (Array.isArray(r.steps) ? r.steps : []).slice(0, 10).map(s => typeof s === 'string' ? { text: s } : { text: String(s.text || ''), timerMin: +s.timerMin > 0 ? +s.timerMin : null }),
     remixes: (Array.isArray(r.remixes) ? r.remixes : []).slice(0, 3).map(x => ({ add: String(x.add || ''), name: String(x.name || ''), note: String(x.note || '') })),
     usesExpiring: Array.isArray(r.usesExpiring) ? r.usesExpiring.map(String) : [], why: String(r.why || ''), meal: S.prefs.meal,
-    spice: Math.max(0, Math.min(3, Math.round(+r.spice || 0))), allergens: (Array.isArray(r.allergens) ? r.allergens : []).map(x => String(x).toLowerCase()).slice(0, 14), diet: (Array.isArray(r.diet) ? r.diet : []).map(x => String(x).toLowerCase()).slice(0, 9) };
+    imageQuery: String(r.imageQuery || '').slice(0, 60), spice: Math.max(0, Math.min(3, Math.round(+r.spice || 0))), allergens: (Array.isArray(r.allergens) ? r.allergens : []).map(x => String(x).toLowerCase()).slice(0, 14), diet: (Array.isArray(r.diet) ? r.diet : []).map(x => String(x).toLowerCase()).slice(0, 9) };
 }
+function safeRecipes(arr) {
+  const bad = S.prefs.allergies.map(a => a.toLowerCase());
+  return arr.filter(r => !r.allergens.some(a => bad.includes(a)) && !r.ingredients.some(i => bad.some(b => allergenHit(b, i.name))));
+}
+// Oneindig swipen: bijna aan het eind haalt juno op de achtergrond 6 nieuwe recepten op.
+async function generateMore() {
+  if (S.gen.busy || S.gen.more || S.ai !== 'on' || !S.recipes.length || S.recipesKey !== prefsKey()) return;
+  S.gen.more = true; S.gen.moreErr = ''; softFeed();
+  try {
+    const s = await needSample();
+    const seen = S.recipes.map(r => r.title).slice(-40);
+    const res = await s.json(recipePrompt(6) + '\n- Deze zijn al voorgesteld; bedenk andere gerechten: ' + seen.join('; ') + '.', {});
+    let arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
+    arr = safeRecipes(arr).filter(r => !S.recipes.some(x => norm(x.title) === norm(r.title)));
+    if (arr.length) { S.recipes = S.recipes.concat(arr); ls.set('recipes', S.recipes); arr.forEach(loadImage); }
+  } catch (e) { S.gen.moreErr = errCopy(e); }
+  S.gen.more = false; softFeed();
+}
+// Voorbeeldfoto's: een echte foto van dit soort gerecht van Wikimedia Commons (vrij te gebruiken, met naamsvermelding).
+function stripTags(h) { const d = document.createElement('div'); d.innerHTML = String(h || ''); return (d.textContent || '').trim().slice(0, 60); }
+async function loadImage(r) {
+  if (!r || r.img !== undefined || !r.imageQuery || !S.web) return;
+  r.img = null;
+  try {
+    const q = encodeURIComponent(r.imageQuery + ' dish');
+    const res = await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=8&gsrsearch=' + q + '%20filetype%3Abitmap&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=900');
+    const j = await res.json();
+    const pages = Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index);
+    const pg = pages.find(x => x.imageinfo && x.imageinfo[0].thumburl && /\.jpe?g$/i.test(x.title) && x.imageinfo[0].width >= 600 && x.imageinfo[0].width >= x.imageinfo[0].height * 0.8);
+    if (pg) { const ii = pg.imageinfo[0]; r.img = { url: ii.thumburl, page: ii.descriptionurl, by: stripTags(ii.extmetadata && ii.extmetadata.Artist && ii.extmetadata.Artist.value) }; ls.set('recipes', S.recipes); softFeed(); }
+  } catch (e) { r.img = null; }
+}
+function softFeed() { if (TT_TABS.includes(S.tab) && !S.ov && $('#paneFeed') && !document.querySelector('#tcard.drag')) { FEED.key = ''; renderTT(); } }
 async function generate() {
   if (S.gen.busy) return;
   if (!S.pantry.length) { openScan('koelkast'); return; }
@@ -923,10 +965,9 @@ async function generate() {
     const res = await s.json(recipePrompt(6), { signal: S.gen.ctl.signal, onText: ({ text }) => { const n = (text.match(/"title"\s*:/g) || []).length; if (n !== S.gen.count) { S.gen.count = n; const el = $('#genCount'); if (el) el.textContent = n ? n + ' VAN 6 RECEPTEN' : 'juno denkt na'; } } });
     let arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
     if (!arr.length) throw { code: 'invalid_json' };
-    const bad = S.prefs.allergies.map(a => a.toLowerCase());
-    const safe = arr.filter(r => !r.allergens.some(a => bad.includes(a)) && !r.ingredients.some(i => bad.some(b => allergenHit(b, i.name))));
-    if (arr.length && !safe.length) throw { code: 'allergy_all', message: 'Alle voorstellen bevatten een allergeen uit je profiel. Probeer het opnieuw.' };
-    arr = safe;
+    const safe = safeRecipes(arr);
+    if (arr.length && !safe.length) throw { code: 'allergy_all' };
+    arr = safe; arr.forEach(loadImage);
     S.recipes = arr; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', arr); ls.set('recipesKey', S.recipesKey);
   } catch (e) { if (e && e.code !== 'cancelled') S.gen.error = errCopy(e); }
   S.gen.busy = false; S.gen.ctl = null; render();
@@ -1332,9 +1373,9 @@ function maybeAutoGen() {
 }
 function ttTop() {
   const onFeed = S.tab === 'recepten';
-  return `<div class="tttop">${onFeed ? `<button class="mealpill" data-act="open" data-arg="filters" aria-label="Maaltijd: ${esc(S.prefs.meal)}. Wijzig">${esc(S.prefs.meal)} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>` : `<button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button>`}
-    <div class="tttabs" role="tablist"><button role="tab" aria-selected="${!onFeed}" class="${onFeed ? '' : 'on'}" data-act="toScan">Scan</button><button role="tab" aria-selected="${onFeed}" class="${onFeed ? 'on' : ''}" data-act="toFeed">Recepten</button></div>
-    <button class="ttic" data-act="open" data-arg="filters" aria-label="Waar heb je zin in? Filters en smaakprofiel">${I.filter}</button></div>`;
+  if (onFeed) return `<div class="tttop"><div class="mealseg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${S.prefs.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${S.prefs.meal === m}">${m}</button>`).join('')}</div>
+    <button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en smaakprofiel">${I.filter}</button></div>`;
+  return `<div class="tttop"><button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button><span></span><button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en smaakprofiel">${I.filter}</button></div>`;
 }
 function ttBar() {
   const openList = S.list.filter(x => !x.checked).length;
@@ -1386,13 +1427,19 @@ function viewScanTT() {
 function cardHTML(r, i, under) {
   const st = recipeStats(r), c = ['y', 'k', 'w'][i % 3], rv = reviewOf(r);
   const free = S.prefs.allergies.filter(a => !r.allergens.includes(a.toLowerCase()));
-  return `<article class="tcard s-${c}${under ? ' under' : ''}" ${under ? 'aria-hidden="true"' : `id="tcard" data-rid="${r.id}" tabindex="0" aria-label="${esc(r.title)}. Veeg naar rechts om te bewaren, naar links om over te slaan, tik voor het recept."`}>
-    <div class="giant" aria-hidden="true">${(r.ingredients || []).slice(0, 4).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>
+  const labels = [];
+  if (r.usesExpiring.length) labels.push(`<span class="lab warn">${esc(r.usesExpiring[0])} moet op</span>`);
+  if (rv) labels.push(`<span class="lab ${rv.v === 'up' ? 'ok' : 'warn'}">${rv.v === 'up' ? 'Eerder lekker' : 'Eerder niet lekker'}</span>`);
+  else if (free.length) labels.push(`<span class="lab ok">Zonder ${esc(free.slice(0, 2).join(' en ').toLowerCase())}</span>`);
+  const img = r.img && r.img.url;
+  return `<article class="tcard s-${c}${under ? ' under' : ''}${img ? ' hasimg' : ''}" ${under ? 'aria-hidden="true"' : `id="tcard" data-rid="${r.id}" tabindex="0" aria-label="${esc(r.title)}. Veeg naar rechts om te bewaren, naar links om over te slaan, tik voor het recept."`}>
+    ${img ? `<div class="tphoto"><img src="${esc(img)}" alt="Voorbeeldfoto van ${esc(r.title)}" draggable="false"></div>` : `<div class="giant" aria-hidden="true">${(r.ingredients || []).slice(0, 4).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>`}
     ${under ? '' : '<span class="stamp yes">BEWAAR</span><span class="stamp no">VOLGENDE</span>'}
-    <div class="cap"><div class="labels">${i === 0 ? '<span class="lab acc">Beste match</span>' : ''}${r.usesExpiring.length ? `<span class="lab warn">${esc(r.usesExpiring[0])} op</span>` : ''}${free.length ? `<span class="lab ok">Zonder ${esc(free.join(' · ').toLowerCase())}</span>` : ''}${rv ? `<span class="lab ${rv.v === 'up' ? 'ok' : 'warn'}">${rv.v === 'up' ? 'Eerder lekker' : 'Eerder niet lekker'}</span>` : ''}</div>
+    <div class="cap">${labels.length ? `<div class="labels">${labels.slice(0, 2).join('')}</div>` : ''}
       <h2>${esc(r.title)}</h2>
-      <div class="mono capmeta" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span>${r.minutes}′</span><span>·</span><span>${st.have}/${st.total} in huis</span><span>·</span>${peppers(r.spice)}${r.diet.length ? `<span>· ${esc(r.diet.slice(0, 2).join(' · '))}</span>` : ''}</div>
-      ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div></article>`;
+      <div class="meta"><span>${r.minutes} min</span><span>${st.have}/${st.total} in huis</span>${r.spice ? peppers(r.spice) : ''}</div>
+      ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div>
+    ${img && !under ? `<a class="credit" href="${esc(r.img.page)}" target="_blank" rel="noopener">Voorbeeldfoto${r.img.by ? ' · ' + esc(r.img.by) : ''} · Wikimedia</a>` : ''}</article>`;
 }
 function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${cls}" style="cursor:default;touch-action:auto"><div class="slidemsg" style="padding:24px 20px;height:100%;box-sizing:border-box;overflow:auto">${inner}</div></div></div>`; }
 function viewFeedTT() {
@@ -1402,10 +1449,11 @@ function viewFeedTT() {
   if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
   else if (S.gen.busy) h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`);
   else if (!S.recipes.length || stale || S.gen.error) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak ${esc(p.meal.toLowerCase())}-recepten</span><span class="mono">→</span></button>`);
+  else if (!r && (S.gen.more || S.recipes.length - S.swipeI < 1 && !S.gen.moreErr && S.ai === 'on')) { if (!S.gen.more) setTimeout(generateMore, 0); h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt nog meer recepten…</h2>`); }
   else if (!r) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Alles gezien</div><h2>Niks voor je erbij?</h2><p>Kies hierboven een andere stemming, of laat juno nieuwe ${esc(p.meal.toLowerCase())}-recepten bedenken. Bewaarde recepten staan onder Bewaard.</p><button class="ttgo" data-act="generate"><span>Nieuwe recepten</span><span class="mono">↻</span></button><button class="btn ghost" data-act="swipeReset" style="color:#fff;border-color:rgba(255,255,255,.4)"><span>Opnieuw bekijken</span><span class="mono">↺</span></button>`);
   else h += `<div class="stack">${nx ? cardHTML(nx, S.swipeI + 1, true) : ''}${cardHTML(r, S.swipeI, false)}</div>
     <div class="tbtns"><button class="big" data-act="tSwipe" data-arg="skip" aria-label="Overslaan">${I.x}</button><button class="mid" data-act="detail" data-arg="${r.id}" aria-label="Recept bekijken">${I.info}</button><button class="big yes" data-act="tSwipe" data-arg="save" aria-label="Bewaren">${I.heartf}</button></div>
-    <div class="thint">← OVERSLAAN · ${S.swipeI + 1}/${S.recipes.length} · BEWAREN →</div>`;
+`;
   return h + '</div>';
 }
 function flyOut(el, dir, kind) { el.style.transition = 'transform .25s ease'; el.style.transform = `translate(${dir * 140}%, 40px) rotate(${dir * 24}deg)`; setTimeout(() => act.tSwipeDone(kind), 220); }
@@ -1422,7 +1470,7 @@ function bindTinder() {
   el.addEventListener('keydown', e => { if (e.key === 'ArrowRight') act.tSwipe('save'); else if (e.key === 'ArrowLeft') act.tSwipe('skip'); else if (e.key === 'Enter') act.detail(el.dataset.rid); });
 }
 function feedKey() {
-  return JSON.stringify([S.swipeI, S.prefs.mood, S.recipes.map(r => r.id + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '')), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
+  return JSON.stringify([S.swipeI, S.prefs.mood, S.gen.more, S.recipes.length, [S.recipes[S.swipeI], S.recipes[S.swipeI + 1]].map(r => r ? r.id + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '') + (r.img ? 'i' : '') : ''), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
 }
 function bindPager() {
   const pg = $('#pager'); let t = 0;
@@ -1521,6 +1569,7 @@ const act = {
     if (kind === 'save') { if (!isSaved(r)) saveRecipe(r); S.taste.likes = [...(S.taste.likes || []).filter(x => x !== tag), tag].slice(-30); toast('Bewaard · juno onthoudt wat je lekker vindt'); try { navigator.vibrate && navigator.vibrate(20); } catch (e) {} }
     else S.taste.skips = [...(S.taste.skips || []).filter(x => x !== tag), tag].slice(-30);
     ls.set('taste', S.taste); S.swipeI++; render();
+    if (S.recipes.length - S.swipeI <= 3) generateMore();
   },
   scanMode2(m) {
     if (m === 'bon') { pickFile(true, f => runBon(f)); return; }
