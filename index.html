@@ -236,6 +236,21 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .stamp.no{right:20px;color:#B45309;transform:rotate(16deg)}
 .s-k .stamp.yes{color:#7BD17B}.s-k .stamp.no{color:#F2A65A}
 .labels{display:flex;gap:6px;flex-wrap:wrap}
+.moods .mysmaak{display:inline-flex;align-items:center;gap:6px;border-color:#FFD400;color:#FFD400;font-weight:700}
+.moods .mysmaak svg,.ttpill svg{width:18px;height:18px}
+.ttpill{height:40px;padding:0 14px;border-radius:20px;border:0;background:rgba(0,0,0,.45);color:#fff;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+.profcard{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:12px;border:0;background:#0A0A0A;color:#fff;text-align:left}
+.profcard .pi{width:44px;height:44px;border-radius:22px;background:#FFD400;color:#0A0A0A;display:flex;align-items:center;justify-content:center;flex:none}
+.profcard .pi svg{width:22px;height:22px}
+.profcard b{display:block;font-family:var(--display);font-size:17px;font-weight:600}
+.profcard span span,.profcard > span:nth-child(2) span{display:block;font-size:14px;color:#C9C9CE;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profcard .go{flex:none;font-weight:700;font-size:15px;color:#FFD400}
+.clearbar{display:flex;justify-content:flex-end}
+.clearbar .textlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--warn);font-weight:600;font-size:15px;padding:0}
+.clearbar .textlink svg{width:18px;height:18px}
+.clearbar.armed{flex-wrap:wrap;align-items:center;gap:8px;padding:12px;border-radius:10px;background:var(--warn-bg);justify-content:space-between}
+.clearbar.armed span{flex:1 1 180px;font-size:15px;line-height:1.4}
+.btn.danger{background:var(--warn);color:#fff;border-color:var(--warn)}
 .mealseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1;min-width:0;margin-right:10px;background:rgba(30,31,34,.92);border-radius:22px;padding:3px}
 .mealseg button{height:38px;border:0;border-radius:19px;background:none;color:rgba(255,255,255,.7);font-weight:700;font-size:15px}
 .mealseg button.on{background:#FFD400;color:#0A0A0A}
@@ -405,6 +420,8 @@ const LOCNAME = {koelkast:'Koelkast', vriezer:'Vriezer', kast:'Kast', kruiden:'K
 const WEEK = ['ma','di','wo','do','vr','za','zo'];
 
 const I = {
+  trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
   info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>',
   up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
   down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:rotate(180deg)"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
@@ -1119,12 +1136,19 @@ function swipeHTML() {
       <button class="iconbtn${isSaved(r) ? ' on' : ''}" style="width:64px;height:64px" data-act="swipe" data-arg="save" aria-label="Bewaren">${isSaved(r) ? I.markf : I.mark}</button></div>
     <div class="mono" style="font-size:11px;color:var(--muted);text-align:center">← volgende · swipe · bewaren →</div>`;
 }
+// Alles in één keer wissen, met een bevestiging in de pagina zelf.
+function clearBar(what, label, n) {
+  if (!n) return '';
+  if (S.armClear === what) return `<div class="clearbar armed" role="group" aria-label="Bevestig wissen"><span>${n} ${n === 1 ? 'ding' : 'dingen'} wissen? Dit kun je niet ongedaan maken.</span><button class="btn small ghost" data-act="clearCancel">Annuleer</button><button class="btn small danger" data-act="clearAll" data-arg="${what}">Ja, wis</button></div>`;
+  return `<div class="clearbar"><button class="textlink" data-act="clearAll" data-arg="${what}">${I.trash}${esc(label)}</button></div>`;
+}
 function viewVoorraad() {
   const all = pantrySorted(); const exp = expiring();
   const items = S.locTab === 'alles' ? all : all.filter(x => x.loc === S.locTab);
   let h = `<div class="top"><span class="eyebrow">Voorraad · op houdbaarheid</span><button class="btn small ghost" data-act="openScan" data-arg="typen" style="height:40px"><span class="mono">+ Toevoegen</span></button></div>
     <h1 class="big">${all.length} ${all.length === 1 ? 'item' : 'items'}.<br><span class="mark">${exp.length ? exp.length + ' bijna op.' : 'Alles nog goed.'}</span></h1>
     <div class="chips" role="group" aria-label="Bewaarplek">${chipsHTML([['Alles', S.locTab === 'alles', 'alles'], ...LOCS.map(l => [LOCNAME[l], S.locTab === l, l])], 'locTab')}</div>`;
+  if (all.length) h += clearBar('pantry', S.locTab === 'alles' ? 'Hele voorraad wissen' : 'Alles in ' + LOCNAME[S.locTab].toLowerCase() + ' wissen', S.locTab === 'alles' ? all.length : all.filter(x => x.loc === S.locTab).length);
   if (!all.length) return h + `<div class="empty"><p>Nog niets in je voorraad. Scan je koelkast of typ wat je hebt.</p><button class="btn" data-act="openScan" data-arg="koelkast"><span>Scan je koelkast</span><span class="mono">→</span></button></div>`;
   if (all.some(x => x.example)) h += `<div class="notice" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span>Dit zijn voorbeeldproducten om juno te proberen.</span><button class="btn small" data-act="clearExamples">Wis voorbeelden</button></div>`;
   h += `<div class="rows">`;
@@ -1150,6 +1174,7 @@ function viewLijst() {
   let h = `<div class="top"><span class="eyebrow">${S.store === 'db' ? 'Lijst · gedeeld met iedereen die juno opent' : 'Lijst · op dit apparaat'}</span>${S.list.length ? `<button class="btn small ghost" data-act="shareList" style="height:40px"><span class="mono">Kopieer</span></button>` : ''}</div>
     <h1 class="big">${open.length} ${open.length === 1 ? 'ding' : 'dingen'} halen.${done.length ? `<br><span class="mark">${done.length} in de mand.</span>` : ''}</h1>
     <form data-submit="addList" style="display:flex;gap:8px"><label class="sr" for="listInput">Product toevoegen</label><input type="text" id="listInput" placeholder="Bijv. citroen" style="flex:1;min-width:0" autocomplete="off"><button class="btn small" type="submit">Voeg toe</button></form>`;
+  if (S.list.length) h += clearBar('list', 'Hele lijst wissen', S.list.length);
   if (!S.list.length) return h + `<div class="empty"><p>Je lijst is leeg. Ontbrekende ingrediënten uit een recept zet je hier met één tik op.</p></div>`;
   for (const s of secs) {
     const its = S.list.filter(x => x.section === s); if (!its.length) continue;
@@ -1164,7 +1189,8 @@ function viewOpgeslagen() {
   const folders = ['Alle', ...S.saved.folders];
   const list = S.saved.recipes.filter(r => S.folder === 'Alle' || r.folder === S.folder);
   const todayPlan = S.saved.week[WEEK[todayIdx]];
-  let h = `<span class="eyebrow">Opgeslagen · weekmenu</span><h1 class="big">Jouw <span class="mark">week.</span></h1>
+  let h = `<button class="profcard" data-act="editProfile"><span class="pi">${I.user}</span><span style="flex:1;min-width:0;text-align:left"><b>Mijn smaakprofiel</b><span>${esc(profSummary())}</span></span><span class="go">Wijzig</span></button>
+    <h1 class="big">Jouw <span class="mark">week.</span></h1>
     <div class="week" role="group" aria-label="Weekmenu">${WEEK.map((d, i) => { const p = S.saved.week[d]; return `<button class="${i === todayIdx ? 'today' : ''}" data-act="weekDay" data-arg="${d}" aria-label="${d}${p ? ': ' + esc(p.title) : ''}">${d.toUpperCase()}<i class="${p ? 'full' : ''}"></i></button>`; }).join('')}</div>`;
   if (todayPlan) { const r = S.saved.recipes.find(x => x.id === todayPlan.id); h += `<button class="card" ${r ? `data-act="detailSaved" data-arg="${r.id}"` : ''} style="display:flex;align-items:center;gap:12px;padding:12px;text-align:left;color:inherit"><span style="flex:1;min-width:0"><span class="eyebrow">Vandaag</span><br><b style="font-size:16px">${esc(todayPlan.title)}</b></span>${r ? `<span class="mono" style="font-size:12px">${recipeStats(r).have}/${recipeStats(r).total}</span>` : ''}</button>`; }
   else h += `<div style="font-size:14px;color:var(--muted)">Nog niets gepland voor vandaag. Plan een recept via de kalenderknop op een recept.</div>`;
@@ -1303,9 +1329,10 @@ function ovCook() {
       <button class="btn ghost" style="justify-content:center;color:var(--on-cam);border-color:#444" data-act="cookStep" data-arg="-1" ${c.i === 0 ? 'disabled' : ''}>Vorige</button>
       <button class="btn" style="justify-content:center;background:var(--on-cam);color:#0A0A0A" data-act="${last ? 'cookDone' : 'cookStep'}" data-arg="1">${last ? 'Klaar · eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
 }
+function profSummary() { const p = S.prefs; return [p.allergies.length ? 'zonder ' + p.allergies.join(', ').toLowerCase() : 'geen allergieën', ...p.diets.map(d => d.toLowerCase()), SPICE[p.spice || 0].toLowerCase(), p.cuisines.length ? p.cuisines.join(', ') : '', p.persons + ' personen'].filter(Boolean).join(' · '); }
 function ovFilters() {
   const p = S.prefs;
-  const prof = [p.allergies.length ? 'geen ' + p.allergies.join(' · ').toLowerCase() : 'geen allergieën', ...p.diets.map(d => d.toLowerCase()), SPICE[p.spice || 0].toLowerCase(), p.cuisines.length ? p.cuisines.join(' · ') : '', p.persons + ' pers.'].filter(Boolean).join(' · ');
+  const prof = profSummary();
   return `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><span class="eyebrow">Waar heb je zin in?</span></div>
     <div><div class="eyebrow" style="margin-bottom:6px">Maaltijd · juno kiest op het tijdstip</div><div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div></div>
     <div><div class="eyebrow" style="margin-bottom:6px">Voor nu</div><div class="pills" role="group" aria-label="Stemming">${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div></div>
@@ -1390,7 +1417,7 @@ function ttTop() {
   const onFeed = S.tab === 'recepten';
   if (onFeed) return `<div class="tttop"><div class="mealseg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${S.prefs.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${S.prefs.meal === m}">${m}</button>`).join('')}</div>
     <button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en smaakprofiel">${I.filter}</button></div>`;
-  return `<div class="tttop"><button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button><span></span><button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en smaakprofiel">${I.filter}</button></div>`;
+  return `<div class="tttop"><button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button><span></span><button class="ttpill" data-act="editProfile" aria-label="Mijn smaakprofiel aanpassen">${I.user}Mijn smaak</button></div>`;
 }
 function ttBar() {
   const openList = S.list.filter(x => !x.checked).length;
@@ -1459,7 +1486,7 @@ function cardHTML(r, i, under) {
 function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${cls}" style="cursor:default;touch-action:auto"><div class="slidemsg" style="padding:24px 20px;height:100%;box-sizing:border-box;overflow:auto">${inner}</div></div></div>`; }
 function viewFeedTT() {
   const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
-  let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?">${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
+  let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?"><button class="mysmaak" data-act="editProfile" aria-label="Mijn smaakprofiel aanpassen">${I.user}Mijn smaak</button>${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
   const r = S.recipes[S.swipeI], nx = S.recipes[S.swipeI + 1];
   if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
   else if (S.gen.busy) h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`);
@@ -1574,7 +1601,7 @@ function beep() { try { const a = new (window.AudioContext || window.webkitAudio
 
 // ---------- actions ----------
 const act = {
-  tab(t) { const was = S.tab; S.tab = t; ls.set('tt.tab', t); S.ov = null; S.expOpen = null; render(); if (!TT_TABS.includes(t) || !TT_TABS.includes(was)) window.scrollTo(0, 0); },
+  tab(t) { S.armClear = null; const was = S.tab; S.tab = t; ls.set('tt.tab', t); S.ov = null; S.expOpen = null; render(); if (!TT_TABS.includes(t) || !TT_TABS.includes(was)) window.scrollTo(0, 0); },
   toScan() { act.tab('scan'); },
   mood(m) { setPrefs({ mood: m }); S.swipeI = 0; render(); },
   tSwipe(kind) { const el = $('#tcard'); if (el) { const st = el.querySelector(kind === 'save' ? '.stamp.yes' : '.stamp.no'); if (st) st.style.opacity = 1; flyOut(el, kind === 'save' ? 1 : -1, kind); } else act.tSwipeDone(kind); },
@@ -1691,7 +1718,7 @@ const act = {
     toast(add.length + ' items toegevoegd'); render(); window.scrollTo(0, 0);
     if (S.ai !== 'off') generate();
   },
-  locTab(l) { S.locTab = l; S.expOpen = null; render(); },
+  locTab(l) { S.locTab = l; S.expOpen = null; S.armClear = null; render(); },
   useUp(id) { S.pantry = S.pantry.filter(x => x.id !== id); persist('pantry'); S.expOpen = null; toast('Opgemaakt. Lekker!'); render(); },
   delItem(id) { if (S.armDelete !== id) { S.armDelete = id; render(); return; } S.pantry = S.pantry.filter(x => x.id !== id); S.armDelete = null; S.expOpen = null; persist('pantry'); render(); },
   clearExamples() { S.pantry = S.pantry.filter(x => !x.example); persist('pantry'); render(); },
@@ -1704,6 +1731,14 @@ const act = {
     for (const x of done) { const days = SEC_DAYS[x.section] || 7; if (!S.pantry.some(p => norm(p.name) === norm(x.name))) S.pantry.push({ id: uid(), name: x.name, qty: null, unit: 'st', loc: SEC_LOC[x.section] || 'kast', exp: addDays(days), shelfDays: days, method: 'auto', addedAt: Date.now() }); }
     S.list = S.list.filter(x => !x.checked); persist('pantry'); persist('list'); toast(done.length + ' items naar je voorraad'); render();
   },
+  clearAll(what) {
+    if (S.armClear !== what) { S.armClear = what; render(); return; }
+    let n = 0;
+    if (what === 'pantry') { const keep = S.locTab === 'alles' ? [] : S.pantry.filter(x => x.loc !== S.locTab); n = S.pantry.length - keep.length; S.pantry = keep; S.expOpen = null; persist('pantry'); }
+    if (what === 'list') { n = S.list.length; S.list = []; persist('list'); }
+    S.armClear = null; toast(n + (n === 1 ? ' ding' : ' dingen') + ' gewist'); render();
+  },
+  clearCancel() { S.armClear = null; render(); },
   clearDone() { S.list = S.list.filter(x => !x.checked); persist('list'); render(); },
   folder(f) { S.folder = f; render(); },
   weekDay(d) { const p = S.saved.week[d]; const r = p && S.saved.recipes.find(x => x.id === p.id); if (r) openDetail(r); else toast('Nog niets op ' + d + '. Open een recept en tik op de kalender.'); },
