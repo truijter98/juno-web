@@ -141,97 +141,6 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .shot .tag.unsure{background:#FFFFFF}
 .shot .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes pop{from{transform:translate(-50%,-50%) scale(.3);opacity:0}}
-/* ---------- TikTok-indeling: Scan | Recepten, schermvullend ---------- */
-:root{--barh:58px}
-.ttapp{padding:0;margin:0}
-.pager{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px));display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:#0A0A0A}
-.pager::-webkit-scrollbar,.feed::-webkit-scrollbar{display:none}
-.pane{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;color:#fff}
-#ttTop{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;z-index:20;pointer-events:none}
-.tttop{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent)}
-.tttop > *{pointer-events:auto}
-.tttabs{display:flex;gap:18px}
-.tttabs button{background:none;border:0;color:rgba(255,255,255,.62);font-weight:700;font-size:17px;padding:6px 0;position:relative;text-shadow:0 1px 4px rgba(0,0,0,.4)}
-.tttabs button.on{color:#fff}
-.tttabs button.on::after{content:"";position:absolute;left:50%;bottom:0;width:22px;height:3px;border-radius:2px;background:var(--accent);transform:translateX(-50%)}
-.ttic{width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.25);color:#fff;display:flex;align-items:center;justify-content:center}
-.ttic svg{width:22px;height:22px}
-/* scan */
-.ttcam{position:absolute;inset:0;background:#111}
-.ttcam .camvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ttcam .tag,.ttshot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:14px;line-height:1;padding:8px 11px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 12px rgba(0,0,0,.4);max-width:52vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
-.ttcam .tag.unsure,.ttshot .tag.unsure{background:#fff}
-.ttcam .tag.pop,.ttshot .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
-.ttcam .livepill{top:calc(env(safe-area-inset-top,0px) + 62px)}
-.ttshot{position:absolute;inset:0;background:#111}
-.ttshot img{width:100%;height:100%;object-fit:cover;display:block}
-.ttoff{display:flex;align-items:center;justify-content:center;padding:24px}
-.ttoffmsg{max-width:30ch;text-align:center;display:flex;flex-direction:column;gap:8px;color:#C9C9CE;line-height:1.45;font-size:15px}
-.ttoffmsg b{color:#fff;font-size:18px}
-.ttscanfoot{position:absolute;left:0;right:0;bottom:0;padding:40px 14px 14px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(to top,rgba(0,0,0,.72) 55%,transparent)}
-.ttfound{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.ttfound button{flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;font-size:14px;font-weight:600}
-.ttfound button span{opacity:.6}
-.ttshutter{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:10px}
-.ttshutter .mid{display:flex;justify-content:center}
-.ttsmall{width:52px;height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
-.ttsmall svg{width:22px;height:22px}
-.ttcount{display:flex;flex-direction:column;align-items:center;line-height:1}
-.ttcount b{font-size:40px;font-weight:800;letter-spacing:-.04em}
-.ttcount span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#C9C9CE;margin-top:4px}
-.ttgo{height:52px;border:0;border-radius:12px;background:var(--accent);color:#0A0A0A;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.ttgo .mono{font-size:11px}
-.ttnote{background:rgba(255,212,0,.16);border:1px solid rgba(255,212,0,.45);color:#fff;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.4}
-/* feed */
-.feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none}
-.slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;touch-action:manipulation;cursor:pointer}
-.slide.s-y{background:#FFD400;color:#0A0A0A}
-.slide.s-k{background:#0A0A0A;color:#fff}
-.slide.s-w{background:#F4F2EA;color:#0A0A0A}
-.giant{position:absolute;left:-4px;right:0;top:calc(env(safe-area-inset-top,0px) + 70px);display:flex;flex-direction:column;font-weight:800;font-size:clamp(46px,15vw,78px);line-height:.92;letter-spacing:-.05em;text-transform:lowercase;pointer-events:none;padding-left:14px}
-.giant span{white-space:nowrap;overflow:hidden;text-overflow:clip}
-.s-y .giant{color:rgba(10,10,10,.13)} .s-w .giant{color:rgba(10,10,10,.1)} .s-k .giant{color:rgba(255,212,0,.2)}
-.cap{position:absolute;left:14px;right:84px;bottom:30px;display:flex;flex-direction:column;gap:8px}
-.cap h2{margin:0;font-weight:800;font-size:clamp(28px,8.6vw,38px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
-.cap p{margin:0;font-size:15px;line-height:1.4;opacity:.85;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.capmeta{font-size:11px;opacity:.8}
-.capbadges{display:flex;gap:6px;flex-wrap:wrap}
-.s-k .capbadges .badge.acc{background:var(--accent);color:#0A0A0A}
-.s-y .capbadges .badge.acc{background:#0A0A0A;color:var(--accent)}
-.s-w .capbadges .badge.acc{background:#0A0A0A;color:var(--accent)}
-.caphint{font-size:10px;opacity:.55}
-.rail{position:absolute;right:10px;bottom:30px;display:flex;flex-direction:column;gap:14px;align-items:center}
-.rail button{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;color:inherit;font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:0;width:62px}
-.rail button i{width:50px;height:50px;border-radius:25px;display:flex;align-items:center;justify-content:center;font-style:normal}
-.s-y .rail button i{background:rgba(10,10,10,.1)} .s-w .rail button i{background:rgba(10,10,10,.07)} .s-k .rail button i{background:rgba(255,255,255,.12)}
-.rail button i svg{width:24px;height:24px}
-.rail button.on i{background:#0A0A0A;color:var(--accent)}
-.s-k .rail button.on i{background:var(--accent);color:#0A0A0A}
-.burst{position:absolute;left:50%;top:44%;width:120px;height:120px;margin:-60px 0 0 -60px;pointer-events:none;color:#FF3D5A;animation:burst .8s ease forwards}
-@keyframes burst{0%{transform:scale(.2);opacity:0}25%{transform:scale(1.15);opacity:1}60%{transform:scale(1);opacity:1}100%{transform:scale(1.3) translateY(-30px);opacity:0}}
-.slidemsg{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:90px 20px 40px}
-.slidemsg h2{margin:0;font-weight:800;font-size:clamp(32px,10vw,44px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
-.slidemsg p{margin:0;font-size:16px;line-height:1.5;opacity:.8}
-.slidemsg .seg{background:transparent}
-.dots3{display:flex;gap:8px}.dots3 i{width:12px;height:12px;border-radius:6px;background:currentColor;animation:pulse 1s infinite}.dots3 i:nth-child(2){animation-delay:.2s}.dots3 i:nth-child(3){animation-delay:.4s}
-.swipehint{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;pointer-events:none}
-/* onderbalk */
-.ttbar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;z-index:30;background:#000;color:#fff;height:calc(var(--barh) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center}
-.ttbar button{background:none;border:0;color:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;position:relative;height:100%;justify-content:center}
-.ttbar button.on{color:#fff}
-.ttbar button svg{width:24px;height:24px}
-.ttbar .dot{position:absolute;top:8px;right:calc(50% - 16px);width:8px;height:8px;border-radius:4px;background:var(--accent)}
-.ttbar .plus{width:48px;height:32px;border-radius:9px;background:#fff;color:#0A0A0A;display:flex;align-items:center;justify-content:center;box-shadow:-4px 0 0 var(--accent),4px 0 0 #fff;font-size:24px;font-weight:700;line-height:1}
-.ttbar .plus.on{background:var(--accent);box-shadow:-4px 0 0 #fff,4px 0 0 var(--accent)}
-body.tt .app{padding-bottom:calc(var(--barh) + 40px)}
-.review{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
-.thumbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.thumbs button{height:48px;border-radius:var(--rs);border:1px solid var(--line);background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px}
-.thumbs button svg{width:22px;height:22px}
-.thumbs button.on.up{background:#2F6B2F;border-color:#2F6B2F;color:#fff}
-.thumbs button.on.down{background:#B45309;border-color:#B45309;color:#fff}
-.thumbs.big2 button{height:120px;flex-direction:column;font-size:17px;background:#1A1C20;border-color:#333;color:#fff;border-radius:14px}
-.thumbs.big2 button svg{width:40px;height:40px}
 .codegate{position:fixed;inset:0;z-index:99;background:rgba(10,10,10,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .codecard{width:100%;max-width:440px;background:var(--bg);color:var(--fg);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
 .codecard input{height:52px;border:1px solid var(--fg);border-radius:var(--rs);padding:0 14px;font-size:18px;font-family:var(--mono);background:var(--card);color:var(--fg)}
@@ -332,15 +241,6 @@ const LOCNAME = {koelkast:'Koelkast', vriezer:'Vriezer', kast:'Kast', kruiden:'K
 const WEEK = ['ma','di','wo','do','vr','za','zo'];
 
 const I = {
-  up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
-  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:rotate(180deg)"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
-  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9.3-8.6C1.2 8.5 2.9 5 6.3 5c2 0 3.3 1.1 3.9 2.2h3.6C14.4 6.1 15.7 5 17.7 5c3.4 0 5.1 3.5 3.6 6.4C19 15.6 12 20 12 20z" transform="translate(0 -1)"/></svg>',
-  heartf:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20s-7-4.4-9.3-8.6C1.2 8.5 2.9 5 6.3 5c2 0 3.3 1.1 3.9 2.2h3.6C14.4 6.1 15.7 5 17.7 5c3.4 0 5.1 3.5 3.6 6.4C19 15.6 12 20 12 20z" transform="translate(0 -1)"/></svg>',
-  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5l7 7-7 7M21 12H9a6 6 0 0 0-6 6"/></svg>',
-  filter:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>',
-  remix:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>',
-  cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="16.5" cy="19.5" r="1.3"/></svg>',
-  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>',
   grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>',
   fridge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 10h12M9 5v2M9 13v3"/></svg>',
   list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>',
@@ -366,7 +266,7 @@ const S = {
   recipes: ls.get('recipes', []),
   recipesKey: ls.get('recipesKey', ''),
   prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu' }, ls.get('prefs', {})),
-  tab: ls.get('tt.tab', 'scan'),
+  tab: ls.get('tab', 'recepten'),
   recView: ls.get('recView', 'lijst'),
   swipeI: 0,
   ov: null, detail: null, detailPersons: 2, planOpen: false, remixBusy: '',
@@ -380,14 +280,6 @@ const S = {
 };
 function defaultMeal() { const h = new Date().getHours(); return h < 10 ? 'Ontbijt' : h < 14 ? 'Lunch' : h < 16 ? 'Snack' : 'Diner'; }
 if (!Array.isArray(S.saved.folders)) S.saved.folders = ['Favorieten','Doordeweeks','Feestjes'];
-if (!S.saved.reviews || typeof S.saved.reviews !== 'object') S.saved.reviews = {};
-const reviewOf = (r) => r && S.saved.reviews[norm(r.title)];
-function setReview(r, v, note) {
-  const k = norm(r.title); const cur = S.saved.reviews[k];
-  if (v === null) delete S.saved.reviews[k];
-  else S.saved.reviews[k] = { v, title: r.title, note: note != null ? String(note).slice(0, 300) : (cur && cur.note) || '', at: Date.now() };
-  persist('saved');
-}
 
 // ---------- capabilities ----------
 let db = null, sample = null;
@@ -395,7 +287,7 @@ const DOCS = { pantry: 'household/pantry', list: 'household/list', saved: 'house
 function persist(key) {
   ls.set(key, S[key]);
   if (!db) return;
-  const body = key === 'saved' ? { recipes: S.saved.recipes, week: S.saved.week, folders: S.saved.folders, reviews: S.saved.reviews || {} } : { items: S[key] };
+  const body = key === 'saved' ? { recipes: S.saved.recipes, week: S.saved.week, folders: S.saved.folders } : { items: S[key] };
   db.doc(DOCS[key]).set(body).catch(e => {
     toast(e && e.code === 'quota_exceeded' ? 'De opslag is vol. Verwijder oude recepten of producten.' : 'Opslaan lukte niet. Je wijziging staat alleen op dit apparaat.');
   });
@@ -471,7 +363,7 @@ async function initCaps() {
       db.doc(DOCS[key]).onSnapshot(snap => {
         if (!snap.exists) { if (!snap.metadata.fromCache && (key === 'saved' ? S.saved.recipes.length : S[key].length)) persist(key); return; }
         const d0 = snap.data() || {};
-        if (key === 'saved') S.saved = { recipes: clone(d0.recipes || []), week: clone(d0.week || {}), folders: clone(d0.folders || ['Favorieten','Doordeweeks','Feestjes']), reviews: clone(d0.reviews || {}) };
+        if (key === 'saved') S.saved = { recipes: clone(d0.recipes || []), week: clone(d0.week || {}), folders: clone(d0.folders || ['Favorieten','Doordeweeks','Feestjes']) };
         else S[key] = clone(d0.items || []);
         ls.set(key, S[key]);
         if (!S.ov || S.ov === 'detail' || key !== 'pantry') softRender();
@@ -658,7 +550,7 @@ async function camStart() {
   CAM.state = 'starting'; CAM.paused = false; render();
   try {
     const st = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
-    if (!scanActive()) { st.getTracks().forEach(t => t.stop()); CAM.state = 'idle'; return; }
+    if (S.ov !== 'scan' || S.scan.mode === 'typen') { st.getTracks().forEach(t => t.stop()); CAM.state = 'idle'; return; }
     CAM.stream = st;
     if (!CAM.video) { const v = document.createElement('video'); v.setAttribute('playsinline', ''); v.setAttribute('aria-label', 'Camerabeeld'); v.muted = true; v.autoplay = true; v.className = 'camvideo'; CAM.video = v; }
     CAM.video.srcObject = st;
@@ -695,7 +587,7 @@ function grabFrame() {
 }
 async function camLoop() {
   const me = ++CAM.loop;
-  const alive = () => me === CAM.loop && CAM.state === 'on' && scanActive() && !CAM.paused;
+  const alive = () => me === CAM.loop && CAM.state === 'on' && S.ov === 'scan' && !CAM.paused;
   while (alive()) {
     if (document.hidden) { await sleep(800); continue; }
     if (Date.now() - CAM.lastNew > 75000) { CAM.paused = true; render(); break; }
@@ -775,14 +667,6 @@ async function readTht(ctx, id, file) {
   S.thtBusy = null; render();
 }
 const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet."}';
-function tasteText() {
-  const all = Object.values(S.saved.reviews || {}).sort((a, b) => b.at - a.at);
-  const up = all.filter(x => x.v === 'up').slice(0, 8), down = all.filter(x => x.v === 'down').slice(0, 8);
-  if (!up.length && !down.length) return '';
-  const fmt = (x) => '"' + x.title + '"' + (x.note ? ' (' + x.note + ')' : '');
-  return (up.length ? '- Smaak: deze recepten vond iemand lekker, maak vergelijkbare keuzes: ' + up.map(fmt).join('; ') + '.\n' : '') +
-    (down.length ? '- Smaak: deze recepten vond iemand NIET lekker, vermijd dit soort gerechten: ' + down.map(fmt).join('; ') + '.\n' : '');
-}
 function recipePrompt(n) {
   const p = S.prefs;
   return 'Je bent juno, een kookassistent. Bedenk ' + n + ' verschillende recepten voor ' + p.meal.toLowerCase() + ', in het Nederlands, op basis van wat iemand in huis heeft.\n\nVoorraad (naam — houdbaarheid):\n' + pantryText() +
@@ -792,7 +676,7 @@ function recipePrompt(n) {
     '- Dieet: ' + (p.diets.length ? p.diets.join(', ') : 'geen beperkingen') + '.\n' +
     (p.cuisine !== 'Alle keukens' ? '- Keuken: ' + p.cuisine + '.\n' : '- Varieer in keukens.\n') +
     (p.level !== 'Elk niveau' ? '- Moeilijkheid: ' + p.level.toLowerCase() + '.\n' : '') +
-    '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n' + tasteText() + '\n' +
+    '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n\n' +
     'Antwoord alleen met een JSON-array van objecten, precies in deze vorm:\n' + RECIPE_SHAPE +
     '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- Sorteer van beste match naar minste.';
 }
@@ -1042,7 +926,7 @@ function ovScan() {
     }
 
   } else {
-    if (imgMode && !S.canImg) h += `<div class="notice" style="color:var(--fg)">Foto's versturen werkt niet in deze weergave. Open juno via claude.ai in de browser van je telefoon (Safari of Chrome), of typ hieronder wat je hebt.<br><small style="opacity:.6">code ${S.imgWhy||'?'} · v8</small></div>`;
+    if (imgMode && !S.canImg) h += `<div class="notice" style="color:var(--fg)">Foto's versturen werkt niet in deze weergave. Open juno via claude.ai in de browser van je telefoon (Safari of Chrome), of typ hieronder wat je hebt.<br><small style="opacity:.6">code ${S.imgWhy||'?'} · v7</small></div>`;
     h += `<label for="typeInput" class="eyebrow" style="color:var(--cam-muted)">Wat heb je in huis?</label>
       <textarea id="typeInput" data-input="scanText" placeholder="Bijv. 6 eieren, 2 paprika, melk, spinazie, kipfilet">${esc(sc.text)}</textarea>
       <button class="btn" data-act="runTyped" ${sc.busy ? 'disabled' : ''}><span>${sc.busy ? 'juno leest mee…' : 'Herken producten'}</span><span class="mono">→</span></button>`;
@@ -1062,26 +946,6 @@ function ovScan() {
   }
   return h;
 }
-function reviewRow(r) {
-  const rv = reviewOf(r);
-  return `<div class="review"><span class="eyebrow">${rv ? 'Jouw oordeel' : 'Al gemaakt? Laat een duimpje achter'}</span><div class="thumbs">
-    <button class="${rv && rv.v === 'up' ? 'on up' : ''}" data-act="thumb" data-arg="up" aria-pressed="${!!(rv && rv.v === 'up')}" aria-label="Lekker">${I.up}<span>Lekker</span></button>
-    <button class="${rv && rv.v === 'down' ? 'on down' : ''}" data-act="thumb" data-arg="down" aria-pressed="${!!(rv && rv.v === 'down')}" aria-label="Niet lekker">${I.down}<span>Liever niet</span></button></div>
-    ${rv && rv.note ? `<div style="font-size:14px;color:var(--muted)">“${esc(rv.note)}”</div>` : ''}</div>`;
-}
-function ovReview() {
-  const r = S.detail; const rv = reviewOf(r);
-  return `<div class="top"><span class="mono" style="font-size:11px;color:var(--cam-muted)">Eet smakelijk</span><button class="camsmall" data-act="reviewDone" aria-label="Sluiten">${I.x}</button></div>
-    <div class="eyebrow" style="color:var(--accent)">${esc(r.title)}</div>
-    <h1 class="big" style="color:#fff">Hoe was het?</h1>
-    <p style="margin:0;color:var(--cam-muted);line-height:1.5">Met jouw duimpje leert juno wat je lekker vindt en worden je volgende recepten beter.</p>
-    <div class="thumbs big2">
-      <button class="${rv && rv.v === 'up' ? 'on up' : ''}" data-act="thumb" data-arg="up" aria-pressed="${!!(rv && rv.v === 'up')}">${I.up}<span>Lekker!</span></button>
-      <button class="${rv && rv.v === 'down' ? 'on down' : ''}" data-act="thumb" data-arg="down" aria-pressed="${!!(rv && rv.v === 'down')}">${I.down}<span>Liever niet</span></button></div>
-    <label class="eyebrow" for="reviewNote" style="color:var(--cam-muted)">Iets toevoegen? (mag leeg)</label>
-    <textarea id="reviewNote" data-input="reviewNote" placeholder="Bijv. volgende keer meer kruiden, of: de kinderen vonden het top" style="min-height:80px;background:#1A1C20;color:#fff;border-color:#333">${esc(S.reviewDraft != null ? S.reviewDraft : (rv && rv.note) || '')}</textarea>
-    <div class="stickyfoot"><button class="btn" data-act="reviewDone" style="justify-content:center">${rv ? 'Klaar' : 'Overslaan'}</button></div>`;
-}
 function ovDetail() {
   const r = S.detail; if (!r) return '';
   const f = S.detailPersons / r.persons; const st = recipeStats(r); const saved = isSaved(r);
@@ -1100,7 +964,6 @@ function ovDetail() {
         return `<div class="row"><span class="name" style="${have ? '' : 'color:var(--muted)'}">${esc(i.name)} ${d != null && d <= 2 ? '<span class="badge warn">eerst op</span>' : ''}</span>
         ${have ? `<span class="qty">${fmtQty(i.qty, i.unit, f)} ✓</span>` : `<span class="qty">${fmtQty(i.qty, i.unit, f)}</span><button class="chip${onList ? ' on' : ''}" data-act="ingToList" data-arg="${esc(i.name)}">${onList ? 'Op lijst' : '+ Lijst'}</button>`}</div>`; }).join('')}</div></div>
     ${r.remixes.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Remix · maak er iets anders van</div><div class="remix">${r.remixes.map((x, i) => `<button data-act="remix" data-arg="${i}" ${S.remixBusy ? 'disabled' : ''} title="${esc(x.note)}"><span class="mono">+ ${esc(x.add)}</span><b>${S.remixBusy === x.name ? 'Bezig…' : esc(x.name)}</b></button>`).join('')}</div></div>` : ''}
-    ${reviewRow(r)}
     <div><div class="eyebrow" style="margin-bottom:4px">Bereiding · ${r.steps.length} stappen</div>${r.steps.map((s, i) => `<div class="step"><span class="mono">${pad(i + 1)}</span><span style="flex:1;min-width:0">${esc(s.text)}${s.timerMin ? ` <span class="badge line">${s.timerMin} min</span>` : ''}</span></div>`).join('')}</div>
     <div class="stickyfoot"><button class="btn" data-act="cook" style="background:var(--fg);color:var(--bg)"><span>Start koken</span><span class="mono" style="color:var(--accent)">${r.minutes}′ →</span></button></div>`;
   return h;
@@ -1119,22 +982,7 @@ function ovCook() {
       <button data-act="timer" aria-label="${c.running ? 'Pauzeer timer' : 'Start timer'}">${c.running ? I.pause : I.play}</button></div>` : ''}
     <div class="stickyfoot"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;width:100%">
       <button class="btn ghost" style="justify-content:center;color:var(--on-cam);border-color:#444" data-act="cookStep" data-arg="-1" ${c.i === 0 ? 'disabled' : ''}>Vorige</button>
-      <button class="btn" style="justify-content:center;background:var(--on-cam);color:#0A0A0A" data-act="${last ? 'cookDone' : 'cookStep'}" data-arg="1">${last ? 'Klaar · eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
-}
-function ovFilters() {
-  const p = S.prefs;
-  return `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><span class="eyebrow">Wat zoek je?</span></div>
-    <h1 class="big">Recepten <span class="mark">op maat.</span></h1>
-    <div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div>
-    <div class="chips" role="group" aria-label="Filters">
-      ${chipsHTML([['Nu te maken', p.mode === 'nu', 'nu'], ['+1–3 extra', p.mode === 'bijna', 'bijna']], 'mode')}
-      <button class="chip ink" data-act="cycle" data-arg="time">≤ ${p.time} MIN</button>
-      <button class="chip ink" data-act="cycle" data-arg="persons">${p.persons} PERS.</button>
-      <button class="chip${p.cuisine !== 'Alle keukens' ? ' on' : ''}" data-act="cycle" data-arg="cuisine">${esc(p.cuisine)}</button>
-      <button class="chip${p.level !== 'Elk niveau' ? ' on' : ''}" data-act="cycle" data-arg="level">${esc(p.level)}</button>
-      ${chipsHTML(['Vega','Vegan','Glutenvrij','Lactosevrij','Notenvrij'].map(d => [d, p.diets.includes(d), d]), 'diet')}
-    </div>
-    <div class="stickyfoot"><button class="btn" data-act="applyFilters"><span>Toon recepten</span><span class="mono">→</span></button></div>`;
+      <button class="btn" style="justify-content:center;background:var(--on-cam);color:#0A0A0A" data-act="${last ? 'closeCook' : 'cookStep'}" data-arg="1">${last ? 'Eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
 }
 function ovChat() {
   const c = S.chat;
@@ -1171,155 +1019,18 @@ function pickFile(camera, cb) {
   inp.onchange = () => { const f = inp.files && inp.files[0]; if (f) cb(f); inp.value = ''; };
   inp.click();
 }
-// ---------- TikTok-indeling ----------
-const TT_TABS = ['scan', 'recepten'];
-const FEED = { key: '', ids: '', autoKey: '', jumping: false, lastTap: 0, tapT: 0 };
-function scanActive() { return (S.ov === 'scan' && S.scan.mode !== 'typen') || (!S.ov && S.tab === 'scan' && !S.scan.photo); }
-function ensureCam() {
-  if (scanActive()) { if (CAM.state === 'idle') camStart(); }
-  else if (CAM.state === 'on' || CAM.state === 'starting') camStop();
-}
-function maybeAutoGen() {
-  if (S.tab !== 'recepten' || S.ov || !S.pantry.length || S.ai !== 'on' || S.gen.busy) return;
-  const k = prefsKey();
-  if (S.recipes.length && S.recipesKey === k) return;
-  if (FEED.autoKey === k) return; // niet blijven proberen na een fout
-  FEED.autoKey = k; setTimeout(generate, 0);
-}
-function ttTop() {
-  const onFeed = S.tab === 'recepten';
-  return `<div class="tttop"><button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button>
-    <div class="tttabs" role="tablist"><button role="tab" aria-selected="${!onFeed}" class="${onFeed ? '' : 'on'}" data-act="toScan">Scan</button><button role="tab" aria-selected="${onFeed}" class="${onFeed ? 'on' : ''}" data-act="toFeed">Recepten</button></div>
-    <button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en maaltijd">${I.filter}</button></div>`;
-}
-function ttBar() {
-  const openList = S.list.filter(x => !x.checked).length;
-  const b = (t, ic, l, dot) => `<button class="${S.tab === t ? 'on' : ''}" data-act="tab" data-arg="${t}" aria-label="${l}" aria-current="${S.tab === t ? 'page' : 'false'}">${ic}${dot ? '<span class="dot"></span>' : ''}<span>${l}</span></button>`;
-  return `<nav class="ttbar" aria-label="Hoofdmenu">${b('recepten', I.home, 'Recepten')}${b('voorraad', I.fridge, 'Voorraad', expiring().length)}
-    <button data-act="tab" data-arg="scan" aria-label="Scan" aria-current="${S.tab === 'scan' ? 'page' : 'false'}"><span class="plus${S.tab === 'scan' ? ' on' : ''}">+</span></button>
-    ${b('lijst', I.list, 'Lijst', openList)}${b('opgeslagen', I.mark, 'Bewaard')}</nav>`;
-}
-function viewScanTT() {
-  const sc = S.scan, now = Date.now();
-  const live = !sc.photo && (CAM.state === 'on' || CAM.state === 'starting');
-  let h = '';
-  if (sc.photo) {
-    h += `<div class="ttshot"><img src="${sc.photo}" alt="Jouw foto">${sc.items.filter(it => it.x != null && it.y != null).map(it => `<span class="tag${it.unsure ? ' unsure' : ''}${now - (it.t || 0) < 450 ? ' pop' : ''}" style="left:${it.x}%;top:${it.y}%">${esc(it.name)}</span>`).join('')}${sc.busy ? `<span class="scanline"></span><span class="busytag">${sc.items.length ? sc.items.length + ' gevonden…' : 'juno kijkt mee…'}</span>` : ''}</div>`;
-  } else if (live) {
-    h += `<div class="ttcam" id="camSlot">${CAM.labels.map(l => `<span class="tag${l.unsure ? ' unsure' : ''}${now - l.t < 450 ? ' pop' : ''}" style="left:${l.x}%;top:${l.y}%">${esc(l.name)}${l.unsure ? ' ?' : ''}</span>`).join('')}
-      <span class="livepill">${CAM.paused ? 'Gepauzeerd' : `<i></i>${CAM.state === 'starting' ? 'Camera start…' : CAM.thinking ? 'juno kijkt mee…' : 'Live'}`}</span>
-      ${CAM.paused ? '<button class="resume" data-act="camResume" aria-label="Verder scannen"><span>Tik om verder te scannen</span></button>' : ''}</div>`;
-  } else {
-    h += `<div class="ttcam ttoff"><div class="ttoffmsg">${CAM.state === 'off'
-      ? `<b>Live camera staat uit</b><span>${esc(CAM.why)}. Maak een foto, dan zet juno de namen erop.</span><button class="chip" data-act="camRetry" style="align-self:center;margin-top:6px;color:#fff;border-color:rgba(255,255,255,.35);background:transparent">Opnieuw proberen</button>`
-      : '<b>Camera start…</b><span>Sta de camera toe als je telefoon erom vraagt.</span>'}</div></div>`;
-  }
-  h += `<div class="ttscanfoot">`;
-  if (S.ai === 'off') h += `<div class="ttnote">Herkennen werkt hier niet: juno heeft geen verbinding met de AI. Open juno via je eigen juno-adres.</div>`;
-  if (sc.error) h += `<div class="ttnote">${esc(sc.error)}</div>`;
-  if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd aan voorraad">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
-  else if (live && !CAM.paused) h += `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Beweeg je telefoon rustig langs je koelkast of kast</div>`;
-  h += `<div class="ttshutter"><button class="ttsmall" data-act="pickPhoto" data-arg="gallery" aria-label="Foto uit galerij">${I.img}</button><div class="mid">`;
-  if (live) h += `<div class="ttcount" aria-live="polite"><b>${sc.items.length}</b><span>${sc.items.length === 1 ? 'product erbij' : 'producten erbij'}</span></div>`;
-  else if (sc.photo && !sc.busy) h += `<button class="ttsmall" style="width:auto;padding:0 18px;border-radius:26px" data-act="clearPhoto">${CAM.state === 'off' ? 'Nieuwe foto' : '● Live camera'}</button>`;
-  else if (!sc.photo) h += `<button class="shutter" data-act="pickPhoto" data-arg="camera" aria-label="Foto maken"><span></span></button>`;
-  h += `</div><button class="ttsmall" data-act="openScan" data-arg="typen" aria-label="Typen">Aa</button></div>`;
-  h += `<button class="ttgo" data-act="toFeed"><span>${sc.items.length ? 'Bekijk je recepten' : 'Recepten'}</span><span class="mono">swipe ←</span></button></div>`;
-  return h;
-}
-function slideRecipe(r, i) {
-  const st = recipeStats(r), saved = isSaved(r), c = ['y', 'k', 'w'][i % 3];
-  return `<article class="slide s-${c}" data-act="slideTap" data-arg="${r.id}" aria-label="${esc(r.title)}">
-    <div class="giant" aria-hidden="true">${(r.ingredients || []).slice(0, 5).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>
-    <div class="cap"><div class="capbadges">${i === 0 ? '<span class="badge acc">Beste match</span>' : ''}${r.usesExpiring.length ? `<span class="badge warn">${esc(r.usesExpiring[0])} op</span>` : ''}${st.missing.length ? `<span class="badge line" style="color:inherit;border-color:currentColor;opacity:.75">+${st.missing.length} halen</span>` : ''}${reviewOf(r) ? `<span class="badge" style="background:${reviewOf(r).v === 'up' ? '#2F6B2F' : '#B45309'};color:#fff">${reviewOf(r).v === 'up' ? '👍 Lekker' : '👎 Liever niet'}</span>` : ''}</div>
-      <h2>${esc(r.title)}</h2>
-      <div class="mono capmeta">${r.minutes}′ · ${st.have}/${st.total} in huis · ${esc(r.difficulty)}${r.cuisine ? ' · ' + esc(r.cuisine) : ''}</div>
-      ${r.why ? `<p>${esc(r.why)}</p>` : ''}
-      <div class="mono caphint">Tik voor het recept · dubbeltik = bewaren</div></div>
-    <div class="rail">
-      <button class="${saved ? 'on' : ''}" data-act="ttSave" data-arg="${r.id}" aria-pressed="${saved}" aria-label="${saved ? 'Niet meer bewaren' : 'Bewaren'}"><i>${saved ? I.heartf : I.heart}</i>${saved ? 'Bewaard' : 'Bewaar'}</button>
-      <button data-act="ttList" data-arg="${r.id}" aria-label="Ontbrekende ingrediënten op je lijst"><i>${I.cart}</i>${st.missing.length ? '+' + st.missing.length : 'Compleet'}</button>
-      <button data-act="ttRemix" data-arg="${r.id}" aria-label="Remix"><i>${I.remix}</i>Remix</button>
-      <button data-act="ttCook" data-arg="${r.id}" aria-label="Start koken"><i>${I.play}</i>Koken</button>
-      <button data-act="ttShare" data-arg="${r.id}" aria-label="Recept kopiëren om te delen"><i>${I.share}</i>Deel</button></div>
-    ${i === 0 ? '<div class="swipehint">↑ swipe voor het volgende recept</div>' : ''}</article>`;
-}
-function slideMsg(cls, inner) { return `<article class="slide s-${cls}"><div class="slidemsg">${inner}</div></article>`; }
-function viewFeedTT() {
-  const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
-  const out = [];
-  const mealSeg = `<div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div>`;
-  if (!S.pantry.length) out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Swipe naar rechts naar de camera en beweeg langs je koelkast. Daarna verschijnen hier je recepten.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`));
-  else if (S.gen.busy) out.push(slideMsg('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno kookt iets uit met je ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`));
-  else if (!S.recipes.length || stale || S.gen.error) out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}${mealSeg}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak recepten</span><span class="mono">${p.mode === 'nu' ? 'NU' : '+1–3'} · ≤${p.time}′</span></button>`));
-  if (S.recipes.length && !S.gen.busy && !stale) {
-    S.recipes.forEach((r, i) => out.push(slideRecipe(r, i)));
-    out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">Dat waren ze</div><h2>Niks voor je erbij?</h2><p>Kies een andere maaltijd of filters, of laat juno nieuwe recepten bedenken.</p>${mealSeg}<button class="ttgo" data-act="generate"><span>Nieuwe recepten</span><span class="mono">↻</span></button><button class="btn ghost" data-act="open" data-arg="filters" style="color:#fff;border-color:rgba(255,255,255,.4)"><span>Filters</span><span class="mono">${I.filter}</span></button>`));
-  }
-  return `<div class="feed" id="feed">${out.join('')}</div>`;
-}
-function feedKey() {
-  return JSON.stringify([S.recipes.map(r => r.id + (isSaved(r) ? '♥' : '') + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '')), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
-}
-function bindPager() {
-  const pg = $('#pager'); let t = 0;
-  pg.addEventListener('scroll', () => {
-    clearTimeout(t);
-    t = setTimeout(() => {
-      FEED.jumping = false;
-      const idx = Math.round(pg.scrollLeft / Math.max(1, pg.clientWidth));
-      const tab = TT_TABS[idx] || 'scan';
-      if (tab !== S.tab) { S.tab = tab; ls.set('tt.tab', tab); render(); }
-    }, 90);
-  }, { passive: true });
-}
-function bindFeed() {
-  const f = $('#feed'); if (!f || f.dataset.bound) return; f.dataset.bound = '1';
-  f.addEventListener('scroll', () => { S.feedI = Math.round(f.scrollTop / Math.max(1, f.clientHeight)); }, { passive: true });
-}
-function jumpPane(smooth) {
-  const pg = $('#pager'); if (!pg) return;
-  const want = Math.max(0, TT_TABS.indexOf(S.tab)) * pg.clientWidth;
-  if (Math.abs(pg.scrollLeft - want) > 2) { FEED.jumping = !!smooth; pg.scrollTo({ left: want, behavior: smooth ? 'smooth' : 'instant' }); }
-}
-function renderTT() {
-  const app = $('#app');
-  if (!$('#pager')) {
-    app.className = 'ttapp';
-    app.innerHTML = `<div id="ttTop"></div><div class="pager" id="pager"><section class="pane" id="paneScan" aria-label="Scan"></section><section class="pane" id="paneFeed" aria-label="Recepten"></section></div>`;
-    FEED.key = ''; bindPager();
-    requestAnimationFrame(() => jumpPane(false));
-  }
-  $('#ttTop').innerHTML = ttTop();
-  $('#paneScan').innerHTML = viewScanTT();
-  const k = feedKey();
-  if (k !== FEED.key) {
-    FEED.key = k;
-    const ids = S.recipes.map(r => r.id).join();
-    $('#paneFeed').innerHTML = viewFeedTT();
-    bindFeed();
-    const f = $('#feed');
-    if (ids !== FEED.ids) { FEED.ids = ids; S.feedI = 0; }
-    if (f) f.scrollTop = (S.feedI || 0) * f.clientHeight;
-  }
-  if (!FEED.jumping) jumpPane(true);
-}
 function render() {
   const app = $('#app'), ov = $('#ov');
-  document.body.classList.add('tt');
-  if (TT_TABS.includes(S.tab)) renderTT();
-  else { app.className = 'app'; app.innerHTML = S.tab === 'voorraad' ? viewVoorraad() : S.tab === 'lijst' ? viewLijst() : S.tab === 'opgeslagen' ? viewOpgeslagen() : viewRecepten(); }
-  $('#dock').innerHTML = ttBar();
+  app.innerHTML = S.tab === 'voorraad' ? viewVoorraad() : S.tab === 'lijst' ? viewLijst() : S.tab === 'opgeslagen' ? viewOpgeslagen() : viewRecepten();
+  $('#dock').innerHTML = dockHTML();
   if (S.ov) {
     const keep = ov.scrollTop;
-    ov.className = S.ov === 'scan' ? 'cam' : (S.ov === 'cook' || S.ov === 'review') ? 'cook' : '';
-    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : S.ov === 'filters' ? ovFilters() : S.ov === 'review' ? ovReview() : ovChat()}</div>`;
+    ov.className = S.ov === 'scan' ? 'cam' : S.ov === 'cook' ? 'cook' : '';
+    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : ovChat()}</div>`;
     ov.hidden = false; ov.scrollTop = keep; document.body.classList.add('lock');
   } else { ov.hidden = true; ov.innerHTML = ''; document.body.classList.remove('lock'); }
   bindSwipe();
   camAttach();
-  ensureCam();
-  maybeAutoGen();
 }
 let toastT;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600); }
@@ -1348,38 +1059,14 @@ function beep() { try { const a = new (window.AudioContext || window.webkitAudio
 
 // ---------- actions ----------
 const act = {
-  tab(t) { const was = S.tab; S.tab = t; ls.set('tt.tab', t); S.ov = null; S.expOpen = null; render(); if (!TT_TABS.includes(t) || !TT_TABS.includes(was)) window.scrollTo(0, 0); },
-  toScan() { act.tab('scan'); },
-  toFeed() { act.tab('recepten'); },
-  clearPhoto() { if (S.scan.photo) URL.revokeObjectURL(S.scan.photo); S.scan.photo = null; S.scan.error = ''; if (CAM.state === 'off') { render(); pickFile(true, f => runLiveScan(f)); } else render(); },
-  applyFilters() { S.ov = null; S.tab = 'recepten'; ls.set('tt.tab', 'recepten'); FEED.autoKey = ''; render(); },
-  slideTap(id) {
-    const now = Date.now();
-    if (now - FEED.lastTap < 300 && FEED.lastId === id) { clearTimeout(FEED.tapT); FEED.lastTap = 0; act.ttSave(id, true); return; }
-    FEED.lastTap = now; FEED.lastId = id; clearTimeout(FEED.tapT);
-    FEED.tapT = setTimeout(() => act.detail(id), 300);
-  },
-  ttSave(id, viaDouble) {
-    const r = S.recipes.find(x => x.id === id); if (!r) return;
-    if (isSaved(r) && !viaDouble) { unsaveRecipe(r); toast('Niet meer bewaard'); }
-    else { if (!isSaved(r)) saveRecipe(r); toast('Bewaard in Favorieten'); const sl = document.querySelector(`.slide[data-arg="${id}"]`); if (sl) { const b = document.createElement('div'); b.className = 'burst'; b.innerHTML = I.heartf; sl.appendChild(b); setTimeout(() => b.remove(), 900); } try { navigator.vibrate && navigator.vibrate(20); } catch (e) {} }
-    setTimeout(render, viaDouble ? 500 : 0);
-  },
-  ttList(id) { const r = S.recipes.find(x => x.id === id); if (!r) return; let n = 0; recipeStats(r).missing.forEach(i => { if (addToList(i.name, r.title)) n++; }); toast(n ? n + (n === 1 ? ' ding' : ' dingen') + ' op je lijst' : recipeStats(r).missing.length ? 'Staat al op je lijst' : 'Je hebt alles in huis'); render(); },
-  ttRemix(id) { const r = S.recipes.find(x => x.id === id); if (!r) return; openDetail(r); setTimeout(() => { const el = document.querySelector('#ov .remix'); if (el) el.scrollIntoView({ block: 'center' }); }, 60); },
-  ttCook(id) { const r = S.recipes.find(x => x.id === id); if (!r) return; S.detail = r; S.detailPersons = r.persons; act.cook(); },
-  ttShare(id) {
-    const r = S.recipes.find(x => x.id === id); if (!r) return;
-    const txt = r.title + ' (' + r.minutes + ' min, juno)\n\nIngrediënten:\n' + r.ingredients.map(i => '- ' + (fmtQty(i.qty, i.unit) + ' ' + i.name).trim()).join('\n') + '\n\nBereiding:\n' + r.steps.map((s, i) => (i + 1) + '. ' + s.text).join('\n');
-    try { navigator.clipboard.writeText(txt).then(() => toast('Recept gekopieerd. Plak het in WhatsApp of een bericht.'), () => toast('Kopiëren lukte niet in deze weergave.')); } catch (e) { toast('Kopiëren lukte niet in deze weergave.'); }
-  },
+  tab(t) { S.tab = t; ls.set('tab', t); S.ov = null; S.expOpen = null; render(); window.scrollTo(0, 0); },
   open(o) { S.ov = o; render(); if (o === 'chat') { scrollChat(); setTimeout(() => $('#chatInput')?.focus(), 50); } },
   pickPhoto(arg) { pickFile(arg === 'camera', f => runLiveScan(f)); },
   scanRemove(id) { const i = S.scan.items.findIndex(x => x.id === id); if (i < 0) return; CAM.blocked.add(norm(S.scan.items[i].name)); CAM.labels = CAM.labels.filter(l => l.k !== norm(S.scan.items[i].name)); removeScanned(S.scan.items[i]); S.scan.items.splice(i, 1); persist('pantry'); render(); },
-  scanDone() { camStop(); CAM.blocked.clear(); FEED.autoKey = ''; if (S.scan.photo) URL.revokeObjectURL(S.scan.photo); const n = S.scan.items.length; S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' }; S.ov = null; S.tab = 'recepten'; ls.set('tab', 'recepten'); render(); window.scrollTo(0, 0); if (n) toast(n + (n === 1 ? ' product' : ' producten') + ' in je voorraad'); },
+  scanDone() { camStop(); CAM.blocked.clear(); if (S.scan.photo) URL.revokeObjectURL(S.scan.photo); const n = S.scan.items.length; S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' }; S.ov = null; S.tab = 'recepten'; ls.set('tab', 'recepten'); render(); window.scrollTo(0, 0); if (n) toast(n + (n === 1 ? ' product' : ' producten') + ' in je voorraad'); },
   pickTht(arg) { const [ctx, id] = String(arg).split('|'); pickFile(true, f => readTht(ctx, id, f)); },
   close() { if (S.ov === 'scan') { camStop(); CAM.blocked.clear(); } if (S.ov === 'scan' && S.scan.photo) { URL.revokeObjectURL(S.scan.photo); S.scan.photo = null; } if (S.ov === 'scan' && S.scan.auto) { const n = S.scan.items.length; S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' }; if (n) toast(n + (n === 1 ? ' product' : ' producten') + ' in je voorraad'); } S.ov = null; S.expOpen = null; render(); },
-  openScan(m) { if ((m || 'koelkast') !== 'typen') { S.scan.mode = m || 'koelkast'; act.tab('scan'); } else openScan('typen'); },
+  openScan(m) { openScan(m); if ((m || 'koelkast') !== 'typen') camStart(); },
   camResume() { CAM.paused = false; CAM.lastNew = Date.now(); S.scan.error = ''; render(); if (CAM.state === 'on') camLoop(); else camStart(); },
   camRetry() { CAM.state = 'idle'; camStart(); },
   scanMode(m) { S.scan.mode = m; S.scan.error = ''; if (m === 'typen') camStop(); else if (CAM.state === 'idle') setTimeout(camStart, 0); render(); if (m === 'typen') setTimeout(() => $('#typeInput')?.focus(), 50); },
@@ -1406,9 +1093,6 @@ const act = {
   allToList() { const st = recipeStats(S.detail); let n = 0; st.missing.forEach(i => { if (addToList(i.name, S.detail.title)) n++; }); toast(n ? n + ' items op je lijst' : 'Staat al op je lijst'); render(); },
   remix(i) { remix(+i); },
   cook() { S.cook = { i: 0, left: null, running: false, end: 0, done: false }; S.ov = 'cook'; wakeOn(); render(); $('#ov').scrollTop = 0; },
-  cookDone() { stopTimer(); wakeOff(); S.reviewDraft = null; S.ov = 'review'; render(); $('#ov').scrollTop = 0; },
-  thumb(v) { const r = S.detail; if (!r) return; const cur = reviewOf(r); const note = S.ov === 'review' && S.reviewDraft != null ? S.reviewDraft : undefined; setReview(r, cur && cur.v === v && S.ov !== 'review' ? null : v, note); if (S.ov !== 'review') toast(v === 'up' && !(cur && cur.v === 'up') ? 'Genoteerd: lekker 👍' : v === 'down' && !(cur && cur.v === 'down') ? 'Genoteerd: liever niet 👎' : 'Duimpje weggehaald'); try { navigator.vibrate && navigator.vibrate(15); } catch (e) {} render(); },
-  reviewDone() { const r = S.detail; const rv = reviewOf(r); if (rv && S.reviewDraft != null && S.reviewDraft !== rv.note) setReview(r, rv.v, S.reviewDraft); if (rv) toast(rv.v === 'up' ? 'Dank je! juno onthoudt dat je dit lekker vond.' : 'Dank je! juno stelt dit soort gerechten minder vaak voor.'); S.reviewDraft = null; S.ov = null; render(); },
   closeCook() { stopTimer(); wakeOff(); S.ov = 'detail'; render(); },
   cookStep(d) { stopTimer(); S.cook.i = Math.max(0, Math.min(S.detail.steps.length - 1, S.cook.i + +d)); S.cook.left = null; S.cook.done = false; render(); $('#ov').scrollTop = 0; },
   timer() {
@@ -1466,7 +1150,7 @@ const onChange = {
   moveFolder(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.folder = el.value; persist('saved'); render(); } },
   note(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.note = el.value.slice(0, 500); persist('saved'); } }
 };
-const onInput = { reviewNote(el) { S.reviewDraft = el.value; }, scanText(el) { S.scan.text = el.value; }, chatDraft(el) { S.chat.draft = el.value; } };
+const onInput = { scanText(el) { S.scan.text = el.value; }, chatDraft(el) { S.chat.draft = el.value; } };
 const onSubmit = {
   addList(form) { const i = form.querySelector('input'); const v = i.value.trim(); if (!v) return; v.split(/[,\n]+/).forEach(n => addToList(n.trim())); i.value = ''; render(); setTimeout(() => $('#listInput')?.focus(), 30); },
   newFolder(form) { const i = form.querySelector('input'); const v = i.value.trim().slice(0, 30); if (!v || S.saved.folders.includes(v)) return; S.saved.folders.push(v); persist('saved'); S.folder = v; render(); },
