@@ -251,6 +251,34 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .clearbar.armed{flex-wrap:wrap;align-items:center;gap:8px;padding:12px;border-radius:10px;background:var(--warn-bg);justify-content:space-between}
 .clearbar.armed span{flex:1 1 180px;font-size:15px;line-height:1.4}
 .btn.danger{background:var(--warn);color:#fff;border-color:var(--warn)}
+.flist{flex:1;min-height:0;overflow-y:auto;padding:14px 14px 96px;display:flex;flex-direction:column;gap:18px;scrollbar-width:none;overscroll-behavior:contain}
+.flist::-webkit-scrollbar{display:none}
+.fcard{background:#17181B;border-radius:18px;overflow:hidden;color:#fff;cursor:pointer;position:relative;flex:none}
+.fphoto{position:relative;aspect-ratio:4/3;background:#2A2B2F;overflow:hidden}
+.fphoto img{width:100%;height:100%;object-fit:cover;display:block}
+.fphoto.s-y{background:#FFD400;color:#0A0A0A}.fphoto.s-k{background:#222326;color:#FFD400}.fphoto.s-w{background:#F4F2EA;color:#0A0A0A}
+.fgiant{position:absolute;inset:16px;font-family:var(--display);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.02em;opacity:.2;display:flex;flex-direction:column;overflow:hidden;text-transform:lowercase}
+.fheart{position:absolute;right:12px;top:12px;width:48px;height:48px;border-radius:24px;border:0;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center}
+.fheart.on{background:#FFD400;color:#0A0A0A}
+.fheart svg{width:24px;height:24px}
+.fbest{position:absolute;left:12px;top:12px;background:#FFD400;color:#0A0A0A;font-weight:700;font-size:14px;padding:7px 12px;border-radius:16px}
+.fcredit{position:absolute;right:10px;bottom:10px;font-size:12px;color:#fff;background:rgba(0,0,0,.5);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:75%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.finfo{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
+.finfo h2{margin:0;font-size:22px;line-height:1.2;font-weight:600;color:#fff}
+.finfo .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:15px;font-weight:600;color:#D6D6DA}
+.finfo .peppers{color:#FF8A4C}
+.finfo p{margin:0;font-size:15px;line-height:1.45;color:#B9B9BF;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fskel{height:320px;border-radius:18px;background:#1E1F22;animation:pulse 1.2s infinite;flex:none}
+.fstatus{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#E6E6EA;font-size:15px}
+.fend{min-height:40px;text-align:center;color:#C9C9CE;display:flex;flex-direction:column;align-items:center;gap:8px}
+.surprise{position:absolute;right:16px;bottom:16px;z-index:5;height:50px;padding:0 20px;border-radius:25px;border:0;background:#FFD400;color:#0A0A0A;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.surprise svg{width:20px;height:20px}
+.swipewrap{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#0A0A0A;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 10px) 0 calc(env(safe-area-inset-bottom,0px) + 12px);z-index:40}
+.swipetop{display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#fff}
+.swipetop b{font-size:19px}
+.swipehelp{margin:0;text-align:center;color:#9A9BA1;font-size:14px}
+.dphoto{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3}
+.dphoto img{width:100%;height:100%;object-fit:cover;display:block}
 .mealseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1;min-width:0;margin-right:10px;background:rgba(30,31,34,.92);border-radius:22px;padding:3px}
 .mealseg button{height:38px;border:0;border-radius:19px;background:none;color:rgba(255,255,255,.7);font-weight:700;font-size:15px}
 .mealseg button.on{background:#FFD400;color:#0A0A0A}
@@ -420,6 +448,7 @@ const LOCNAME = {koelkast:'Koelkast', vriezer:'Vriezer', kast:'Kast', kruiden:'K
 const WEEK = ['ma','di','wo','do','vr','za','zo'];
 
 const I = {
+  shuffle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>',
   trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
   user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
   info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>',
@@ -987,7 +1016,7 @@ async function loadImage(r) {
     if (pg) { const ii = pg.imageinfo[0]; r.img = { url: ii.thumburl, page: ii.descriptionurl, by: stripTags(ii.extmetadata && ii.extmetadata.Artist && ii.extmetadata.Artist.value), source: 'Wikimedia' }; ls.set('recipes', S.recipes); softFeed(); }
   } catch (e) { r.img = null; }
 }
-function softFeed() { if (TT_TABS.includes(S.tab) && !S.ov && $('#paneFeed') && !document.querySelector('#tcard.drag')) { FEED.key = ''; renderTT(); } }
+function softFeed() { if (document.querySelector('#tcard.drag')) return; if (S.ov === 'swipe') { render(); return; } if (TT_TABS.includes(S.tab) && !S.ov && $('#paneFeed')) { FEED.key = ''; renderTT(); } }
 async function generate() {
   if (S.gen.busy) return;
   if (!S.pantry.length) { openScan('koelkast'); return; }
@@ -1198,7 +1227,7 @@ function viewOpgeslagen() {
     <form data-submit="newFolder" style="display:flex;gap:8px"><label class="sr" for="folderInput">Nieuwe map</label><input type="text" id="folderInput" placeholder="Nieuwe map" style="flex:1;min-width:0" autocomplete="off"><button class="btn small ghost" type="submit">+ Map</button></form>`;
   if (!list.length) return h + `<div class="empty"><p>${S.saved.recipes.length ? 'Geen recepten in deze map.' : 'Nog niets bewaard. Tik op het bladwijzer-icoon bij een recept om het hier te bewaren.'}</p></div>`;
   h += `<div class="rows">${list.map(r => `<div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
-      <div style="display:flex;gap:10px;align-items:center">${reviewOf(r) && reviewOf(r).photo ? `<img src="${reviewOf(r).photo}" alt="Jouw foto van ${esc(r.title)}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;flex:none">` : ''}<button class="dish" data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:600;font-size:17px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
+      <div style="display:flex;gap:10px;align-items:center">${(reviewOf(r) && reviewOf(r).photo) || (r.img && r.img.url) ? `<img src="${esc((reviewOf(r) && reviewOf(r).photo) || r.img.url)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none">` : ''}<button class="dish" data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:600;font-size:17px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         ${savedReviewHTML(r)}
         <label class="sr" for="fold-${r.id}">Map</label><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select></div>
@@ -1297,7 +1326,7 @@ function ovDetail() {
       <button class="iconbtn${S.planOpen ? ' on' : ''}" data-act="togglePlan" aria-label="Inplannen in weekmenu" aria-expanded="${S.planOpen}">${I.cal}</button>
       <button class="iconbtn${saved ? ' on' : ''}" data-act="toggleSave" aria-label="${saved ? 'Niet meer bewaren' : 'Bewaren'}" aria-pressed="${saved}">${saved ? I.markf : I.mark}</button></div></div>`;
   if (S.planOpen) h += `<div><div class="eyebrow" style="margin-bottom:6px">Plan op</div><div class="week">${WEEK.map(d => `<button class="${S.saved.week[d] && S.saved.week[d].id === r.id ? 'today' : ''}" data-act="planDay" data-arg="${d}">${d.toUpperCase()}<i class="${S.saved.week[d] ? 'full' : ''}"></i></button>`).join('')}</div></div>`;
-  h += `<div class="cover" style="min-height:150px;border-radius:var(--r)"><span class="mono" style="font-size:11px">${esc([r.cuisine, r.meal].filter(Boolean).join(' · '))}</span><div class="words" style="font-size:13px">${esc(coverWords(r))}</div></div>
+  if (r.img && r.img.url) h += `<div class="dphoto"><img src="${esc(r.img.url)}" alt="">${creditHTML(r.img, 'fcredit')}</div>`; else h += `<div class="cover" style="min-height:150px;border-radius:var(--r)"><span class="mono" style="font-size:11px">${esc([r.cuisine, r.meal].filter(Boolean).join(' · '))}</span><div class="words" style="font-size:13px">${esc(coverWords(r))}</div></div>
     <h1 class="big">${esc(r.title)}</h1>
     ${r.why ? `<p style="margin:0;color:var(--muted);line-height:1.5">${esc(r.why)}</p>` : ''}
     <div class="stats"><div><div class="eyebrow">Tijd</div><div class="v">${r.minutes}′</div></div>
@@ -1466,6 +1495,29 @@ function viewScanTT() {
   h += `<button class="ttgo" data-act="toFeed"><span>${sc.items.length ? 'Bekijk je recepten' : 'Recepten'}</span><span class="mono">→</span></button></div>`;
   return h;
 }
+function cardLabels(r) {
+  const rv = reviewOf(r), free = S.prefs.allergies.filter(a => !r.allergens.includes(a.toLowerCase()));
+  const labels = [];
+  if (r.usesExpiring.length) labels.push(`<span class="lab warn">${esc(r.usesExpiring[0])} moet op</span>`);
+  if (rv) labels.push(`<span class="lab ${rv.v === 'up' ? 'ok' : 'warn'}">${rv.v === 'up' ? 'Eerder lekker' : 'Eerder niet lekker'}</span>`);
+  else if (free.length) labels.push(`<span class="lab ok">Zonder ${esc(free.slice(0, 2).join(' en ').toLowerCase())}</span>`);
+  return labels.length ? `<div class="labels">${labels.slice(0, 2).join('')}</div>` : '';
+}
+function creditHTML(img, cls) {
+  return `<a class="${cls}" href="${esc(img.page)}" target="_blank" rel="noopener">${img.source === 'Unsplash' ? `Foto: ${esc(img.by || 'onbekend')} op Unsplash` : `Voorbeeldfoto${img.by ? ' · ' + esc(img.by) : ''} · Wikimedia`}</a>`;
+}
+// Eén recept in de feed: grote foto, hartje, titel, één regel info.
+function listCard(r, i) {
+  const st = recipeStats(r), saved = isSaved(r), c = ['y', 'k', 'w'][i % 3], img = r.img && r.img.url;
+  return `<article class="fcard" data-act="detail" data-arg="${r.id}" aria-label="${esc(r.title)}">
+    <div class="fphoto${img ? '' : ' s-' + c}">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : `<div class="fgiant" aria-hidden="true">${(r.ingredients || []).slice(0, 3).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>`}
+      ${i === 0 ? '<span class="fbest">Beste match</span>' : ''}
+      <button class="fheart${saved ? ' on' : ''}" data-act="fSave" data-arg="${r.id}" aria-pressed="${saved}" aria-label="${saved ? 'Niet meer bewaren' : 'Bewaren'}">${saved ? I.heartf : I.heart}</button>
+      ${img ? creditHTML(r.img, 'fcredit') : ''}</div>
+    <div class="finfo">${cardLabels(r)}<h2 class="dish">${esc(r.title)}</h2>
+      <div class="meta"><span>${r.minutes} min</span><span>${st.have}/${st.total} in huis</span>${st.missing.length ? `<span>+${st.missing.length} halen</span>` : ''}${r.spice ? peppers(r.spice) : ''}</div>
+      ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div></article>`;
+}
 function cardHTML(r, i, under) {
   const st = recipeStats(r), c = ['y', 'k', 'w'][i % 3], rv = reviewOf(r);
   const free = S.prefs.allergies.filter(a => !r.allergens.includes(a.toLowerCase()));
@@ -1487,16 +1539,34 @@ function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${
 function viewFeedTT() {
   const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
   let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?"><button class="mysmaak" data-act="editProfile" aria-label="Mijn smaakprofiel aanpassen">${I.user}Mijn smaak</button>${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
-  const r = S.recipes[S.swipeI], nx = S.recipes[S.swipeI + 1];
   if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
-  else if (S.gen.busy) h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`);
+  else if (S.gen.busy) h += `<div class="flist"><div class="fstatus"><span>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten…</span><button class="btn small ghost" data-act="stopGen" style="color:#fff;border-color:rgba(255,255,255,.4)">Stop</button></div><div class="fskel"></div><div class="fskel"></div></div>`;
   else if (!S.recipes.length || stale || S.gen.error) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak ${esc(p.meal.toLowerCase())}-recepten</span><span class="mono">→</span></button>`);
-  else if (!r && (S.gen.more || S.recipes.length - S.swipeI < 1 && !S.gen.moreErr && S.ai === 'on')) { if (!S.gen.more) setTimeout(generateMore, 0); h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt nog meer recepten…</h2>`); }
-  else if (!r) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Alles gezien</div><h2>Niks voor je erbij?</h2><p>Kies hierboven een andere stemming, of laat juno nieuwe ${esc(p.meal.toLowerCase())}-recepten bedenken. Bewaarde recepten staan onder Bewaard.</p><button class="ttgo" data-act="generate"><span>Nieuwe recepten</span><span class="mono">↻</span></button><button class="btn ghost" data-act="swipeReset" style="color:#fff;border-color:rgba(255,255,255,.4)"><span>Opnieuw bekijken</span><span class="mono">↺</span></button>`);
-  else h += `<div class="stack">${nx ? cardHTML(nx, S.swipeI + 1, true) : ''}${cardHTML(r, S.swipeI, false)}</div>
-    <div class="tbtns"><button class="big" data-act="tSwipe" data-arg="skip" aria-label="Overslaan">${I.x}</button><button class="mid" data-act="detail" data-arg="${r.id}" aria-label="Recept bekijken">${I.info}</button><button class="big yes" data-act="tSwipe" data-arg="save" aria-label="Bewaren">${I.heartf}</button></div>
-`;
+  else h += `<div class="flist" id="flist">${S.recipes.map(listCard).join('')}${S.gen.more ? '<div class="fskel"></div>' : ''}<div id="fsentinel" class="fend">${S.gen.moreErr ? `<p>${esc(S.gen.moreErr)}</p><button class="btn small ghost" data-act="moreRetry" style="color:#fff;border-color:rgba(255,255,255,.4)">Opnieuw proberen</button>` : ''}</div></div>
+    <button class="surprise" data-act="surprise">${I.shuffle}Verras me</button>`;
   return h + '</div>';
+}
+// "Verras me": dezelfde recepten één voor één, vegen naar links of rechts.
+function deckHTML() {
+  const r = S.recipes[S.swipeI], nx = S.recipes[S.swipeI + 1];
+  if (!r) {
+    if (S.gen.more || (S.ai === 'on' && !S.gen.moreErr)) { if (!S.gen.more) setTimeout(generateMore, 0); return msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt nog meer recepten…</h2>`); }
+    return msgCard('k', `<h2>Alles gezien</h2><p>Je bewaarde recepten staan onder Bewaard.</p><button class="ttgo" data-act="close"><span>Terug naar de feed</span><span class="mono">→</span></button>`);
+  }
+  return `<div class="stack">${nx ? cardHTML(nx, S.swipeI + 1, true) : ''}${cardHTML(r, S.swipeI, false)}</div>
+    <div class="tbtns"><button class="big" data-act="tSwipe" data-arg="skip" aria-label="Overslaan">${I.x}</button><button class="mid" data-act="detail" data-arg="${r.id}" aria-label="Recept bekijken">${I.info}</button><button class="big yes" data-act="tSwipe" data-arg="save" aria-label="Bewaren">${I.heartf}</button></div>`;
+}
+function ovSwipe() {
+  return `<div class="swipewrap"><div class="swipetop"><button class="ttic" data-act="close" aria-label="Sluiten">${I.x}</button><b class="dish">Verras me</b><span style="width:40px"></span></div>${deckHTML()}<p class="swipehelp">Naar rechts bewaren · naar links overslaan</p></div>`;
+}
+function bindFeedList() {
+  const list = $('#flist'), sen = $('#fsentinel'); if (!list) return;
+  list.addEventListener('scroll', () => { FEED.scroll = list.scrollTop; }, { passive: true });
+  if (FEED.io) FEED.io.disconnect();
+  if (sen && 'IntersectionObserver' in window) {
+    FEED.io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && !S.gen.more && !S.gen.moreErr) generateMore(); }, { root: list, rootMargin: '700px' });
+    FEED.io.observe(sen);
+  }
 }
 function flyOut(el, dir, kind) { el.style.transition = 'transform .25s ease'; el.style.transform = `translate(${dir * 140}%, 40px) rotate(${dir * 24}deg)`; setTimeout(() => act.tSwipeDone(kind), 220); }
 function bindTinder() {
@@ -1512,7 +1582,7 @@ function bindTinder() {
   el.addEventListener('keydown', e => { if (e.key === 'ArrowRight') act.tSwipe('save'); else if (e.key === 'ArrowLeft') act.tSwipe('skip'); else if (e.key === 'Enter') act.detail(el.dataset.rid); });
 }
 function feedKey() {
-  return JSON.stringify([S.swipeI, S.prefs.mood, S.gen.more, S.recipes.length, [S.recipes[S.swipeI], S.recipes[S.swipeI + 1]].map(r => r ? r.id + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '') + (r.img ? 'i' : '') : ''), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
+  return JSON.stringify([S.prefs.mood, S.prefs.meal, S.gen.busy, S.gen.more, S.gen.moreErr, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length > 0, S.ai, S.recipes.map(r => r.id + (isSaved(r) ? 's' : '') + (r.img ? 'i' : '') + ((reviewOf(r) || {}).v || '') + recipeStats(r).missing.length)]);
 }
 function bindPager() {
   const pg = $('#pager'); let t = 0;
@@ -1550,10 +1620,11 @@ function renderTT() {
     FEED.key = k;
     const ids = S.recipes.map(r => r.id).join();
     $('#paneFeed').innerHTML = viewFeedTT();
-    bindTinder();
-    const f = $('#feed');
-    if (ids !== FEED.ids) { FEED.ids = ids; S.feedI = 0; }
-    if (f) f.scrollTop = (S.feedI || 0) * f.clientHeight;
+    bindFeedList();
+    const f = $('#flist');
+    if (FEED.ids && !ids.startsWith(FEED.ids)) FEED.scroll = 0;
+    FEED.ids = ids;
+    if (f) f.scrollTop = FEED.scroll || 0;
   }
   if (!FEED.jumping) jumpPane(true);
 }
@@ -1565,11 +1636,12 @@ function render() {
   $('#dock').innerHTML = ttBar();
   if (S.ov) {
     const keep = ov.scrollTop;
-    ov.className = S.ov === 'scan' ? 'cam' : (S.ov === 'cook' || S.ov === 'review') ? 'cook' : '';
-    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : S.ov === 'filters' ? ovFilters() : S.ov === 'review' ? ovReview() : S.ov === 'onboard' ? ovOnboard() : ovChat()}</div>`;
+    ov.className = S.ov === 'scan' ? 'cam' : (S.ov === 'cook' || S.ov === 'review') ? 'cook' : S.ov === 'swipe' ? 'swipeov' : '';
+    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : S.ov === 'filters' ? ovFilters() : S.ov === 'review' ? ovReview() : S.ov === 'onboard' ? ovOnboard() : S.ov === 'swipe' ? ovSwipe() : ovChat()}</div>`;
     ov.hidden = false; ov.scrollTop = keep; document.body.classList.add('lock');
   } else { ov.hidden = true; ov.innerHTML = ''; document.body.classList.remove('lock'); }
   bindSwipe();
+  if (S.ov === 'swipe') bindTinder();
   camAttach();
   ensureCam();
   maybeAutoGen();
@@ -1603,6 +1675,14 @@ function beep() { try { const a = new (window.AudioContext || window.webkitAudio
 const act = {
   tab(t) { S.armClear = null; const was = S.tab; S.tab = t; ls.set('tt.tab', t); S.ov = null; S.expOpen = null; render(); if (!TT_TABS.includes(t) || !TT_TABS.includes(was)) window.scrollTo(0, 0); },
   toScan() { act.tab('scan'); },
+  surprise() { S.swipeI = 0; while (S.recipes[S.swipeI] && isSaved(S.recipes[S.swipeI])) S.swipeI++; S.ov = 'swipe'; render(); },
+  moreRetry() { S.gen.moreErr = ''; generateMore(); },
+  fSave(id) {
+    const r = S.recipes.find(x => x.id === id); if (!r) return;
+    if (isSaved(r)) { unsaveRecipe(r); toast('Niet meer bewaard'); }
+    else { saveRecipe(r); const tag = r.title + (r.cuisine ? ' (' + r.cuisine + ')' : ''); S.taste.likes = [...(S.taste.likes || []).filter(x => x !== tag), tag].slice(-30); ls.set('taste', S.taste); toast('Bewaard · juno onthoudt wat je lekker vindt'); try { navigator.vibrate && navigator.vibrate(20); } catch (e) {} }
+    render();
+  },
   mood(m) { setPrefs({ mood: m }); S.swipeI = 0; render(); },
   tSwipe(kind) { const el = $('#tcard'); if (el) { const st = el.querySelector(kind === 'save' ? '.stamp.yes' : '.stamp.no'); if (st) st.style.opacity = 1; flyOut(el, kind === 'save' ? 1 : -1, kind); } else act.tSwipeDone(kind); },
   tSwipeDone(kind) {
