@@ -485,7 +485,7 @@ const S = {
   saved: ls.get('saved', { recipes: [], week: {}, folders: ['Favorieten','Doordeweeks','Feestjes'] }),
   recipes: ls.get('recipes', []),
   recipesKey: ls.get('recipesKey', ''),
-  prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu', allergies: [], avoid: '', spice: 1, cuisines: [], mood: 'Voor jou' }, ls.get('prefs', {}), { meal: defaultMeal() }),
+  prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu', allergies: [], avoid: '', spice: 1, cuisines: [], mood: 'Voor jou' }, ls.get('prefs', {}), { meal: startMeal() }),
   tab: ls.get('tt.tab', 'scan'),
   recView: ls.get('recView', 'lijst'),
   swipeI: 0,
@@ -498,6 +498,14 @@ const S = {
   locTab: 'alles', folder: 'Alle', armDelete: null,
   ai: 'pending', canImg: true, store: 'local'
 };
+// Bij verversen blijft je maaltijdkeuze staan. Alleen als je juno 4 uur of langer niet gebruikte, kiest juno opnieuw op het tijdstip.
+function startMeal() {
+  const saved = (ls.get('prefs', {}) || {}).meal, seen = +ls.get('tt.seen', 0) || 0;
+  return saved && Date.now() - seen < 4 * 3600e3 ? saved : defaultMeal();
+}
+function markSeen() { ls.set('tt.seen', Date.now()); }
+markSeen(); setInterval(markSeen, 60e3);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') markSeen(); });
 function defaultMeal() { const h = new Date().getHours(); return h < 10 ? 'Ontbijt' : h < 14 ? 'Lunch' : h < 16 ? 'Snack' : 'Diner'; }
 if (!Array.isArray(S.saved.folders)) S.saved.folders = ['Favorieten','Doordeweeks','Feestjes'];
 if (!S.saved.reviews || typeof S.saved.reviews !== 'object') S.saved.reviews = {};
