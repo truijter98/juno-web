@@ -144,7 +144,7 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 /* ---------- TikTok-indeling: Scan | Recepten, schermvullend ---------- */
 :root{--barh:58px}
 .ttapp{padding:0;margin:0}
-.pager{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px));display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:#0A0A0A}
+.pager{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px));display:flex;overflow-x:hidden;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:#0A0A0A}
 .pager::-webkit-scrollbar,.feed::-webkit-scrollbar{display:none}
 .pane{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;color:#fff}
 #ttTop{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;z-index:20;pointer-events:none}
@@ -215,6 +215,65 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .slidemsg .seg{background:transparent}
 .dots3{display:flex;gap:8px}.dots3 i{width:12px;height:12px;border-radius:6px;background:currentColor;animation:pulse 1s infinite}.dots3 i:nth-child(2){animation-delay:.2s}.dots3 i:nth-child(3){animation-delay:.4s}
 .swipehint{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;pointer-events:none}
+/* swipe-kaarten */
+.tfeed{position:absolute;inset:0;background:#0A0A0A;display:flex;flex-direction:column}
+.moods{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:calc(env(safe-area-inset-top,0px) + 62px) 12px 0;flex:none}
+.moods::-webkit-scrollbar{display:none}
+.moods button{flex:none;height:34px;padding:0 12px;border-radius:17px;border:1px solid #3A3B3F;background:none;color:#fff;font-weight:600;font-size:14px}
+.moods button.on{background:#fff;color:#0A0A0A;border-color:#fff;font-weight:700}
+.stack{position:relative;flex:1;min-height:0;margin:12px 14px 0}
+.tcard{position:absolute;inset:0;border-radius:18px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;transition:transform .25s ease}
+.tcard.drag{transition:none;cursor:grabbing}
+.tcard.under{transform:scale(.95) translateY(10px);filter:brightness(.6);pointer-events:none}
+.tcard.s-y{background:#FFD400;color:#0A0A0A}.tcard.s-k{background:#1A1B1E;color:#fff}.tcard.s-w{background:#F4F2EA;color:#0A0A0A}
+.tcard .giant{top:16px}
+.tcard .cap{right:16px;bottom:16px;left:16px}
+.tcard .cap h2{font-size:clamp(28px,8.6vw,36px)}
+.stamp{position:absolute;top:26px;padding:4px 12px;border:4px solid;border-radius:8px;font-weight:800;font-size:28px;letter-spacing:.04em;opacity:0;pointer-events:none}
+.stamp.yes{left:20px;color:#2F6B2F;transform:rotate(-16deg)}
+.stamp.no{right:20px;color:#B45309;transform:rotate(16deg)}
+.s-k .stamp.yes{color:#7BD17B}.s-k .stamp.no{color:#F2A65A}
+.labels{display:flex;gap:6px;flex-wrap:wrap}
+.lab{height:26px;padding:0 9px;border-radius:4px;display:inline-flex;align-items:center;font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor}
+.lab.ok{background:#2F6B2F;color:#fff;border-color:#2F6B2F}
+.lab.warn{background:#B45309;color:#fff;border-color:#B45309}
+.lab.acc{background:#0A0A0A;color:#FFD400;border-color:#0A0A0A}
+.s-k .lab.acc{background:#FFD400;color:#0A0A0A;border-color:#FFD400}
+.peppers{display:inline-flex;color:#C2410C}.s-k .peppers{color:#FF8A4C}
+.tbtns{flex:none;display:flex;justify-content:center;align-items:center;gap:22px;padding:14px 0 6px}
+.tbtns button{border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #3A3B3F;background:#141518;color:#fff}
+.tbtns .big{width:64px;height:64px}.tbtns .mid{width:48px;height:48px}
+.tbtns .yes{background:#FFD400;border-color:#FFD400;color:#0A0A0A}
+.tbtns svg{width:26px;height:26px}
+.thint{flex:none;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#8A8B90;padding-bottom:10px}
+.mealpill{height:36px;padding:0 12px;border-radius:18px;border:0;background:rgba(30,31,34,.9);color:#fff;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+/* scan-modi */
+.modes{display:flex;justify-content:center;gap:4px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.modes button{padding:7px 10px;border-radius:999px;border:0;background:none;color:#C9C9CE}
+.modes button.on{background:#fff;color:#0A0A0A}
+.ttcam .tag.add{background:#fff;padding:6px 6px 6px 12px;display:inline-flex;align-items:center;gap:6px;border:0;pointer-events:auto}
+.ttcam .tag.add i{width:24px;height:24px;border-radius:12px;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:16px}
+.thtbox{position:absolute;left:50%;top:42%;width:62%;height:76px;transform:translate(-50%,-50%);border:3px solid #FFD400;border-radius:12px;pointer-events:none}
+.thtread{position:absolute;left:50%;top:calc(42% - 64px);transform:translateX(-50%);background:#FFD400;color:#0A0A0A;font-weight:800;font-size:15px;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.pend{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.pend button{flex:none;height:36px;padding:0 6px 0 12px;border-radius:999px;border:0;background:#fff;color:#0A0A0A;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.pend button i{width:24px;height:24px;border-radius:12px;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center;font-style:normal}
+/* smaakprofiel */
+.ob{display:flex;flex-direction:column;gap:16px;min-height:100%}
+.obbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.obbar span{height:3px;background:var(--line)}.obbar span.on{background:var(--fg)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills button{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--fg);background:none;color:var(--fg);font-weight:600;font-size:15px}
+.pills button.on{background:var(--fg);color:var(--accent);font-weight:700}
+.spice{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--fg);border-radius:var(--r);overflow:hidden}
+.spice button{height:74px;border:0;border-right:1px solid var(--fg);background:none;color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:13px}
+.spice button:last-child{border-right:0}.spice button.on{background:var(--accent);color:var(--on-accent);font-weight:800}
+.cuis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cuis button{min-height:64px;border-radius:var(--r);border:1px solid var(--fg);background:none;color:var(--fg);padding:10px 12px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:4px}
+.cuis button b{font-size:16px}.cuis button span{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
+.cuis button.on{background:var(--fg);color:var(--bg)}.cuis button.on span{color:var(--accent);opacity:1}
+.revphoto{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;align-items:center}
+.revphoto button{width:112px;height:112px;border-radius:14px;border:2px dashed #555;background:transparent;color:#C9C9CE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:600;overflow:hidden;padding:0}
+.revphoto img{width:100%;height:100%;object-fit:cover}
 /* onderbalk */
 .ttbar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;z-index:30;background:#000;color:#fff;height:calc(var(--barh) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center}
 .ttbar button{background:none;border:0;color:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;position:relative;height:100%;justify-content:center}
@@ -332,6 +391,7 @@ const LOCNAME = {koelkast:'Koelkast', vriezer:'Vriezer', kast:'Kast', kruiden:'K
 const WEEK = ['ma','di','wo','do','vr','za','zo'];
 
 const I = {
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>',
   up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
   down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:rotate(180deg)"><path d="M7 10v11M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.6l-2.3 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.8a2 2 0 0 0 1.8-1.1L12 2a3.1 3.1 0 0 1 3 3.9Z"/></svg>',
   heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-9.3-8.6C1.2 8.5 2.9 5 6.3 5c2 0 3.3 1.1 3.9 2.2h3.6C14.4 6.1 15.7 5 17.7 5c3.4 0 5.1 3.5 3.6 6.4C19 15.6 12 20 12 20z" transform="translate(0 -1)"/></svg>',
@@ -365,7 +425,7 @@ const S = {
   saved: ls.get('saved', { recipes: [], week: {}, folders: ['Favorieten','Doordeweeks','Feestjes'] }),
   recipes: ls.get('recipes', []),
   recipesKey: ls.get('recipesKey', ''),
-  prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu' }, ls.get('prefs', {})),
+  prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu', allergies: [], avoid: '', spice: 1, cuisines: [], mood: 'Voor jou' }, ls.get('prefs', {}), { meal: defaultMeal() }),
   tab: ls.get('tt.tab', 'scan'),
   recView: ls.get('recView', 'lijst'),
   swipeI: 0,
@@ -381,11 +441,15 @@ const S = {
 function defaultMeal() { const h = new Date().getHours(); return h < 10 ? 'Ontbijt' : h < 14 ? 'Lunch' : h < 16 ? 'Snack' : 'Diner'; }
 if (!Array.isArray(S.saved.folders)) S.saved.folders = ['Favorieten','Doordeweeks','Feestjes'];
 if (!S.saved.reviews || typeof S.saved.reviews !== 'object') S.saved.reviews = {};
+for (const k of ['allergies', 'cuisines', 'diets']) if (!Array.isArray(S.prefs[k])) S.prefs[k] = [];
+S.taste = ls.get('taste', { likes: [], skips: [] });
+S.scanMode = 'live'; S.pending = []; S.tht = null;
+if (!ls.get('tt.onboarded', false)) { S.ov = 'onboard'; S.ob = 1; }
 const reviewOf = (r) => r && S.saved.reviews[norm(r.title)];
 function setReview(r, v, note) {
   const k = norm(r.title); const cur = S.saved.reviews[k];
   if (v === null) delete S.saved.reviews[k];
-  else S.saved.reviews[k] = { v, title: r.title, note: note != null ? String(note).slice(0, 300) : (cur && cur.note) || '', at: Date.now() };
+  else S.saved.reviews[k] = { v, title: r.title, note: note != null ? String(note).slice(0, 300) : (cur && cur.note) || '', photo: S.reviewPhoto || (cur && cur.photo) || null, at: Date.now() };
   persist('saved');
 }
 
@@ -505,7 +569,8 @@ function errCopy(e) {
     config: 'De AI van juno is nog niet goed ingesteld (sleutel of pilotcode op de server).',
     network: 'Geen verbinding met juno. Controleer je internet en probeer het opnieuw.',
     bad_request: 'Dit verzoek werd geweigerd. Probeer een andere foto of tekst.',
-    cancelled: 'Gestopt.'
+    cancelled: 'Gestopt.',
+    allergy_all: 'Alle voorstellen bevatten iets uit je allergieën. Probeer het opnieuw of pas je profiel aan.'
   })[c] || 'De verbinding viel weg. Probeer het opnieuw.';
 }
 async function needSample() {
@@ -529,7 +594,7 @@ function recipeStats(r) {
   const have = ing.filter(i => i.inPantry !== false || inPantry(i.name)).length;
   return { have, total: ing.length, missing: ing.filter(i => !(i.inPantry !== false || inPantry(i.name))) };
 }
-function prefsKey() { const p = S.prefs; return JSON.stringify([p.meal, p.time, p.persons, p.diets, p.cuisine, p.level, p.mode, S.pantry.map(x => x.name + x.exp).sort()]); }
+function prefsKey() { const p = S.prefs; return JSON.stringify([p.meal, p.time, p.persons, p.diets, p.cuisine, p.level, p.mode, p.allergies, p.avoid, p.spice, p.cuisines, p.mood, S.pantry.map(x => x.name + x.exp).sort()]); }
 const SECTIONS = [
   ['Groente & fruit', /(appel|peer|banaan|citroen|limoen|sinaas|druif|bes|aardbei|tomaat|tomaten|paprika|ui|uien|knoflook|wortel|courgette|aubergine|spinazie|sla|komkommer|broccoli|bloemkool|kool|prei|champignon|paddenstoel|avocado|aardappel|bonen|erwt|mais|gember|lente|rucola|selderij|venkel|pompoen|biet|radijs|chili|peper vers|mango|ananas|kiwi|meloen)/],
   ['Zuivel & eieren', /(melk|yoghurt|kwark|kaas|feta|mozzarella|parmezaan|room|boter|ei\b|eieren|creme|crème|ricotta|mascarpone|halloumi)/],
@@ -651,6 +716,7 @@ async function runLiveScan(file) {
 // ---------- live camera in de pagina ----------
 const CAM = { state: 'idle', why: '', stream: null, video: null, loop: 0, labels: [], lastNew: 0, thinking: false, paused: false, blocked: new Set() };
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const THT_FRAME_PROMPT = () => 'Dit is een live camerabeeld van een verpakking. Lees de houdbaarheidsdatum (THT, TGT, "ten minste houdbaar tot" of "te gebruiken tot"). Vandaag is ' + ymd(new Date()) + '. Staat er geen jaar, neem dan het eerstvolgende jaar waarin die datum na vandaag valt. Antwoord alleen met de datum als JJJJ-MM-DD, of met - als je geen datum duidelijk kunt lezen.';
 const LIVE_FRAME_PROMPT = () => 'Dit is een live camerabeeld van iemand die met zijn telefoon langs zijn koelkast, kast of boodschappen beweegt. Noem elk eetbaar product dat je DUIDELIJK ziet, hooguit 12. Zie je niets eetbaars of is het beeld wazig, antwoord dan alleen met: -\n' + LIVE_RULES;
 async function camStart() {
   if (CAM.state === 'on' || CAM.state === 'starting') return;
@@ -704,9 +770,14 @@ async function camLoop() {
       if (!blob) { await sleep(400); continue; }
       const s = await needSample();
       CAM.thinking = true; render();
-      const res = await s(LIVE_FRAME_PROMPT(), { images: [blob], modelTier: 'quick', cache: false });
+      const res = await s(S.scanMode === 'tht' ? THT_FRAME_PROMPT() : LIVE_FRAME_PROMPT(), { images: [blob], modelTier: 'quick', cache: false });
       if (!alive()) break;
       const now = Date.now(); let fresh = 0;
+      if (S.scanMode === 'tht') {
+        const m = /(\d{4}-\d{2}-\d{2})/.exec(String(res && res.text || ''));
+        if (m && parseYmd(m[1])) { S.tht = { date: m[1], at: now }; CAM.lastNew = now; try { navigator.vibrate && navigator.vibrate(30); } catch (e) {} }
+        CAM.thinking = false; render(); await sleep(900); continue;
+      }
       const hits = String(res && res.text || '').split('\n').map(parseLiveLine).filter(Boolean);
       for (const r of hits) {
         const k = norm(r.name);
@@ -714,6 +785,7 @@ async function camLoop() {
         if (r.x != null && r.y != null) { if (old) Object.assign(old, { x: r.x, y: r.y, seen: now, name: r.name }); else CAM.labels.push({ k, name: r.name, x: r.x, y: r.y, seen: now, t: now, unsure: r.confidence < 0.6 }); }
         if (r.confidence < 0.6 || CAM.blocked.has(k) || S.scan.items.some(x => norm(x.name) === k)) continue;
         const [it] = normItems([r]); if (!it) continue;
+        if (S.scanMode === 'confirm') { if (!S.pending.some(x => norm(x.name) === k)) { it.t = now; S.pending.push(it); CAM.lastNew = now; } continue; }
         it.checked = true; it.t = now; addScanned(it); S.scan.items.push(it); fresh++;
       }
       CAM.labels = CAM.labels.filter(l => now - l.seen < 4000);
@@ -728,6 +800,18 @@ async function camLoop() {
     CAM.thinking = false; if (alive()) render();
     await sleep(900);
   }
+}
+async function runBon(file) {
+  camStop();
+  S.scan = { mode: 'bon', items: [], busy: true, photo: URL.createObjectURL(file), error: '', text: '', auto: false };
+  S.ov = 'scan'; render();
+  try {
+    const s = await needSample();
+    const res = await s.json('Op de foto staat een kassabon van een supermarkt. Zet alle ETENSWAREN en dranken om naar een JSON-array zoals ' + ITEM_SHAPE + '. Sla niet-eetbare artikelen over (schoonmaak, verzorging, statiegeld, tasjes, kortingen). Maak afkortingen leesbaar (bijv. "H-MELK" wordt "Houdbare melk"). Neem het aantal over als het erop staat. confidence: lager dan 0.6 als je de regel niet goed kunt lezen.\n' + ITEM_RULES, { images: [await shrink(file)] });
+    S.scan.items = normItems(res);
+    if (!S.scan.items.length) S.scan.error = 'juno vond geen etenswaren op deze bon. Probeer een scherpere foto, plat en met genoeg licht.';
+  } catch (e) { S.scan.error = errCopy(e); }
+  S.scan.busy = false; render();
 }
 async function runScan(file) {
   S.scan.error = ''; S.scan.busy = true;
@@ -774,13 +858,37 @@ async function readTht(ctx, id, file) {
   } catch (e) { toast(errCopy(e)); }
   S.thtBusy = null; render();
 }
-const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet."}';
+const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet.","spice":1,"allergens":["ei","melk"],"diet":["vega","glutenvrij"]}';
+const ALLERGENS = ['Gluten','Ei','Melk','Pinda','Noten','Soja','Vis','Schaaldieren','Weekdieren','Selderij','Mosterd','Sesam','Sulfiet','Lupine'];
+const DIETS = ['Vega','Vegan','Pescotariër','Glutenvrij','Lactosevrij','Zonder toegevoegde suikers','Koolhydraatarm','Eiwitrijk','Halal'];
+const SPICE = ['Niet pittig','Mild','Pittig','Heet'];
+const CUISINES = [['Oosters','Thais · Japans · Chinees · Indonesisch'],['Indiaas','Curry · dal'],['Italiaans','Pasta · risotto'],['Mexicaans','Taco · bowl'],['Midden-Oosters','Mezze · shakshuka'],['Grieks','Souvlaki · feta'],['Hollands','Stamppot · soep'],['Frans','Quiche · stoofpot']];
+const MOODS = [['Voor jou',''],['Snel ≤15′','klaar in maximaal 15 minuten'],['Pittig','een stapje pittiger dan normaal'],['Oosters','Aziatische keuken (Thais, Japans, Chinees, Indonesisch, Vietnamees, Koreaans)'],['Comfort','troostend: warm, romig of uit de oven'],['Licht','licht en fris, veel groente'],['Zonder vlees','vegetarisch'],['Kindvriendelijk','mild en kindvriendelijk, herkenbare smaken']];
+const PEPPER = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4c0 2 1 3 3 3M7 20c8 0 12-6 12-11 0-1-1-2-2-2-3 0-3 4-6 6s-6 3-6 5c0 1 1 2 2 2z"/></svg>';
+// Extra vangnet naast wat de AI zelf opgeeft: hele woorden in ingrediëntnamen.
+const ALLERGEN_WORDS = { gluten: ['bloem','tarwe','pasta','spaghetti','penne','brood','couscous','bulgur','paneermeel','spelt','rogge','gerst','noedels','mie','tortilla','wrap','pita','naan','sojasaus'], ei: ['ei','eieren','eidooier','eiwit','mayonaise'], melk: ['melk','room','kookroom','slagroom','boter','kaas','feta','mozzarella','parmezaan','yoghurt','kwark','crème fraîche','zure room','ricotta','mascarpone','halloumi','geitenkaas'], pinda: ['pinda','pindakaas','satesaus','pinda\'s'], noten: ['noten','walnoten','cashewnoten','amandelen','hazelnoten','pecannoten','pistache','pijnboompitten','notenpasta'], soja: ['soja','sojasaus','tofu','tempeh','edamame','miso'], vis: ['vis','zalm','tonijn','kabeljauw','vissaus','ansjovis','makreel','haring','pangasius','koolvis'], schaaldieren: ['garnalen','gamba','krab','kreeft','langoustine'], weekdieren: ['mosselen','inktvis','octopus','oesters','sint-jakobsschelp'], selderij: ['selderij','bleekselderij','knolselderij'], mosterd: ['mosterd'], sesam: ['sesam','sesamolie','tahin','tahini'], sulfiet: ['wijn','azijn'], lupine: ['lupine'] };
+function allergenHit(allergen, name) {
+  const words = ALLERGEN_WORDS[allergen.toLowerCase()] || [allergen.toLowerCase()];
+  const n = ' ' + norm(name).replace(/[^a-z0-9' ]/g, ' ') + ' ';
+  return words.some(w => n.includes(' ' + norm(w) + ' '));
+}
+const peppers = (n) => n > 0 ? `<span class="peppers" aria-label="Pittig ${n} van 3">${PEPPER.repeat(Math.min(3, n))}</span>` : '<span>niet pittig</span>';
+function profileText() {
+  const p = S.prefs; const mood = MOODS.find(m => m[0] === p.mood);
+  return (p.allergies.length ? '- ALLERGIEËN, harde regel: gebruik NOOIT ' + p.allergies.join(', ').toLowerCase() + ', ook niet als verborgen bestanddeel (sauzen, pasta, bouillon, pesto, vissaus, sojasaus, brood). Twijfel = niet gebruiken.\n' : '') +
+    (p.avoid ? '- Lust of mag niet: ' + p.avoid + '.\n' : '') +
+    '- Pittigheid: niveau ' + Math.min(3, (p.spice || 0) + (p.mood === 'Pittig' ? 1 : 0)) + ' van 3 (0 = helemaal niet pittig).\n' +
+    (p.cuisines.length && p.mood !== 'Oosters' ? '- Favoriete keukens: ' + p.cuisines.join(', ') + '. Kies hier vaak uit, maar varieer.\n' : '') +
+    (mood && mood[1] ? '- Stemming nu: ' + mood[1] + '.\n' : '');
+}
 function tasteText() {
   const all = Object.values(S.saved.reviews || {}).sort((a, b) => b.at - a.at);
   const up = all.filter(x => x.v === 'up').slice(0, 8), down = all.filter(x => x.v === 'down').slice(0, 8);
-  if (!up.length && !down.length) return '';
+  if (!up.length && !down.length && !(S.taste.likes || []).length && !(S.taste.skips || []).length) return '';
   const fmt = (x) => '"' + x.title + '"' + (x.note ? ' (' + x.note + ')' : '');
-  return (up.length ? '- Smaak: deze recepten vond iemand lekker, maak vergelijkbare keuzes: ' + up.map(fmt).join('; ') + '.\n' : '') +
+  const likes = (S.taste.likes || []).slice(-8), skips = (S.taste.skips || []).slice(-8);
+  const sw = (likes.length ? '- Naar rechts geswiped (bewaard): ' + likes.join('; ') + '.\n' : '') + (skips.length ? '- Overgeslagen: ' + skips.join('; ') + '. Niet opnieuw voorstellen.\n' : '');
+  return sw + (up.length ? '- Smaak: deze recepten vond iemand lekker, maak vergelijkbare keuzes: ' + up.map(fmt).join('; ') + '.\n' : '') +
     (down.length ? '- Smaak: deze recepten vond iemand NIET lekker, vermijd dit soort gerechten: ' + down.map(fmt).join('; ') + '.\n' : '');
 }
 function recipePrompt(n) {
@@ -792,9 +900,9 @@ function recipePrompt(n) {
     '- Dieet: ' + (p.diets.length ? p.diets.join(', ') : 'geen beperkingen') + '.\n' +
     (p.cuisine !== 'Alle keukens' ? '- Keuken: ' + p.cuisine + '.\n' : '- Varieer in keukens.\n') +
     (p.level !== 'Elk niveau' ? '- Moeilijkheid: ' + p.level.toLowerCase() + '.\n' : '') +
-    '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n' + tasteText() + '\n' +
+    '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n' + profileText() + tasteText() + '\n' +
     'Antwoord alleen met een JSON-array van objecten, precies in deze vorm:\n' + RECIPE_SHAPE +
-    '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- Sorteer van beste match naar minste.';
+    '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- spice: 0 tot 3.\n- allergens: welke van deze 14 erin zitten (kleine letters): gluten, ei, melk, pinda, noten, soja, vis, schaaldieren, weekdieren, selderij, mosterd, sesam, sulfiet, lupine. Wees eerlijk en volledig.\n- diet: welke passen: vega, vegan, pescotariër, glutenvrij, lactosevrij, zonder toegevoegde suikers, koolhydraatarm, eiwitrijk, halal.\n- Sorteer van beste match naar minste.';
 }
 function normRecipe(r) {
   if (!r || !r.title) return null;
@@ -803,7 +911,8 @@ function normRecipe(r) {
     ingredients: (Array.isArray(r.ingredients) ? r.ingredients : []).slice(0, 20).map(i => ({ name: String(i.name || ''), qty: i.qty, unit: String(i.unit || ''), inPantry: i.inPantry !== false })),
     steps: (Array.isArray(r.steps) ? r.steps : []).slice(0, 10).map(s => typeof s === 'string' ? { text: s } : { text: String(s.text || ''), timerMin: +s.timerMin > 0 ? +s.timerMin : null }),
     remixes: (Array.isArray(r.remixes) ? r.remixes : []).slice(0, 3).map(x => ({ add: String(x.add || ''), name: String(x.name || ''), note: String(x.note || '') })),
-    usesExpiring: Array.isArray(r.usesExpiring) ? r.usesExpiring.map(String) : [], why: String(r.why || ''), meal: S.prefs.meal };
+    usesExpiring: Array.isArray(r.usesExpiring) ? r.usesExpiring.map(String) : [], why: String(r.why || ''), meal: S.prefs.meal,
+    spice: Math.max(0, Math.min(3, Math.round(+r.spice || 0))), allergens: (Array.isArray(r.allergens) ? r.allergens : []).map(x => String(x).toLowerCase()).slice(0, 14), diet: (Array.isArray(r.diet) ? r.diet : []).map(x => String(x).toLowerCase()).slice(0, 9) };
 }
 async function generate() {
   if (S.gen.busy) return;
@@ -812,8 +921,12 @@ async function generate() {
   try {
     const s = await needSample();
     const res = await s.json(recipePrompt(6), { signal: S.gen.ctl.signal, onText: ({ text }) => { const n = (text.match(/"title"\s*:/g) || []).length; if (n !== S.gen.count) { S.gen.count = n; const el = $('#genCount'); if (el) el.textContent = n ? n + ' VAN 6 RECEPTEN' : 'juno denkt na'; } } });
-    const arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
+    let arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
     if (!arr.length) throw { code: 'invalid_json' };
+    const bad = S.prefs.allergies.map(a => a.toLowerCase());
+    const safe = arr.filter(r => !r.allergens.some(a => bad.includes(a)) && !r.ingredients.some(i => bad.some(b => allergenHit(b, i.name))));
+    if (arr.length && !safe.length) throw { code: 'allergy_all', message: 'Alle voorstellen bevatten een allergeen uit je profiel. Probeer het opnieuw.' };
+    arr = safe;
     S.recipes = arr; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', arr); ls.set('recipesKey', S.recipesKey);
   } catch (e) { if (e && e.code !== 'cancelled') S.gen.error = errCopy(e); }
   S.gen.busy = false; S.gen.ctl = null; render();
@@ -1003,9 +1116,9 @@ function viewOpgeslagen() {
     <form data-submit="newFolder" style="display:flex;gap:8px"><label class="sr" for="folderInput">Nieuwe map</label><input type="text" id="folderInput" placeholder="Nieuwe map" style="flex:1;min-width:0" autocomplete="off"><button class="btn small ghost" type="submit">+ Map</button></form>`;
   if (!list.length) return h + `<div class="empty"><p>${S.saved.recipes.length ? 'Geen recepten in deze map.' : 'Nog niets bewaard. Tik op het bladwijzer-icoon bij een recept om het hier te bewaren.'}</p></div>`;
   h += `<div class="rows">${list.map(r => `<div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
-      <div style="display:flex;gap:10px;align-items:baseline"><button data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:700;font-size:16px;color:inherit">${esc(r.title)}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
+      <div style="display:flex;gap:10px;align-items:center">${reviewOf(r) && reviewOf(r).photo ? `<img src="${reviewOf(r).photo}" alt="Jouw foto van ${esc(r.title)}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;flex:none">` : ''}<button data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:700;font-size:16px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-        <div class="stars" role="group" aria-label="Beoordeling">${[1,2,3,4,5].map(n => `<button class="${r.rating >= n ? 'on' : ''}" data-act="rate" data-arg="${r.id}|${n}" aria-label="${n} ster${n > 1 ? 'ren' : ''}">${r.rating >= n ? '★' : '☆'}</button>`).join('')}</div>
+        ${savedReviewHTML(r)}
         <label class="sr" for="fold-${r.id}">Map</label><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select></div>
       <label class="sr" for="note-${r.id}">Notitie</label><textarea id="note-${r.id}" data-change="note" data-arg="${r.id}" placeholder="Notitie, bijv. volgende keer extra chili" style="min-height:44px;font-size:14px;border-color:var(--line)">${esc(r.note || '')}</textarea></div>`).join('')}</div>`;
   return h;
@@ -1062,6 +1175,18 @@ function ovScan() {
   }
   return h;
 }
+function savedReviewHTML(r) {
+  const rv = reviewOf(r);
+  return `<div class="thumbs" style="grid-template-columns:repeat(2,minmax(0,52px));gap:6px" role="group" aria-label="Duimpje">
+    <button style="height:40px" class="${rv && rv.v === 'up' ? 'on up' : ''}" data-act="thumbSaved" data-arg="${r.id}|up" aria-pressed="${!!(rv && rv.v === 'up')}" aria-label="Lekker">${I.up}</button>
+    <button style="height:40px" class="${rv && rv.v === 'down' ? 'on down' : ''}" data-act="thumbSaved" data-arg="${r.id}|down" aria-pressed="${!!(rv && rv.v === 'down')}" aria-label="Liever niet">${I.down}</button></div>`;
+}
+function thumbData(file) {
+  return new Promise(async (res) => {
+    try { const bmp = await createImageBitmap(file); const k = Math.min(1, 360 / Math.max(bmp.width, bmp.height)); const cv = document.createElement('canvas'); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k); cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height); res(cv.toDataURL('image/jpeg', 0.6)); }
+    catch (e) { res(null); }
+  });
+}
 function reviewRow(r) {
   const rv = reviewOf(r);
   return `<div class="review"><span class="eyebrow">${rv ? 'Jouw oordeel' : 'Al gemaakt? Laat een duimpje achter'}</span><div class="thumbs">
@@ -1078,6 +1203,7 @@ function ovReview() {
     <div class="thumbs big2">
       <button class="${rv && rv.v === 'up' ? 'on up' : ''}" data-act="thumb" data-arg="up" aria-pressed="${!!(rv && rv.v === 'up')}">${I.up}<span>Lekker!</span></button>
       <button class="${rv && rv.v === 'down' ? 'on down' : ''}" data-act="thumb" data-arg="down" aria-pressed="${!!(rv && rv.v === 'down')}">${I.down}<span>Liever niet</span></button></div>
+    <div class="revphoto"><button data-act="revPhoto" aria-label="Foto van je gerecht maken">${S.reviewPhoto || (rv && rv.photo) ? `<img src="${S.reviewPhoto || rv.photo}" alt="Jouw gerecht">` : `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Foto`}</button><span style="font-size:15px;line-height:1.45;color:var(--cam-muted)">Maak een foto van wat je gemaakt hebt. Hij komt bij het recept onder Bewaard.</span></div>
     <label class="eyebrow" for="reviewNote" style="color:var(--cam-muted)">Iets toevoegen? (mag leeg)</label>
     <textarea id="reviewNote" data-input="reviewNote" placeholder="Bijv. volgende keer meer kruiden, of: de kinderen vonden het top" style="min-height:80px;background:#1A1C20;color:#fff;border-color:#333">${esc(S.reviewDraft != null ? S.reviewDraft : (rv && rv.note) || '')}</textarea>
     <div class="stickyfoot"><button class="btn" data-act="reviewDone" style="justify-content:center">${rv ? 'Klaar' : 'Overslaan'}</button></div>`;
@@ -1123,18 +1249,36 @@ function ovCook() {
 }
 function ovFilters() {
   const p = S.prefs;
-  return `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><span class="eyebrow">Wat zoek je?</span></div>
-    <h1 class="big">Recepten <span class="mark">op maat.</span></h1>
-    <div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div>
-    <div class="chips" role="group" aria-label="Filters">
-      ${chipsHTML([['Nu te maken', p.mode === 'nu', 'nu'], ['+1–3 extra', p.mode === 'bijna', 'bijna']], 'mode')}
-      <button class="chip ink" data-act="cycle" data-arg="time">≤ ${p.time} MIN</button>
-      <button class="chip ink" data-act="cycle" data-arg="persons">${p.persons} PERS.</button>
-      <button class="chip${p.cuisine !== 'Alle keukens' ? ' on' : ''}" data-act="cycle" data-arg="cuisine">${esc(p.cuisine)}</button>
-      <button class="chip${p.level !== 'Elk niveau' ? ' on' : ''}" data-act="cycle" data-arg="level">${esc(p.level)}</button>
-      ${chipsHTML(['Vega','Vegan','Glutenvrij','Lactosevrij','Notenvrij'].map(d => [d, p.diets.includes(d), d]), 'diet')}
-    </div>
+  const prof = [p.allergies.length ? 'geen ' + p.allergies.join(' · ').toLowerCase() : 'geen allergieën', ...p.diets.map(d => d.toLowerCase()), SPICE[p.spice || 0].toLowerCase(), p.cuisines.length ? p.cuisines.join(' · ') : '', p.persons + ' pers.'].filter(Boolean).join(' · ');
+  return `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><span class="eyebrow">Waar heb je zin in?</span></div>
+    <div><div class="eyebrow" style="margin-bottom:6px">Maaltijd · juno kiest op het tijdstip</div><div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div></div>
+    <div><div class="eyebrow" style="margin-bottom:6px">Voor nu</div><div class="pills" role="group" aria-label="Stemming">${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div></div>
+    <div class="seg" role="group" aria-label="Ingrediënten">${[['nu','Nu te maken'],['bijna','+1 tot 3 extra']].map(([m, l]) => `<button class="${p.mode === m ? 'on' : ''}" data-act="mode" data-arg="${m}" aria-pressed="${p.mode === m}">${l}</button>`).join('')}</div>
+    <div class="chips"><button class="chip ink" data-act="cycle" data-arg="time">≤ ${p.time} MIN</button><button class="chip ink" data-act="cycle" data-arg="persons">${p.persons} PERS.</button><button class="chip${p.level !== 'Elk niveau' ? ' on' : ''}" data-act="cycle" data-arg="level">${esc(p.level)}</button></div>
+    <button class="card" data-act="editProfile" style="text-align:left;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;color:inherit;background:var(--surface);border-color:var(--surface)"><span style="min-width:0"><b>Smaakprofiel</b><br><span style="font-size:13px;color:var(--muted)">${esc(prof)}</span></span><span class="mono" style="font-size:11px;flex:none">Wijzig →</span></button>
     <div class="stickyfoot"><button class="btn" data-act="applyFilters"><span>Toon recepten</span><span class="mono">→</span></button></div>`;
+}
+function ovOnboard() {
+  const p = S.prefs, st = S.ob || 1;
+  let h = `<div class="ob"><div class="obbar">${[1,2,3].map(i => `<span class="${i <= st ? 'on' : ''}"></span>`).join('')}</div>
+    <div class="top"><span class="eyebrow">${st > 1 ? `<button class="textbtn" data-act="obBack" style="font:inherit;color:inherit;letter-spacing:inherit;padding:0">← </button>` : ''}Smaakprofiel · ${st} van 3</span><button class="textbtn" data-act="obDone">Later</button></div>`;
+  if (st === 1) h += `<h1 class="big">Waar moet juno <span class="mark">altijd</span> rekening mee houden?</h1>
+    <p style="margin:0;color:var(--muted);line-height:1.5">Kies je allergieën, of die van iemand in je huis. juno stelt nooit een recept voor waar dit in zit.</p>
+    <div class="pills" role="group" aria-label="Allergieën">${ALLERGENS.map(a => `<button class="${p.allergies.includes(a) ? 'on' : ''}" data-act="obTog" data-arg="allergies|${a}" aria-pressed="${p.allergies.includes(a)}">${a}${p.allergies.includes(a) ? ' ✓' : ''}</button>`).join('')}</div>
+    <div><label class="eyebrow" for="avoidIn">Lust of mag je iets anders niet?</label><input id="avoidIn" type="text" data-input="avoid" value="${esc(p.avoid || '')}" placeholder="Bijv. koriander, champignons" style="width:100%;box-sizing:border-box;margin-top:6px" autocomplete="off"></div>
+    <div class="notice">juno is een hulpmiddel. Controleer bij een allergie altijd zelf het etiket van wat je gebruikt.</div>
+    <div class="stickyfoot" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px"><button class="btn ghost" data-act="obNone" style="justify-content:center">Geen</button><button class="btn" data-act="obNext"><span>Volgende</span><span class="mono">${p.allergies.length ? p.allergies.length + ' gekozen →' : '→'}</span></button></div>`;
+  if (st === 2) h += `<h1 class="big">Hoe eet <span class="mark">jij?</span></h1>
+    <div><div class="eyebrow" style="margin-bottom:8px">Dieetwensen · kies wat past</div><div class="pills" role="group" aria-label="Dieetwensen">${DIETS.map(d => `<button class="${p.diets.includes(d) ? 'on' : ''}" data-act="obTog" data-arg="diets|${d}" aria-pressed="${p.diets.includes(d)}">${d}${p.diets.includes(d) ? ' ✓' : ''}</button>`).join('')}</div></div>
+    <div><div class="eyebrow" style="margin-bottom:8px">Pittig</div><div class="spice" role="group" aria-label="Pittig">${SPICE.map((l, i) => `<button class="${(p.spice || 0) === i ? 'on' : ''}" data-act="obSpice" data-arg="${i}" aria-pressed="${(p.spice || 0) === i}"><span class="peppers" style="color:inherit">${i ? PEPPER.repeat(i) : '—'}</span>${l}</button>`).join('')}</div>
+    <p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Elk recept krijgt pepertjes. Met de chip Pittig in je feed ga je voor één keer een stapje heter.</p></div>
+    <div class="stickyfoot" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px"><button class="btn ghost" data-act="obBack" style="justify-content:center">Terug</button><button class="btn" data-act="obNext"><span>Volgende</span><span class="mono">→</span></button></div>`;
+  if (st === 3) h += `<h1 class="big">Wat vind je <span class="mark">lekker?</span></h1>
+    <div class="cuis" role="group" aria-label="Keukens">${CUISINES.map(([c, sub]) => `<button class="${p.cuisines.includes(c) ? 'on' : ''}" data-act="obTog" data-arg="cuisines|${c}" aria-pressed="${p.cuisines.includes(c)}"><b>${c}${p.cuisines.includes(c) ? ' ✓' : ''}</b><span>${sub}</span></button>`).join('')}</div>
+    <div class="rows"><div class="row"><span class="name">Meestal voor</span><span class="stepper"><button data-act="obPersons" data-arg="-1" aria-label="Minder personen">−</button><b style="min-width:60px;text-align:center">${p.persons} pers.</b><button data-act="obPersons" data-arg="1" aria-label="Meer personen">+</button></span></div>
+      <div class="row"><span class="name">Doordeweeks koken</span><span class="chips">${[15, 30, 45, 60].map(t => `<button class="chip${p.time === t ? ' on' : ''}" data-act="obTime" data-arg="${t}" aria-pressed="${p.time === t}">${t}′</button>`).join('')}</span></div></div>
+    <div class="stickyfoot"><button class="btn" data-act="obDone"><span>Laat zien wat ik kan maken</span><span class="mono">→</span></button></div>`;
+  return h + '</div>';
 }
 function ovChat() {
   const c = S.chat;
@@ -1188,9 +1332,9 @@ function maybeAutoGen() {
 }
 function ttTop() {
   const onFeed = S.tab === 'recepten';
-  return `<div class="tttop"><button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button>
+  return `<div class="tttop">${onFeed ? `<button class="mealpill" data-act="open" data-arg="filters" aria-label="Maaltijd: ${esc(S.prefs.meal)}. Wijzig">${esc(S.prefs.meal)} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>` : `<button class="ttic" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button>`}
     <div class="tttabs" role="tablist"><button role="tab" aria-selected="${!onFeed}" class="${onFeed ? '' : 'on'}" data-act="toScan">Scan</button><button role="tab" aria-selected="${onFeed}" class="${onFeed ? 'on' : ''}" data-act="toFeed">Recepten</button></div>
-    <button class="ttic" data-act="open" data-arg="filters" aria-label="Filters en maaltijd">${I.filter}</button></div>`;
+    <button class="ttic" data-act="open" data-arg="filters" aria-label="Waar heb je zin in? Filters en smaakprofiel">${I.filter}</button></div>`;
 }
 function ttBar() {
   const openList = S.list.filter(x => !x.checked).length;
@@ -1200,14 +1344,14 @@ function ttBar() {
     ${b('lijst', I.list, 'Lijst', openList)}${b('opgeslagen', I.mark, 'Bewaard')}</nav>`;
 }
 function viewScanTT() {
-  const sc = S.scan, now = Date.now();
+  const sc = S.scan, now = Date.now(), mode = S.scanMode;
   const live = !sc.photo && (CAM.state === 'on' || CAM.state === 'starting');
   let h = '';
   if (sc.photo) {
     h += `<div class="ttshot"><img src="${sc.photo}" alt="Jouw foto">${sc.items.filter(it => it.x != null && it.y != null).map(it => `<span class="tag${it.unsure ? ' unsure' : ''}${now - (it.t || 0) < 450 ? ' pop' : ''}" style="left:${it.x}%;top:${it.y}%">${esc(it.name)}</span>`).join('')}${sc.busy ? `<span class="scanline"></span><span class="busytag">${sc.items.length ? sc.items.length + ' gevonden…' : 'juno kijkt mee…'}</span>` : ''}</div>`;
   } else if (live) {
-    h += `<div class="ttcam" id="camSlot">${CAM.labels.map(l => `<span class="tag${l.unsure ? ' unsure' : ''}${now - l.t < 450 ? ' pop' : ''}" style="left:${l.x}%;top:${l.y}%">${esc(l.name)}${l.unsure ? ' ?' : ''}</span>`).join('')}
-      <span class="livepill">${CAM.paused ? 'Gepauzeerd' : `<i></i>${CAM.state === 'starting' ? 'Camera start…' : CAM.thinking ? 'juno kijkt mee…' : 'Live'}`}</span>
+    h += `<div class="ttcam" id="camSlot">${mode === 'tht' ? `<span class="thtbox"></span>${S.tht ? `<span class="thtread">Gelezen: ${esc(fmtDate(S.tht.date))}</span>` : ''}` : CAM.labels.map(l => `<span class="tag${l.unsure ? ' unsure' : ''}${now - l.t < 450 ? ' pop' : ''}" style="left:${l.x}%;top:${l.y}%">${esc(l.name)}${l.unsure ? ' ?' : ''}</span>`).join('')}
+      <span class="livepill">${CAM.paused ? 'Gepauzeerd' : `<i></i>${CAM.state === 'starting' ? 'Camera start…' : CAM.thinking ? 'juno kijkt mee…' : mode === 'tht' ? 'THT lezen' : mode === 'confirm' ? 'Bevestigen' : 'Live'}`}</span>
       ${CAM.paused ? '<button class="resume" data-act="camResume" aria-label="Verder scannen"><span>Tik om verder te scannen</span></button>' : ''}</div>`;
   } else {
     h += `<div class="ttcam ttoff"><div class="ttoffmsg">${CAM.state === 'off'
@@ -1217,49 +1361,68 @@ function viewScanTT() {
   h += `<div class="ttscanfoot">`;
   if (S.ai === 'off') h += `<div class="ttnote">Herkennen werkt hier niet: juno heeft geen verbinding met de AI. Open juno via je eigen juno-adres.</div>`;
   if (sc.error) h += `<div class="ttnote">${esc(sc.error)}</div>`;
-  if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd aan voorraad">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
-  else if (live && !CAM.paused) h += `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Beweeg je telefoon rustig langs je koelkast of kast</div>`;
+  if (mode === 'tht') {
+    const cands = [...S.pantry].sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0)).slice(0, 8);
+    h += S.tht ? `<div style="font-size:15px;color:#E6E6EA">Bij welk product hoort <b style="color:#fff">${esc(fmtDate(S.tht.date))}</b>?</div><div class="ttfound">${cands.map(p => `<button data-act="thtAssign" data-arg="${p.id}">${esc(p.name)}</button>`).join('')}${cands.length ? '' : '<span style="color:#C9C9CE;font-size:14px">Je voorraad is nog leeg. Scan eerst je producten.</span>'}</div>`
+      : `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Houd de datum op de verpakking in het gele kader</div>`;
+  } else if (mode === 'confirm') {
+    h += S.pending.length ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:14px;color:#E6E6EA">juno ziet ${S.pending.length} ${S.pending.length === 1 ? 'product' : 'producten'} · tik om toe te voegen</span><button class="chip" data-act="addAllPending" style="color:#0A0A0A;background:#fff;border-color:#fff">Alles erbij</button></div><div class="pend">${S.pending.map(it => `<button data-act="addPending" data-arg="${it.id}" aria-label="${esc(it.name)} toevoegen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''}<i>+</i></button>`).join('')}</div>`
+      : `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Voorstellen verschijnen hier. Jij kiest wat erin gaat.</div>`;
+    if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)} <span>×</span></button>`).join('')}</div>`;
+  } else {
+    if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd aan voorraad">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
+    else if (live && !CAM.paused) h += `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Beweeg je telefoon rustig langs je koelkast of kast</div>`;
+  }
   h += `<div class="ttshutter"><button class="ttsmall" data-act="pickPhoto" data-arg="gallery" aria-label="Foto uit galerij">${I.img}</button><div class="mid">`;
-  if (live) h += `<div class="ttcount" aria-live="polite"><b>${sc.items.length}</b><span>${sc.items.length === 1 ? 'product erbij' : 'producten erbij'}</span></div>`;
+  if (live && mode !== 'tht') h += `<div class="ttcount" aria-live="polite"><b>${sc.items.length}</b><span>${sc.items.length === 1 ? 'product erbij' : 'producten erbij'}</span></div>`;
+  else if (live) h += `<div class="ttcount"><b style="font-size:24px">${S.tht ? esc(fmtDate(S.tht.date)) : '…'}</b><span>houdbaar tot</span></div>`;
   else if (sc.photo && !sc.busy) h += `<button class="ttsmall" style="width:auto;padding:0 18px;border-radius:26px" data-act="clearPhoto">${CAM.state === 'off' ? 'Nieuwe foto' : '● Live camera'}</button>`;
   else if (!sc.photo) h += `<button class="shutter" data-act="pickPhoto" data-arg="camera" aria-label="Foto maken"><span></span></button>`;
   h += `</div><button class="ttsmall" data-act="openScan" data-arg="typen" aria-label="Typen">Aa</button></div>`;
-  h += `<button class="ttgo" data-act="toFeed"><span>${sc.items.length ? 'Bekijk je recepten' : 'Recepten'}</span><span class="mono">swipe ←</span></button></div>`;
+  h += `<div class="modes" role="group" aria-label="Scanmanier">${[['live','Live'],['confirm','Bevestigen'],['bon','Kassabon'],['tht','THT']].map(([m, l]) => `<button class="${mode === m ? 'on' : ''}" data-act="scanMode2" data-arg="${m}" aria-pressed="${mode === m}">${l}</button>`).join('')}</div>`;
+  h += `<button class="ttgo" data-act="toFeed"><span>${sc.items.length ? 'Bekijk je recepten' : 'Recepten'}</span><span class="mono">→</span></button></div>`;
   return h;
 }
-function slideRecipe(r, i) {
-  const st = recipeStats(r), saved = isSaved(r), c = ['y', 'k', 'w'][i % 3];
-  return `<article class="slide s-${c}" data-act="slideTap" data-arg="${r.id}" aria-label="${esc(r.title)}">
-    <div class="giant" aria-hidden="true">${(r.ingredients || []).slice(0, 5).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>
-    <div class="cap"><div class="capbadges">${i === 0 ? '<span class="badge acc">Beste match</span>' : ''}${r.usesExpiring.length ? `<span class="badge warn">${esc(r.usesExpiring[0])} op</span>` : ''}${st.missing.length ? `<span class="badge line" style="color:inherit;border-color:currentColor;opacity:.75">+${st.missing.length} halen</span>` : ''}${reviewOf(r) ? `<span class="badge" style="background:${reviewOf(r).v === 'up' ? '#2F6B2F' : '#B45309'};color:#fff">${reviewOf(r).v === 'up' ? '👍 Lekker' : '👎 Liever niet'}</span>` : ''}</div>
+function cardHTML(r, i, under) {
+  const st = recipeStats(r), c = ['y', 'k', 'w'][i % 3], rv = reviewOf(r);
+  const free = S.prefs.allergies.filter(a => !r.allergens.includes(a.toLowerCase()));
+  return `<article class="tcard s-${c}${under ? ' under' : ''}" ${under ? 'aria-hidden="true"' : `id="tcard" data-rid="${r.id}" tabindex="0" aria-label="${esc(r.title)}. Veeg naar rechts om te bewaren, naar links om over te slaan, tik voor het recept."`}>
+    <div class="giant" aria-hidden="true">${(r.ingredients || []).slice(0, 4).map(x => `<span>${esc(x.name)}</span>`).join('')}</div>
+    ${under ? '' : '<span class="stamp yes">BEWAAR</span><span class="stamp no">VOLGENDE</span>'}
+    <div class="cap"><div class="labels">${i === 0 ? '<span class="lab acc">Beste match</span>' : ''}${r.usesExpiring.length ? `<span class="lab warn">${esc(r.usesExpiring[0])} op</span>` : ''}${free.length ? `<span class="lab ok">Zonder ${esc(free.join(' · ').toLowerCase())}</span>` : ''}${rv ? `<span class="lab ${rv.v === 'up' ? 'ok' : 'warn'}">${rv.v === 'up' ? 'Eerder lekker' : 'Eerder niet lekker'}</span>` : ''}</div>
       <h2>${esc(r.title)}</h2>
-      <div class="mono capmeta">${r.minutes}′ · ${st.have}/${st.total} in huis · ${esc(r.difficulty)}${r.cuisine ? ' · ' + esc(r.cuisine) : ''}</div>
-      ${r.why ? `<p>${esc(r.why)}</p>` : ''}
-      <div class="mono caphint">Tik voor het recept · dubbeltik = bewaren</div></div>
-    <div class="rail">
-      <button class="${saved ? 'on' : ''}" data-act="ttSave" data-arg="${r.id}" aria-pressed="${saved}" aria-label="${saved ? 'Niet meer bewaren' : 'Bewaren'}"><i>${saved ? I.heartf : I.heart}</i>${saved ? 'Bewaard' : 'Bewaar'}</button>
-      <button data-act="ttList" data-arg="${r.id}" aria-label="Ontbrekende ingrediënten op je lijst"><i>${I.cart}</i>${st.missing.length ? '+' + st.missing.length : 'Compleet'}</button>
-      <button data-act="ttRemix" data-arg="${r.id}" aria-label="Remix"><i>${I.remix}</i>Remix</button>
-      <button data-act="ttCook" data-arg="${r.id}" aria-label="Start koken"><i>${I.play}</i>Koken</button>
-      <button data-act="ttShare" data-arg="${r.id}" aria-label="Recept kopiëren om te delen"><i>${I.share}</i>Deel</button></div>
-    ${i === 0 ? '<div class="swipehint">↑ swipe voor het volgende recept</div>' : ''}</article>`;
+      <div class="mono capmeta" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span>${r.minutes}′</span><span>·</span><span>${st.have}/${st.total} in huis</span><span>·</span>${peppers(r.spice)}${r.diet.length ? `<span>· ${esc(r.diet.slice(0, 2).join(' · '))}</span>` : ''}</div>
+      ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div></article>`;
 }
-function slideMsg(cls, inner) { return `<article class="slide s-${cls}"><div class="slidemsg">${inner}</div></article>`; }
+function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${cls}" style="cursor:default;touch-action:auto"><div class="slidemsg" style="padding:24px 20px;height:100%;box-sizing:border-box;overflow:auto">${inner}</div></div></div>`; }
 function viewFeedTT() {
   const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
-  const out = [];
-  const mealSeg = `<div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div>`;
-  if (!S.pantry.length) out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Swipe naar rechts naar de camera en beweeg langs je koelkast. Daarna verschijnen hier je recepten.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`));
-  else if (S.gen.busy) out.push(slideMsg('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno kookt iets uit met je ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`));
-  else if (!S.recipes.length || stale || S.gen.error) out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}${mealSeg}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak recepten</span><span class="mono">${p.mode === 'nu' ? 'NU' : '+1–3'} · ≤${p.time}′</span></button>`));
-  if (S.recipes.length && !S.gen.busy && !stale) {
-    S.recipes.forEach((r, i) => out.push(slideRecipe(r, i)));
-    out.push(slideMsg('k', `<div class="eyebrow" style="color:var(--accent)">Dat waren ze</div><h2>Niks voor je erbij?</h2><p>Kies een andere maaltijd of filters, of laat juno nieuwe recepten bedenken.</p>${mealSeg}<button class="ttgo" data-act="generate"><span>Nieuwe recepten</span><span class="mono">↻</span></button><button class="btn ghost" data-act="open" data-arg="filters" style="color:#fff;border-color:rgba(255,255,255,.4)"><span>Filters</span><span class="mono">${I.filter}</span></button>`));
-  }
-  return `<div class="feed" id="feed">${out.join('')}</div>`;
+  let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?">${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
+  const r = S.recipes[S.swipeI], nx = S.recipes[S.swipeI + 1];
+  if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
+  else if (S.gen.busy) h += msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten.</h2><p class="mono" id="genCount" style="font-size:12px;opacity:.7">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</p><button class="btn ghost" data-act="stopGen" style="border-color:#0A0A0A;color:#0A0A0A"><span>Stop</span></button>`);
+  else if (!S.recipes.length || stale || S.gen.error) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak ${esc(p.meal.toLowerCase())}-recepten</span><span class="mono">→</span></button>`);
+  else if (!r) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Alles gezien</div><h2>Niks voor je erbij?</h2><p>Kies hierboven een andere stemming, of laat juno nieuwe ${esc(p.meal.toLowerCase())}-recepten bedenken. Bewaarde recepten staan onder Bewaard.</p><button class="ttgo" data-act="generate"><span>Nieuwe recepten</span><span class="mono">↻</span></button><button class="btn ghost" data-act="swipeReset" style="color:#fff;border-color:rgba(255,255,255,.4)"><span>Opnieuw bekijken</span><span class="mono">↺</span></button>`);
+  else h += `<div class="stack">${nx ? cardHTML(nx, S.swipeI + 1, true) : ''}${cardHTML(r, S.swipeI, false)}</div>
+    <div class="tbtns"><button class="big" data-act="tSwipe" data-arg="skip" aria-label="Overslaan">${I.x}</button><button class="mid" data-act="detail" data-arg="${r.id}" aria-label="Recept bekijken">${I.info}</button><button class="big yes" data-act="tSwipe" data-arg="save" aria-label="Bewaren">${I.heartf}</button></div>
+    <div class="thint">← OVERSLAAN · ${S.swipeI + 1}/${S.recipes.length} · BEWAREN →</div>`;
+  return h + '</div>';
+}
+function flyOut(el, dir, kind) { el.style.transition = 'transform .25s ease'; el.style.transform = `translate(${dir * 140}%, 40px) rotate(${dir * 24}deg)`; setTimeout(() => act.tSwipeDone(kind), 220); }
+function bindTinder() {
+  const el = document.getElementById('tcard'); if (!el || el.dataset.b) return; el.dataset.b = '1';
+  const yes = el.querySelector('.stamp.yes'), no = el.querySelector('.stamp.no');
+  let x0 = null, y0 = 0, dx = 0, dy = 0, moved = false;
+  el.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; dx = dy = 0; moved = false; el.classList.add('drag'); try { el.setPointerCapture(e.pointerId); } catch (_) {} });
+  el.addEventListener('pointermove', e => { if (x0 == null) return; dx = e.clientX - x0; dy = e.clientY - y0; if (Math.abs(dx) > 6 || Math.abs(dy) > 6) moved = true; el.style.transform = `translate(${dx}px, ${dy * 0.2}px) rotate(${dx / 18}deg)`; yes.style.opacity = Math.max(0, Math.min(1, dx / 100)); no.style.opacity = Math.max(0, Math.min(1, -dx / 100)); });
+  el.addEventListener('pointerup', () => { if (x0 == null) return; x0 = null; el.classList.remove('drag');
+    if (dx > 100) flyOut(el, 1, 'save'); else if (dx < -100) flyOut(el, -1, 'skip');
+    else { el.style.transform = ''; yes.style.opacity = 0; no.style.opacity = 0; if (!moved) act.detail(el.dataset.rid); } });
+  el.addEventListener('pointercancel', () => { x0 = null; el.classList.remove('drag'); el.style.transform = ''; yes.style.opacity = 0; no.style.opacity = 0; });
+  el.addEventListener('keydown', e => { if (e.key === 'ArrowRight') act.tSwipe('save'); else if (e.key === 'ArrowLeft') act.tSwipe('skip'); else if (e.key === 'Enter') act.detail(el.dataset.rid); });
 }
 function feedKey() {
-  return JSON.stringify([S.recipes.map(r => r.id + (isSaved(r) ? '♥' : '') + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '')), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
+  return JSON.stringify([S.swipeI, S.prefs.mood, S.recipes.map(r => r.id + recipeStats(r).missing.length + ((reviewOf(r) || {}).v || '')), S.gen.busy, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length, S.ai, S.prefs.meal]);
 }
 function bindPager() {
   const pg = $('#pager'); let t = 0;
@@ -1297,7 +1460,7 @@ function renderTT() {
     FEED.key = k;
     const ids = S.recipes.map(r => r.id).join();
     $('#paneFeed').innerHTML = viewFeedTT();
-    bindFeed();
+    bindTinder();
     const f = $('#feed');
     if (ids !== FEED.ids) { FEED.ids = ids; S.feedI = 0; }
     if (f) f.scrollTop = (S.feedI || 0) * f.clientHeight;
@@ -1313,7 +1476,7 @@ function render() {
   if (S.ov) {
     const keep = ov.scrollTop;
     ov.className = S.ov === 'scan' ? 'cam' : (S.ov === 'cook' || S.ov === 'review') ? 'cook' : '';
-    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : S.ov === 'filters' ? ovFilters() : S.ov === 'review' ? ovReview() : ovChat()}</div>`;
+    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : S.ov === 'filters' ? ovFilters() : S.ov === 'review' ? ovReview() : S.ov === 'onboard' ? ovOnboard() : ovChat()}</div>`;
     ov.hidden = false; ov.scrollTop = keep; document.body.classList.add('lock');
   } else { ov.hidden = true; ov.innerHTML = ''; document.body.classList.remove('lock'); }
   bindSwipe();
@@ -1350,6 +1513,22 @@ function beep() { try { const a = new (window.AudioContext || window.webkitAudio
 const act = {
   tab(t) { const was = S.tab; S.tab = t; ls.set('tt.tab', t); S.ov = null; S.expOpen = null; render(); if (!TT_TABS.includes(t) || !TT_TABS.includes(was)) window.scrollTo(0, 0); },
   toScan() { act.tab('scan'); },
+  mood(m) { setPrefs({ mood: m }); S.swipeI = 0; render(); },
+  tSwipe(kind) { const el = $('#tcard'); if (el) { const st = el.querySelector(kind === 'save' ? '.stamp.yes' : '.stamp.no'); if (st) st.style.opacity = 1; flyOut(el, kind === 'save' ? 1 : -1, kind); } else act.tSwipeDone(kind); },
+  tSwipeDone(kind) {
+    const r = S.recipes[S.swipeI]; if (!r) return;
+    const tag = r.title + (r.cuisine ? ' (' + r.cuisine + ')' : '');
+    if (kind === 'save') { if (!isSaved(r)) saveRecipe(r); S.taste.likes = [...(S.taste.likes || []).filter(x => x !== tag), tag].slice(-30); toast('Bewaard · juno onthoudt wat je lekker vindt'); try { navigator.vibrate && navigator.vibrate(20); } catch (e) {} }
+    else S.taste.skips = [...(S.taste.skips || []).filter(x => x !== tag), tag].slice(-30);
+    ls.set('taste', S.taste); S.swipeI++; render();
+  },
+  scanMode2(m) {
+    if (m === 'bon') { pickFile(true, f => runBon(f)); return; }
+    S.scanMode = m; S.tht = null; S.scan.error = ''; CAM.labels = []; CAM.lastNew = Date.now(); CAM.paused = false; render(); if (CAM.state === 'on') camLoop();
+  },
+  addPending(id) { const i = S.pending.findIndex(x => x.id === id); if (i < 0) return; const it = S.pending.splice(i, 1)[0]; it.checked = true; addScanned(it); S.scan.items.push(it); persist('pantry'); try { navigator.vibrate && navigator.vibrate(15); } catch (e) {} render(); },
+  addAllPending() { for (const it of S.pending.splice(0)) { it.checked = true; addScanned(it); S.scan.items.push(it); } persist('pantry'); render(); },
+  thtAssign(id) { const p = S.pantry.find(x => x.id === id); if (!p || !S.tht) return; p.exp = S.tht.date; p.method = 'tht'; persist('pantry'); toast(p.name + ': houdbaar tot ' + fmtDate(S.tht.date)); S.tht = null; render(); },
   toFeed() { act.tab('recepten'); },
   clearPhoto() { if (S.scan.photo) URL.revokeObjectURL(S.scan.photo); S.scan.photo = null; S.scan.error = ''; if (CAM.state === 'off') { render(); pickFile(true, f => runLiveScan(f)); } else render(); },
   applyFilters() { S.ov = null; S.tab = 'recepten'; ls.set('tt.tab', 'recepten'); FEED.autoKey = ''; render(); },
@@ -1406,9 +1585,20 @@ const act = {
   allToList() { const st = recipeStats(S.detail); let n = 0; st.missing.forEach(i => { if (addToList(i.name, S.detail.title)) n++; }); toast(n ? n + ' items op je lijst' : 'Staat al op je lijst'); render(); },
   remix(i) { remix(+i); },
   cook() { S.cook = { i: 0, left: null, running: false, end: 0, done: false }; S.ov = 'cook'; wakeOn(); render(); $('#ov').scrollTop = 0; },
-  cookDone() { stopTimer(); wakeOff(); S.reviewDraft = null; S.ov = 'review'; render(); $('#ov').scrollTop = 0; },
+  cookDone() { stopTimer(); wakeOff(); S.reviewDraft = null; S.reviewPhoto = null; S.ov = 'review'; render(); $('#ov').scrollTop = 0; },
   thumb(v) { const r = S.detail; if (!r) return; const cur = reviewOf(r); const note = S.ov === 'review' && S.reviewDraft != null ? S.reviewDraft : undefined; setReview(r, cur && cur.v === v && S.ov !== 'review' ? null : v, note); if (S.ov !== 'review') toast(v === 'up' && !(cur && cur.v === 'up') ? 'Genoteerd: lekker 👍' : v === 'down' && !(cur && cur.v === 'down') ? 'Genoteerd: liever niet 👎' : 'Duimpje weggehaald'); try { navigator.vibrate && navigator.vibrate(15); } catch (e) {} render(); },
-  reviewDone() { const r = S.detail; const rv = reviewOf(r); if (rv && S.reviewDraft != null && S.reviewDraft !== rv.note) setReview(r, rv.v, S.reviewDraft); if (rv) toast(rv.v === 'up' ? 'Dank je! juno onthoudt dat je dit lekker vond.' : 'Dank je! juno stelt dit soort gerechten minder vaak voor.'); S.reviewDraft = null; S.ov = null; render(); },
+  revPhoto() { pickFile(true, async f => { const d = await thumbData(f); if (!d) { toast('Deze foto kon niet worden gelezen.'); return; } S.reviewPhoto = d; const r = S.detail, rv = reviewOf(r); if (rv) setReview(r, rv.v, S.reviewDraft != null ? S.reviewDraft : undefined); render(); }); },
+  thumbSaved(arg) { const [id, v] = arg.split('|'); const r = S.saved.recipes.find(x => x.id === id); if (!r) return; const cur = reviewOf(r); S.reviewPhoto = null; setReview(r, cur && cur.v === v ? null : v); render(); },
+  obTog(arg) { const [k, v] = arg.split('|'); const a = S.prefs[k]; setPrefs({ [k]: a.includes(v) ? a.filter(x => x !== v) : [...a, v] }); render(); },
+  obSpice(n) { setPrefs({ spice: +n }); render(); },
+  obPersons(d) { setPrefs({ persons: Math.max(1, Math.min(12, S.prefs.persons + +d)) }); render(); },
+  obTime(n) { setPrefs({ time: +n }); render(); },
+  obNone() { setPrefs({ allergies: [] }); S.ob = 2; render(); $('#ov').scrollTop = 0; },
+  obNext() { S.ob = Math.min(3, (S.ob || 1) + 1); render(); $('#ov').scrollTop = 0; },
+  obBack() { S.ob = Math.max(1, (S.ob || 1) - 1); render(); $('#ov').scrollTop = 0; },
+  obDone() { ls.set('tt.onboarded', true); S.ov = null; FEED.autoKey = ''; render(); },
+  editProfile() { S.ov = 'onboard'; S.ob = 1; render(); $('#ov').scrollTop = 0; },
+  reviewDone() { const r = S.detail; const rv = reviewOf(r); if (rv && ((S.reviewDraft != null && S.reviewDraft !== rv.note) || S.reviewPhoto)) setReview(r, rv.v, S.reviewDraft != null ? S.reviewDraft : undefined); S.reviewPhoto = null; if (rv) toast(rv.v === 'up' ? 'Dank je! juno onthoudt dat je dit lekker vond.' : 'Dank je! juno stelt dit soort gerechten minder vaak voor.'); S.reviewDraft = null; S.ov = null; render(); },
   closeCook() { stopTimer(); wakeOff(); S.ov = 'detail'; render(); },
   cookStep(d) { stopTimer(); S.cook.i = Math.max(0, Math.min(S.detail.steps.length - 1, S.cook.i + +d)); S.cook.left = null; S.cook.done = false; render(); $('#ov').scrollTop = 0; },
   timer() {
@@ -1466,7 +1656,7 @@ const onChange = {
   moveFolder(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.folder = el.value; persist('saved'); render(); } },
   note(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.note = el.value.slice(0, 500); persist('saved'); } }
 };
-const onInput = { reviewNote(el) { S.reviewDraft = el.value; }, scanText(el) { S.scan.text = el.value; }, chatDraft(el) { S.chat.draft = el.value; } };
+const onInput = { avoid(el) { S.prefs.avoid = el.value.slice(0, 120); ls.set('prefs', S.prefs); }, reviewNote(el) { S.reviewDraft = el.value; }, scanText(el) { S.scan.text = el.value; }, chatDraft(el) { S.chat.draft = el.value; } };
 const onSubmit = {
   addList(form) { const i = form.querySelector('input'); const v = i.value.trim(); if (!v) return; v.split(/[,\n]+/).forEach(n => addToList(n.trim())); i.value = ''; render(); setTimeout(() => $('#listInput')?.focus(), 30); },
   newFolder(form) { const i = form.querySelector('input'); const v = i.value.trim().slice(0, 30); if (!v || S.saved.folders.includes(v)) return; S.saved.folders.push(v); persist('saved'); S.folder = v; render(); },
