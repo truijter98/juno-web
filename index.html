@@ -245,6 +245,7 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .profcard b{display:block;font-family:var(--display);font-size:17px;font-weight:600}
 .profcard span span,.profcard > span:nth-child(2) span{display:block;font-size:14px;color:#C9D1C5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .profcard .go{flex:none;font-weight:700;font-size:15px;color:var(--pop)}
+.rmlink{display:inline-flex;align-items:center;gap:5px;min-height:36px;border:0;background:none;color:var(--warn);font-weight:600;font-size:14px;padding:0 4px}.rmlink svg{width:16px;height:16px}.rmlink.armed{background:var(--warn);color:#FAF8F2;border-radius:18px;padding:0 12px}
 .clearbar{display:flex;justify-content:flex-end}
 .clearbar .textlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--warn);font-weight:600;font-size:15px;padding:0}
 .clearbar .textlink svg{width:18px;height:18px}
@@ -689,7 +690,7 @@ function saveRecipe(r, folder) {
   S.saved.recipes.unshift(Object.assign(clone(r), { folder: folder || 'Favorieten', rating: 0, note: '', savedAt: Date.now() }));
   persist('saved');
 }
-function unsaveRecipe(r) { S.saved.recipes = S.saved.recipes.filter(x => !(x.id === r.id || norm(x.title) === norm(r.title))); persist('saved'); }
+function unsaveRecipe(r) { S.saved.recipes = S.saved.recipes.filter(x => !(x.id === r.id || norm(x.title) === norm(r.title))); for (const d of WEEK) if (S.saved.week[d] && (S.saved.week[d].id === r.id || norm(S.saved.week[d].title) === norm(r.title))) delete S.saved.week[d]; persist('saved'); }
 function fmtQty(q, unit, factor) {
   if (q == null || q === '' || isNaN(+q)) return (unit || '').toUpperCase();
   let v = +q * (factor || 1);
@@ -1287,8 +1288,9 @@ function viewOpgeslagen() {
       <div style="display:flex;gap:10px;align-items:center">${(reviewOf(r) && reviewOf(r).photo) || (r.img && r.img.url) ? `<img src="${esc((reviewOf(r) && reviewOf(r).photo) || r.img.url)}" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none">` : ''}<button class="dish" data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:600;font-size:17px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         ${savedReviewHTML(r)}
-        <label class="sr" for="fold-${r.id}">Map</label><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select></div>
+        <label class="sr" for="fold-${r.id}">Map</label><span style="display:flex;gap:10px;align-items:center"><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select><button class="rmlink${S.armDelete === 'sv:' + r.id ? ' armed' : ''}" data-act="delSaved" data-arg="${r.id}" aria-label="${esc(r.title)} verwijderen uit Bewaard">${S.armDelete === 'sv:' + r.id ? 'Zeker weten?' : I.trash + 'Verwijder'}</button></span></div>
       <label class="sr" for="note-${r.id}">Notitie</label><textarea id="note-${r.id}" data-change="note" data-arg="${r.id}" placeholder="Notitie, bijv. volgende keer extra chili" style="min-height:44px;font-size:14px;border-color:var(--line)">${esc(r.note || '')}</textarea></div>`).join('')}</div>`;
+  h += clearBar('saved', S.folder === 'Alle' ? 'Alle bewaarde recepten wissen' : 'Alles in ' + S.folder + ' wissen', list.length);
   return h;
 }
 
@@ -1880,11 +1882,13 @@ const act = {
     let n = 0;
     if (what === 'pantry') { const keep = S.locTab === 'alles' ? [] : S.pantry.filter(x => x.loc !== S.locTab); n = S.pantry.length - keep.length; S.pantry = keep; S.expOpen = null; persist('pantry'); }
     if (what === 'list') { n = S.list.length; S.list = []; persist('list'); }
+    if (what === 'saved') { const keep = S.folder === 'Alle' ? [] : S.saved.recipes.filter(r => r.folder !== S.folder); n = S.saved.recipes.length - keep.length; const gone = new Set(S.saved.recipes.filter(r => !keep.includes(r)).map(r => r.id)); S.saved.recipes = keep; for (const d of WEEK) if (S.saved.week[d] && gone.has(S.saved.week[d].id)) delete S.saved.week[d]; persist('saved'); }
     S.armClear = null; toast(n + (n === 1 ? ' ding' : ' dingen') + ' gewist'); render();
   },
   clearCancel() { S.armClear = null; render(); },
+  delSaved(id) { const key = 'sv:' + id; if (S.armDelete !== key) { S.armDelete = key; render(); return; } const r = S.saved.recipes.find(x => x.id === id); if (r) unsaveRecipe(r); S.armDelete = null; toast('Verwijderd uit Bewaard'); render(); },
   clearDone() { S.list = S.list.filter(x => !x.checked); persist('list'); render(); },
-  folder(f) { S.folder = f; render(); },
+  folder(f) { S.armClear = null; S.armDelete = null; S.folder = f; render(); },
   weekDay(d) { const p = S.saved.week[d]; const r = p && S.saved.recipes.find(x => x.id === p.id); if (r) openDetail(r); else toast('Nog niets op ' + d + '. Open een recept en tik op de kalender.'); },
   rate(arg) { const [id, n] = arg.split('|'); const r = S.saved.recipes.find(x => x.id === id); if (!r) return; r.rating = r.rating === +n ? 0 : +n; persist('saved'); render(); },
   quickAsk(q) { sendChat(q); }
