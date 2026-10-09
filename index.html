@@ -18,7 +18,7 @@
 <title>juno</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
 <style>
 /* Layout: one-column phone app, max 480px; big highlighted headline per tab, hairline rows, floating black dock with yellow Scan */
 :root{
@@ -26,8 +26,10 @@
   --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#7A6100;
   --warn:#B45309; --warn-bg:#FFF4D6; --ok:#2F6B2F;
   --bar:#0A0A0A; --on-bar:#FFFFFF; --cam:#0E0F11; --on-cam:#FFFFFF; --cam-muted:#9A9BA1;
-  --font:'Archivo', 'Helvetica Neue', Arial, sans-serif;
-  --mono:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font:'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --display:'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --logo:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --mono:'Inter', 'Helvetica Neue', Arial, sans-serif;
   --r:6px; --rs:4px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
@@ -49,10 +51,10 @@ a{color:inherit}
 .mono{font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-variant-numeric:tabular-nums}
 .app{max-width:480px;margin:0 auto;padding-inline:16px;padding-block:16px 128px;display:flex;flex-direction:column;gap:18px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.wordmark{font-weight:800;font-size:24px;letter-spacing:-.04em}
+.wordmark{font-family:var(--logo);font-weight:800;font-size:24px;letter-spacing:-.04em}
 .wordmark{display:inline-flex;align-items:flex-end;line-height:.95}.wordmark svg{width:.56em;height:.56em;margin:0 0 .08em .03em;flex:none}
 .eyebrow{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.big{font-weight:800;font-size:clamp(28px,8.4vw,34px);line-height:1.06;letter-spacing:-.04em;text-wrap:balance;margin:0}
+.big{font-family:var(--display);font-weight:700;font-size:clamp(27px,8vw,32px);line-height:1.12;letter-spacing:-.02em;text-wrap:balance;margin:0}
 .mark{background:var(--accent);color:var(--on-accent);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .iconbtn{width:44px;height:44px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;justify-content:center;color:var(--fg);flex-shrink:0}
 .iconbtn.on{background:var(--accent);color:var(--on-accent);border-color:var(--fg)}
@@ -300,6 +302,9 @@ body.tt .app{padding-bottom:calc(var(--barh) + 40px)}
 .thumbs button.on.down{background:#B45309;border-color:#B45309;color:#fff}
 .thumbs.big2 button{height:120px;flex-direction:column;font-size:17px;background:#1A1C20;border-color:#333;color:#fff;border-radius:14px}
 .thumbs.big2 button svg{width:40px;height:40px}
+h1,h2,h3,.dish{font-family:var(--display);letter-spacing:-.015em}
+.cap h2,.slidemsg h2{font-weight:700;letter-spacing:-.02em;line-height:1.08}
+.ttcount b,.tcard .giant{font-family:var(--display)}
 .codegate{position:fixed;inset:0;z-index:99;background:rgba(10,10,10,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .codecard{width:100%;max-width:440px;background:var(--bg);color:var(--fg);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
 .codecard input{height:52px;border:1px solid var(--fg);border-radius:var(--rs);padding:0 14px;font-size:18px;font-family:var(--mono);background:var(--card);color:var(--fg)}
@@ -946,13 +951,23 @@ function stripTags(h) { const d = document.createElement('div'); d.innerHTML = S
 async function loadImage(r) {
   if (!r || r.img !== undefined || !r.imageQuery || !S.web) return;
   r.img = null;
+  // Eerst Unsplash (mooie foodfoto's, via de juno-functie); lukt dat niet, dan Wikimedia.
+  try {
+    const code = lsRaw('juno.code');
+    if (code && !S.noUnsplash) {
+      const res = await fetch(WEB_AI_URL, { method: 'POST', headers: { 'content-type': 'application/json', 'x-juno-code': code }, body: JSON.stringify({ action: 'photo', query: r.imageQuery }) });
+      if (res.status === 404) S.noUnsplash = true;
+      const j = res.ok ? await res.json() : null;
+      if (j && j.photo && j.photo.url) { r.img = j.photo; ls.set('recipes', S.recipes); softFeed(); return; }
+    }
+  } catch (e) {}
   try {
     const q = encodeURIComponent(r.imageQuery + ' dish');
     const res = await fetch('https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=8&gsrsearch=' + q + '%20filetype%3Abitmap&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=900');
     const j = await res.json();
     const pages = Object.values((j.query && j.query.pages) || {}).sort((a, b) => a.index - b.index);
     const pg = pages.find(x => x.imageinfo && x.imageinfo[0].thumburl && /\.jpe?g$/i.test(x.title) && x.imageinfo[0].width >= 600 && x.imageinfo[0].width >= x.imageinfo[0].height * 0.8);
-    if (pg) { const ii = pg.imageinfo[0]; r.img = { url: ii.thumburl, page: ii.descriptionurl, by: stripTags(ii.extmetadata && ii.extmetadata.Artist && ii.extmetadata.Artist.value) }; ls.set('recipes', S.recipes); softFeed(); }
+    if (pg) { const ii = pg.imageinfo[0]; r.img = { url: ii.thumburl, page: ii.descriptionurl, by: stripTags(ii.extmetadata && ii.extmetadata.Artist && ii.extmetadata.Artist.value), source: 'Wikimedia' }; ls.set('recipes', S.recipes); softFeed(); }
   } catch (e) { r.img = null; }
 }
 function softFeed() { if (TT_TABS.includes(S.tab) && !S.ov && $('#paneFeed') && !document.querySelector('#tcard.drag')) { FEED.key = ''; renderTT(); } }
@@ -1076,11 +1091,11 @@ function viewRecepten() {
   h += `<button class="card" data-act="detail" data-arg="${best.id}" style="text-align:left;padding:0;display:flex;flex-direction:column;color:inherit">
       <div class="cover"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="badge" style="background:var(--on-accent);color:var(--accent)">Beste match</span>${best.usesExpiring.length ? `<span class="badge warn">${esc(best.usesExpiring[0])} op</span>` : ''}</div><div class="words">${esc(coverWords(best))}</div></div>
       <div style="padding:14px;display:flex;flex-direction:column;gap:8px;width:100%;box-sizing:border-box">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span style="font-weight:700;font-size:19px;letter-spacing:-.01em">${esc(best.title)}</span><span class="mono" style="font-size:13px">${best.minutes}′</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span class="dish" style="font-weight:700;font-size:19px">${esc(best.title)}</span><span class="mono" style="font-size:13px">${best.minutes}′</span></div>
         ${matchBar(best)}<div class="mono" style="font-size:11px;color:var(--muted)">${metaLine(best)}</div>
         ${best.why ? `<div style="font-size:14px;color:var(--muted);line-height:1.4">${esc(best.why)}</div>` : ''}</div></button>
     <div class="rows">${rest.map((r, i) => { const st = recipeStats(r); return `<button class="row" data-act="detail" data-arg="${r.id}" style="background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;width:100%;color:inherit">
-      <span class="mono" style="font-size:12px;color:var(--muted)">${pad(i + 2)}</span><span class="name">${esc(r.title)}</span>
+      <span class="mono" style="font-size:12px;color:var(--muted)">${pad(i + 2)}</span><span class="name dish">${esc(r.title)}</span>
       <span class="mono" style="font-size:12px;${st.missing.length ? 'color:var(--warn)' : ''}">${r.minutes}′ · ${st.missing.length ? '+' + st.missing.length : st.have + '/' + st.total}</span></button>`; }).join('')}</div>
     <button class="btn ghost" data-act="generate"><span>Andere recepten</span><span class="mono">OPNIEUW</span></button>`;
   return h;
@@ -1157,7 +1172,7 @@ function viewOpgeslagen() {
     <form data-submit="newFolder" style="display:flex;gap:8px"><label class="sr" for="folderInput">Nieuwe map</label><input type="text" id="folderInput" placeholder="Nieuwe map" style="flex:1;min-width:0" autocomplete="off"><button class="btn small ghost" type="submit">+ Map</button></form>`;
   if (!list.length) return h + `<div class="empty"><p>${S.saved.recipes.length ? 'Geen recepten in deze map.' : 'Nog niets bewaard. Tik op het bladwijzer-icoon bij een recept om het hier te bewaren.'}</p></div>`;
   h += `<div class="rows">${list.map(r => `<div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
-      <div style="display:flex;gap:10px;align-items:center">${reviewOf(r) && reviewOf(r).photo ? `<img src="${reviewOf(r).photo}" alt="Jouw foto van ${esc(r.title)}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;flex:none">` : ''}<button data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:700;font-size:16px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
+      <div style="display:flex;gap:10px;align-items:center">${reviewOf(r) && reviewOf(r).photo ? `<img src="${reviewOf(r).photo}" alt="Jouw foto van ${esc(r.title)}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;flex:none">` : ''}<button class="dish" data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:600;font-size:17px;color:inherit">${esc(r.title)}${reviewOf(r) && reviewOf(r).note ? `<span style="display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:2px">“${esc(reviewOf(r).note)}”</span>` : ''}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
         ${savedReviewHTML(r)}
         <label class="sr" for="fold-${r.id}">Map</label><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select></div>
@@ -1439,7 +1454,7 @@ function cardHTML(r, i, under) {
       <h2>${esc(r.title)}</h2>
       <div class="meta"><span>${r.minutes} min</span><span>${st.have}/${st.total} in huis</span>${r.spice ? peppers(r.spice) : ''}</div>
       ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div>
-    ${img && !under ? `<a class="credit" href="${esc(r.img.page)}" target="_blank" rel="noopener">Voorbeeldfoto${r.img.by ? ' · ' + esc(r.img.by) : ''} · Wikimedia</a>` : ''}</article>`;
+    ${img && !under ? `<a class="credit" href="${esc(r.img.page)}" target="_blank" rel="noopener">${r.img.source === 'Unsplash' ? `Foto: ${esc(r.img.by || 'onbekend')} op Unsplash` : `Voorbeeldfoto${r.img.by ? ' · ' + esc(r.img.by) : ''} · Wikimedia`}</a>` : ''}</article>`;
 }
 function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${cls}" style="cursor:default;touch-action:auto"><div class="slidemsg" style="padding:24px 20px;height:100%;box-sizing:border-box;overflow:auto">${inner}</div></div></div>`; }
 function viewFeedTT() {
