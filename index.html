@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="juno">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>juno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one-column phone app, max 480px; big highlighted headline per tab, hairline rows, floating black dock with yellow Scan */
+:root{
+  --bg:#FFFDF7; --surface:#F4F2EA; --card:#FFFFFF; --fg:#0A0A0A; --muted:#5E5C55; --line:#E6E3D8;
+  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#7A6100;
+  --warn:#B45309; --warn-bg:#FFF4D6; --ok:#2F6B2F;
+  --bar:#0A0A0A; --on-bar:#FFFFFF; --cam:#0E0F11; --on-cam:#FFFFFF; --cam-muted:#9A9BA1;
+  --font:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --mono:'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --r:6px; --rs:4px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121210; --surface:#1C1B18; --card:#191815; --fg:#F5F3EA; --muted:#A6A398; --line:#2F2D28;
+  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#FFD400; --warn:#F2A65A; --warn-bg:#33240F; --ok:#8BC48B;
+  --bar:#000000; --on-bar:#F5F3EA; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#121210; --surface:#1C1B18; --card:#191815; --fg:#F5F3EA; --muted:#A6A398; --line:#2F2D28;
+  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#FFD400; --warn:#F2A65A; --warn-bg:#33240F; --ok:#8BC48B;
+  --bar:#000000; --on-bar:#F5F3EA; color-scheme:dark }
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+a{color:inherit}
+.mono{font-family:var(--mono);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.app{max-width:480px;margin:0 auto;padding-inline:16px;padding-block:16px 128px;display:flex;flex-direction:column;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.wordmark{font-weight:800;font-size:24px;letter-spacing:-.04em}
+.wordmark{display:inline-flex;align-items:flex-end;line-height:.95}.wordmark svg{width:.56em;height:.56em;margin:0 0 .08em .03em;flex:none}
+.eyebrow{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.big{font-weight:800;font-size:clamp(28px,8.4vw,34px);line-height:1.06;letter-spacing:-.04em;text-wrap:balance;margin:0}
+.mark{background:var(--accent);color:var(--on-accent);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.iconbtn{width:44px;height:44px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;justify-content:center;color:var(--fg);flex-shrink:0}
+.iconbtn.on{background:var(--accent);color:var(--on-accent);border-color:var(--fg)}
+.iconbtn svg{width:20px;height:20px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);border:1px solid var(--fg);border-radius:var(--rs);overflow:hidden}
+.seg button{height:42px;border:0;border-right:1px solid var(--fg);background:var(--card);font-weight:600;font-size:14px}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent);color:var(--on-accent);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{height:34px;padding:0 10px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.chip.on{background:var(--accent);color:var(--on-accent);border-color:var(--fg)}
+.chip.ink{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn{height:54px;border-radius:var(--r);border:0;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px;width:100%;text-align:left}
+.btn .mono{font-size:12px}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--fg)}
+.btn.small{height:40px;font-size:14px;width:auto;padding:0 14px}
+.btn:disabled{opacity:.5;cursor:default}
+.textbtn{border:0;background:none;padding:0 4px;min-height:44px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg)}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);min-height:24px}
+.rows > .row:last-child{border-bottom:1px solid var(--line)}
+.row .name{flex:1;min-width:0;font-weight:600;font-size:16px;overflow-wrap:anywhere}
+.row .qty{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:600}
+.badge{display:inline-block;padding:3px 7px;border-radius:3px;font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.badge.warn{background:var(--warn-bg);color:var(--warn)}
+.badge.acc{background:var(--accent);color:var(--on-accent)}
+.badge.line{border:1px solid var(--line);color:var(--muted)}
+.notice{padding:12px 14px;border-radius:var(--r);background:var(--warn-bg);color:var(--fg);font-size:14px;line-height:1.45}
+.notice b{color:var(--warn)}
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.cover{background:var(--accent);color:var(--on-accent);padding:14px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;position:relative}
+.cover .words{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;line-height:1.7;opacity:.85}
+.cover.alt{background:var(--surface);color:var(--fg)}
+.matchbar{display:grid;gap:3px}
+.matchbar span{height:4px;background:var(--line)}
+.matchbar span.on{background:var(--fg)}
+.empty{border:1px dashed var(--fg);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px}
+.empty p{margin:0;color:var(--muted);line-height:1.5}
+.skel{height:64px;border-radius:var(--r);background:var(--surface);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.err{color:var(--warn);font-size:14px;line-height:1.45}
+.bar{height:6px;width:64px;background:var(--line);display:flex;flex-shrink:0}
+.bar span{background:var(--fg)}
+.bar.warn span{background:var(--warn)}
+
+/* dock */
+.dockwrap{position:fixed;left:0;right:0;bottom:0;padding:0 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;z-index:20}
+.dock{pointer-events:auto;width:100%;max-width:448px;height:64px;border-radius:var(--r);background:var(--bar);color:var(--on-bar);display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 12px;box-sizing:border-box;border:1px solid var(--line)}
+.dock .tab{width:48px;height:48px;border:0;background:none;color:inherit;opacity:.55;display:flex;align-items:center;justify-content:center;border-bottom:2px solid transparent;position:relative}
+.dock .tab.on{opacity:1;border-bottom-color:var(--accent)}
+.dock .tab svg{width:22px;height:22px}
+.dock .tab .dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:4px;background:var(--accent)}
+.dock .scan{height:48px;padding:0 16px;border-radius:var(--rs);border:0;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px}
+.dock .scan svg{width:20px;height:20px}
+
+/* overlays */
+#ov{position:fixed;inset:0;z-index:40;overflow-y:auto;background:var(--bg);color:var(--fg);-webkit-overflow-scrolling:touch}
+#ov.cam{background:var(--cam);color:var(--on-cam)}
+#ov.cook{background:var(--cam);color:var(--on-cam)}
+.ovin{max-width:480px;margin:0 auto;padding-inline:16px;padding-block:calc(16px + env(safe-area-inset-top,0px)) calc(110px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:18px}
+.stickyfoot{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;background:linear-gradient(to top,var(--bg) 70%,transparent);z-index:45}
+.stickyfoot > *{max-width:448px}
+#ov.cam .stickyfoot,#ov.cook .stickyfoot{background:linear-gradient(to top,var(--cam) 70%,transparent)}
+.camtabs{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none}
+.camtabs button{border:0;background:none;color:var(--cam-muted);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 0 8px;border-bottom:2px solid transparent;white-space:nowrap}
+.camtabs button.on{color:var(--on-cam);border-bottom-color:var(--accent)}
+.viewfinder{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:var(--r);overflow:hidden;background:#1A1C20;display:flex;align-items:center;justify-content:center;text-align:center}
+.viewfinder img{width:100%;height:100%;object-fit:cover;display:block}
+.viewfinder .hint{padding:24px;color:var(--cam-muted);font-size:15px;line-height:1.5;max-width:28ch}
+.corner{position:absolute;width:26px;height:26px;border-color:var(--accent);border-style:solid;border-width:0}
+.c1{left:14px;top:14px;border-left-width:3px;border-top-width:3px}.c2{right:14px;top:14px;border-right-width:3px;border-top-width:3px}
+.c3{left:14px;bottom:14px;border-left-width:3px;border-bottom-width:3px}.c4{right:14px;bottom:14px;border-right-width:3px;border-bottom-width:3px}
+.scanline{position:absolute;left:14px;right:14px;height:2px;background:var(--accent);top:20%;animation:scan 1.6s ease-in-out infinite alternate;box-shadow:0 0 12px var(--accent)}
+@keyframes scan{to{top:80%}}
+.busytag{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:var(--accent);color:var(--on-accent);padding:6px 10px;border-radius:var(--rs);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.shutterrow{display:flex;justify-content:space-between;align-items:center}
+.shutter{width:80px;height:80px;padding:0;background:transparent;border-radius:40px;border:3px solid var(--on-cam);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.shutter span{width:62px;height:62px;border-radius:31px;background:var(--accent)}
+.camsmall{width:48px;height:48px;border-radius:var(--rs);border:1px solid rgba(255,255,255,.28);background:transparent;color:var(--on-cam);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.camsmall svg{width:20px;height:20px}
+textarea{width:100%;box-sizing:border-box;border-radius:var(--rs);border:1px solid var(--fg);background:var(--card);padding:12px 14px;font-size:16px;line-height:1.45;resize:vertical;min-height:96px}
+input[type=text],input[type=date],input[type=number],select{height:46px;box-sizing:border-box;border-radius:var(--rs);border:1px solid var(--fg);background:var(--card);padding:0 12px;font-size:16px}
+.shot{position:relative;width:fit-content;max-width:100%;margin:0 auto;border-radius:var(--r);overflow:hidden;background:#1A1C20}
+.shot img{display:block;max-width:100%;max-height:56vh}
+.shot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis}
+.shot .tag.unsure{background:#FFFFFF}
+.shot .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.3);opacity:0}}
+.codegate{position:fixed;inset:0;z-index:99;background:rgba(10,10,10,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.codecard{width:100%;max-width:440px;background:var(--bg);color:var(--fg);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.codecard input{height:52px;border:1px solid var(--fg);border-radius:var(--rs);padding:0 14px;font-size:18px;font-family:var(--mono);background:var(--card);color:var(--fg)}
+.livecam{position:relative;width:100%;aspect-ratio:3/4;max-height:62vh;border-radius:var(--r);overflow:hidden;background:#1A1C20}
+.livecam .camvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.livecam .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
+.livecam .tag.unsure{background:#FFFFFF}
+.livecam .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+.livepill{position:absolute;left:12px;top:12px;display:flex;align-items:center;gap:8px;background:rgba(10,10,10,.6);color:#fff;padding:6px 10px;border-radius:var(--rs);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.livepill i{width:8px;height:8px;border-radius:4px;background:#FF4B3E;animation:pulse 1.2s infinite}
+.livecam .resume{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,.45);border:0;width:100%}
+.livecam .resume span{background:var(--accent);color:#0A0A0A;font-weight:700;padding:12px 16px;border-radius:var(--rs)}
+.livecam .camhint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:14px;text-shadow:0 1px 6px rgba(0,0,0,.7);padding:0 16px}
+.found{display:flex;flex-wrap:wrap;gap:6px}
+.found button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:transparent;color:var(--on-cam);font-size:14px;font-weight:600}
+.found button span{opacity:.55;font-size:16px;line-height:1}
+.livebar{display:flex;gap:8px}
+.livebar .btn{flex:1}
+.sheet{background:var(--bg);color:var(--fg);border-radius:14px 14px 0 0;margin-inline:-16px;padding:12px 16px 0;display:flex;flex-direction:column;gap:14px}
+.sheet .grip{align-self:center;width:36px;height:4px;border-radius:2px;background:var(--line)}
+.exp{border:2px solid var(--fg);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px;margin:2px 0 6px}
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--fg);border-radius:var(--rs);overflow:hidden}
+.seg3 > *{height:44px;border:0;border-right:1px solid var(--fg);background:var(--card);font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--fg)}
+.seg3 > *:last-child{border-right:0}
+.seg3 > .on{background:var(--accent);color:var(--on-accent);font-weight:700}
+.quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.quick .chip{width:100%}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--fg);border-radius:var(--r);overflow:hidden}
+.stats > div{padding:12px;border-right:1px solid var(--fg);min-width:0}
+.stats > div:last-child{border-right:0}
+.stats .v{font-weight:800;font-size:22px;margin-top:4px;font-variant-numeric:tabular-nums}
+.stats .hi{background:var(--accent);color:var(--on-accent)}
+.stats .hi .eyebrow{color:var(--on-accent)}
+.stepper{display:flex;align-items:center;gap:8px;margin-top:4px}
+.stepper button{width:28px;height:28px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);font-size:16px;line-height:1}
+.remix{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.remix button{text-align:left;padding:12px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);min-width:0}
+.remix .mono{font-size:10px;color:var(--acc-text);display:block;overflow-wrap:anywhere}
+.remix b{display:block;margin-top:6px;font-size:15px;overflow-wrap:anywhere}
+.step{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:16px;line-height:1.5}
+.step .mono{font-size:13px;padding-top:2px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--fg);border-radius:var(--rs);overflow:hidden}
+.week button{border:0;border-right:1px solid var(--fg);background:var(--card);padding:10px 0;font-family:var(--mono);font-weight:600;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.week button:last-child{border-right:0}
+.week button.today{background:var(--accent);color:var(--on-accent)}
+.week i{width:8px;height:8px;box-sizing:border-box;border:1px solid var(--muted)}
+.week i.full{background:currentColor;border-color:currentColor}
+.stars{display:flex;gap:2px}
+.stars button{border:0;background:none;padding:4px;font-size:18px;color:var(--muted);line-height:1;min-width:30px;min-height:30px}
+.stars button.on{color:var(--fg)}
+.bubble{max-width:85%;padding:12px 14px;border-radius:var(--r);font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble.me{align-self:flex-end;background:var(--accent);color:var(--on-accent)}
+.bubble.juno{align-self:flex-start;background:var(--surface)}
+.swipecard{touch-action:pan-y;user-select:none;transition:transform .25s ease}
+.swipecard.drag{transition:none}
+.cooktext{font-weight:700;font-size:clamp(24px,7.4vw,31px);line-height:1.2;letter-spacing:-.02em;margin:0}
+.timer{display:flex;align-items:center;justify-content:space-between;padding:18px;border-radius:var(--r);background:var(--accent);color:var(--on-accent)}
+.timer .t{font-family:var(--mono);font-weight:600;font-size:46px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.timer button{width:64px;height:64px;border-radius:32px;border:0;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center}
+.progress{display:grid;gap:4px}
+.progress span{height:4px;background:#333}
+.progress span.on{background:var(--accent)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:var(--rs);font-size:14px;z-index:60;max-width:calc(100% - 32px);box-sizing:border-box}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app" class="app" aria-live="polite"></div>
+<div id="dock"></div>
+<div id="ov" hidden></div>
+<div id="toast" class="toast" hidden role="status"></div>
+
+<script>
+(() => {
+'use strict';
+// ---------- helpers ----------
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const pad = (n) => String(n).padStart(2, '0');
+const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const today0 = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+const addDays = (n) => { const d = today0(); d.setDate(d.getDate() + Math.round(n)); return ymd(d); };
+const parseYmd = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ''); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; };
+const daysLeft = (exp) => { const d = parseYmd(exp); return d ? Math.round((d - today0()) / 864e5) : null; };
+const MONTHS = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+const DAYS = ['zo','ma','di','wo','do','vr','za'];
+const fmtDate = (exp) => { const d = parseYmd(exp); return d ? d.getDate() + ' ' + MONTHS[d.getMonth()] : ''; };
+const expLabel = (n) => n == null ? 'ONBEKEND' : n < 0 ? 'OVER DATUM' : n === 0 ? 'VANDAAG' : n === 1 ? '1 DAG' : n < 21 ? n + ' DAGEN' : n < 60 ? Math.round(n/7) + ' WEKEN' : Math.round(n/30) + ' MND';
+const ls = {
+  get(k, d) { try { const v = localStorage.getItem('juno:' + k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('juno:' + k, JSON.stringify(v)); } catch {} }
+};
+const BASICS = ['zout','peper','olie','olijfolie','boter','water','suiker','bloem','azijn'];
+const LOCS = ['koelkast','vriezer','kast','kruiden','fruit'];
+const LOCNAME = {koelkast:'Koelkast', vriezer:'Vriezer', kast:'Kast', kruiden:'Kruiden', fruit:'Fruit & groente'};
+const WEEK = ['ma','di','wo','do','vr','za','zo'];
+
+const I = {
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>',
+  fridge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 10h12M9 5v2M9 13v3"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>',
+  mark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+  markf:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+  scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.5"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  rows:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+  cards:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M3 6v12M21 6v12"/></svg>',
+  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 17l-5-5-9 8"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>',
+  pause:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="24" height="24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>'
+};
+
+// ---------- state ----------
+const S = {
+  pantry: ls.get('pantry', []),
+  list: ls.get('list', []),
+  saved: ls.get('saved', { recipes: [], week: {}, folders: ['Favorieten','Doordeweeks','Feestjes'] }),
+  recipes: ls.get('recipes', []),
+  recipesKey: ls.get('recipesKey', ''),
+  prefs: Object.assign({ meal: defaultMeal(), time: 30, persons: 2, diets: [], cuisine: 'Alle keukens', level: 'Elk niveau', mode: 'nu' }, ls.get('prefs', {})),
+  tab: ls.get('tab', 'recepten'),
+  recView: ls.get('recView', 'lijst'),
+  swipeI: 0,
+  ov: null, detail: null, detailPersons: 2, planOpen: false, remixBusy: '',
+  scan: { mode: 'koelkast', items: [], busy: false, photo: null, error: '', text: '' },
+  expOpen: null, thtBusy: null,
+  gen: { busy: false, error: '', count: 0, ctl: null },
+  chat: { turns: [], busy: false, error: '', draft: '' },
+  cook: { i: 0, left: null, total: null, running: false, end: 0, done: false },
+  locTab: 'alles', folder: 'Alle', armDelete: null,
+  ai: 'pending', canImg: true, store: 'local'
+};
+function defaultMeal() { const h = new Date().getHours(); return h < 10 ? 'Ontbijt' : h < 14 ? 'Lunch' : h < 16 ? 'Snack' : 'Diner'; }
+if (!Array.isArray(S.saved.folders)) S.saved.folders = ['Favorieten','Doordeweeks','Feestjes'];
+
+// ---------- capabilities ----------
+let db = null, sample = null;
+const DOCS = { pantry: 'household/pantry', list: 'household/list', saved: 'household/saved' };
+function persist(key) {
+  ls.set(key, S[key]);
+  if (!db) return;
+  const body = key === 'saved' ? { recipes: S.saved.recipes, week: S.saved.week, folders: S.saved.folders } : { items: S[key] };
+  db.doc(DOCS[key]).set(body).catch(e => {
+    toast(e && e.code === 'quota_exceeded' ? 'De opslag is vol. Verwijder oude recepten of producten.' : 'Opslaan lukte niet. Je wijziging staat alleen op dit apparaat.');
+  });
+}
+// ---------- website-modus: AI via de juno-ai functie ----------
+const WEB_AI_URL = '__JUNO_AI_URL__';
+const WEB_READY = !WEB_AI_URL.startsWith('__');
+function lsRaw(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return ''; } }
+let codeAsk = null;
+function ensureCode() {
+  const have = lsRaw('juno.code'); if (have) return Promise.resolve(have);
+  if (codeAsk) return codeAsk;
+  codeAsk = new Promise((resolve, reject) => {
+    const box = document.createElement('div');
+    box.className = 'codegate';
+    box.innerHTML = `<form class="codecard"><div class="eyebrow">juno pilot</div><h2 class="big" style="font-size:28px">Vul je <span class="mark">pilotcode</span> in.</h2>
+      <p style="color:var(--muted);font-size:15px;line-height:1.5;margin:0">Die heb je gekregen van wie je juno gaf. Je hoeft hem maar één keer in te vullen op dit apparaat.</p>
+      <input id="codeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pilotcode" aria-label="Pilotcode" required>
+      <div style="display:flex;gap:8px"><button type="button" class="btn ghost" data-x="no" style="flex:1"><span>Later</span></button><button class="btn" style="flex:1"><span>Verder</span><span class="mono">→</span></button></div></form>`;
+    document.body.appendChild(box);
+    const done = (v) => { box.remove(); codeAsk = null; if (v) { lsRaw('juno.code', v); resolve(v); } else reject({ code: 'no_code' }); };
+    box.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const v = box.querySelector('#codeIn').value.trim(); if (v) done(v); });
+    box.querySelector('[data-x="no"]').addEventListener('click', () => done(''));
+    setTimeout(() => box.querySelector('#codeIn').focus(), 50);
+  });
+  return codeAsk;
+}
+const blobToB64 = (b) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1] || ''); r.onerror = () => rej({ code: 'image_rejected' }); r.readAsDataURL(b); });
+function looseJson(t) {
+  t = String(t || '').trim();
+  try { return JSON.parse(t); } catch (e) {}
+  const f = /```(?:json)?\s*([\s\S]*?)```/.exec(t); if (f) { try { return JSON.parse(f[1]); } catch (e) {} }
+  const a = Math.min(...['[', '{'].map(c => t.indexOf(c) < 0 ? Infinity : t.indexOf(c))), b = Math.max(t.lastIndexOf(']'), t.lastIndexOf('}'));
+  if (a !== Infinity && b > a) { try { return JSON.parse(t.slice(a, b + 1)); } catch (e) {} }
+  throw { code: 'invalid_json' };
+}
+function makeWebSample() {
+  const call = async (input, opts = {}) => {
+    const code = await ensureCode();
+    const images = [];
+    for (const b of [].concat(opts.images || [])) images.push({ data: await blobToB64(b), mediaType: b.type || 'image/jpeg' });
+    let res;
+    try { res = await fetch(WEB_AI_URL, { method: 'POST', headers: { 'content-type': 'application/json', 'x-juno-code': code }, body: JSON.stringify({ input, images, tier: opts.modelTier || 'default' }), signal: opts.signal }); }
+    catch (e) { throw { code: e && e.name === 'AbortError' ? 'cancelled' : 'network' }; }
+    if (!res.ok) {
+      let j = {}; try { j = await res.json(); } catch (e) {}
+      if (res.status === 401) lsRaw('juno.code', null);
+      throw { code: j.code || 'network', message: j.message || '' };
+    }
+    const rd = res.body.getReader(), dec = new TextDecoder(); let text = '';
+    for (;;) { const { done, value } = await rd.read(); if (done) break; const d = dec.decode(value, { stream: true }); if (!d) continue; text += d; if (opts.onText) try { opts.onText({ text, delta: d }); } catch (e) {} }
+    if (!text.trim()) throw { code: 'empty_completion' };
+    return { text, truncated: false };
+  };
+  call.json = async (input, opts) => looseJson((await call(input, opts)).text);
+  call.limits = async () => ({ maxInputBytes: 200000, images: { maxCount: 3, maxInputBytes: 20e6, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } });
+  return call;
+}
+async function initCaps() {
+  if (!window.claude || typeof window.claude.use !== 'function') {
+    if (WEB_READY) { sample = makeWebSample(); S.ai = 'on'; S.canImg = true; S.web = true; render(); return; }
+    S.ai = 'off'; S.canImg = false; S.imgWhy = 'A1'; render(); return;
+  }
+  claude.use('sample').then(async s => {
+    sample = s; S.ai = s ? 'on' : 'off';
+    if (s) { const lim = await s.limits().catch(() => null); S.canImg = !!(lim && lim.images); S.imgWhy = !lim ? 'B2' : (lim.images ? '' : 'C3'); } else { S.canImg = false; S.imgWhy = 'D4'; }
+    render();
+  }).catch(() => { S.ai = 'off'; S.canImg = false; render(); });
+  claude.use('db').then(d => {
+    if (!d) return;
+    db = d; S.store = 'db';
+    for (const key of Object.keys(DOCS)) {
+      db.doc(DOCS[key]).onSnapshot(snap => {
+        if (!snap.exists) { if (!snap.metadata.fromCache && (key === 'saved' ? S.saved.recipes.length : S[key].length)) persist(key); return; }
+        const d0 = snap.data() || {};
+        if (key === 'saved') S.saved = { recipes: clone(d0.recipes || []), week: clone(d0.week || {}), folders: clone(d0.folders || ['Favorieten','Doordeweeks','Feestjes']) };
+        else S[key] = clone(d0.items || []);
+        ls.set(key, S[key]);
+        if (!S.ov || S.ov === 'detail' || key !== 'pantry') softRender();
+      }, () => { S.store = 'local'; softRender(); });
+    }
+  }).catch(() => {});
+}
+function softRender() {
+  // avoid wiping a field the user is typing in
+  const a = document.activeElement;
+  if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && a.type !== 'checkbox') return;
+  render();
+}
+function errCopy(e) {
+  const c = e && e.code;
+  return ({
+    not_granted: 'juno heeft geen toestemming om Claude te gebruiken. Herlaad de pagina en kies Toestaan.',
+    sampling_disabled: 'Claude is niet beschikbaar voor dit account.',
+    not_declared: 'AI-functies staan uit voor deze pagina.',
+    capability_disabled: 'AI-functies werken niet in deze weergave.',
+    rate_limited: 'Even te veel verzoeken. Probeer het over een minuut opnieuw.',
+    image_rejected: 'Deze foto kan niet worden gelezen. Probeer een andere JPG- of PNG-foto.',
+    images_unavailable: 'Foto\'s versturen werkt niet in deze weergave. Typ je producten in.',
+    invalid_json: 'Het antwoord kwam niet goed door. Probeer het opnieuw.',
+    refused: 'Dit verzoek kon niet worden uitgevoerd. Probeer een andere foto of omschrijving.',
+    session_expired: 'Je bent uitgelogd. Log opnieuw in bij Claude en herlaad.',
+    prompt_too_large: 'Te veel gegevens in één keer. Verwijder wat oude producten.',
+    empty_completion: 'Er kwam geen antwoord. Probeer het opnieuw.',
+    wrong_code: 'Deze pilotcode klopt niet. Vul de juiste code in bij de volgende poging.',
+    no_code: 'Zonder pilotcode kan juno de AI niet gebruiken.',
+    config: 'De AI van juno is nog niet goed ingesteld (sleutel of pilotcode op de server).',
+    network: 'Geen verbinding met juno. Controleer je internet en probeer het opnieuw.',
+    bad_request: 'Dit verzoek werd geweigerd. Probeer een andere foto of tekst.',
+    cancelled: 'Gestopt.'
+  })[c] || 'De verbinding viel weg. Probeer het opnieuw.';
+}
+async function needSample() {
+  if (!sample && S.web) sample = makeWebSample();
+  if (!sample && window.claude && claude.use) sample = await claude.use('sample').catch(() => null);
+  if (!sample) throw { code: 'capability_disabled' };
+  return sample;
+}
+
+// ---------- domain ----------
+const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+function inPantry(name) {
+  const n = norm(name); if (!n) return false;
+  if (BASICS.some(b => n === b || n.includes(b))) return true;
+  return S.pantry.some(p => { const q = norm(p.name); return q && (n.includes(q) || q.includes(n)); });
+}
+function pantrySorted() { return [...S.pantry].sort((a, b) => (daysLeft(a.exp) ?? 9999) - (daysLeft(b.exp) ?? 9999)); }
+function expiring() { return pantrySorted().filter(p => { const d = daysLeft(p.exp); return d != null && d <= 2; }); }
+function recipeStats(r) {
+  const ing = r.ingredients || [];
+  const have = ing.filter(i => i.inPantry !== false || inPantry(i.name)).length;
+  return { have, total: ing.length, missing: ing.filter(i => !(i.inPantry !== false || inPantry(i.name))) };
+}
+function prefsKey() { const p = S.prefs; return JSON.stringify([p.meal, p.time, p.persons, p.diets, p.cuisine, p.level, p.mode, S.pantry.map(x => x.name + x.exp).sort()]); }
+const SECTIONS = [
+  ['Groente & fruit', /(appel|peer|banaan|citroen|limoen|sinaas|druif|bes|aardbei|tomaat|tomaten|paprika|ui|uien|knoflook|wortel|courgette|aubergine|spinazie|sla|komkommer|broccoli|bloemkool|kool|prei|champignon|paddenstoel|avocado|aardappel|bonen|erwt|mais|gember|lente|rucola|selderij|venkel|pompoen|biet|radijs|chili|peper vers|mango|ananas|kiwi|meloen)/],
+  ['Zuivel & eieren', /(melk|yoghurt|kwark|kaas|feta|mozzarella|parmezaan|room|boter|ei\b|eieren|creme|crème|ricotta|mascarpone|halloumi)/],
+  ['Vlees & vis', /(kip|gehakt|rund|varken|spek|bacon|ham|worst|chorizo|zalm|tonijn|vis|garnaal|kabeljauw|lam|kalkoen|shoarma)/],
+  ['Brood', /(brood|tortilla|wrap|pita|naan|stokbrood|croissant|bol|beschuit|cracker)/],
+  ['Voorraadkast', /(pasta|rijst|noedel|couscous|bulgur|quinoa|meel|bloem|blik|tomatenblok|passata|kikkererwt|linzen|olijf|saus|sojasaus|bouillon|olie|azijn|honing|suiker|noten|pindakaas|havermout|muesli|kokos)/],
+  ['Kruiden', /(komijn|kurkuma|paprikapoeder|oregano|basilicum|tijm|rozemarijn|peterselie|koriander|munt|kaneel|kerrie|chilipoeder|nootmuskaat|dille|bieslook|laurier|zout|peper)/]
+];
+const SEC_DAYS = { 'Groente & fruit': 5, 'Zuivel & eieren': 7, 'Vlees & vis': 2, 'Brood': 3, 'Voorraadkast': 180, 'Kruiden': 365, 'Overig': 7 };
+const SEC_LOC = { 'Groente & fruit': 'fruit', 'Zuivel & eieren': 'koelkast', 'Vlees & vis': 'koelkast', 'Brood': 'kast', 'Voorraadkast': 'kast', 'Kruiden': 'kruiden', 'Overig': 'kast' };
+function sectionOf(name) { const n = norm(name); for (const [s, re] of SECTIONS) if (re.test(n)) return s; return 'Overig'; }
+function addToList(name, recipe) {
+  const n = String(name || '').trim(); if (!n) return false;
+  if (S.list.some(x => !x.checked && norm(x.name) === norm(n))) return false;
+  S.list.push({ id: uid(), name: n, section: sectionOf(n), checked: false, recipe: recipe || '' });
+  persist('list'); return true;
+}
+function isSaved(r) { return S.saved.recipes.some(x => x.id === r.id || norm(x.title) === norm(r.title)); }
+function saveRecipe(r, folder) {
+  if (isSaved(r)) return;
+  S.saved.recipes.unshift(Object.assign(clone(r), { folder: folder || 'Favorieten', rating: 0, note: '', savedAt: Date.now() }));
+  persist('saved');
+}
+function unsaveRecipe(r) { S.saved.recipes = S.saved.recipes.filter(x => !(x.id === r.id || norm(x.title) === norm(r.title))); persist('saved'); }
+function fmtQty(q, unit, factor) {
+  if (q == null || q === '' || isNaN(+q)) return (unit || '').toUpperCase();
+  let v = +q * (factor || 1);
+  if (['g','ml'].includes(unit)) v = v >= 100 ? Math.round(v / 10) * 10 : Math.round(v / 5) * 5 || Math.round(v);
+  else v = Math.round(v * 2) / 2;
+  const s = String(v).replace('.', ',');
+  return (s + ' ' + (unit || '')).trim().toUpperCase();
+}
+function coverWords(r) { return (r.ingredients || []).slice(0, 6).map(i => i.name).join(' · '); }
+
+// ---------- AI calls ----------
+function pantryText() {
+  if (!S.pantry.length) return '(leeg)';
+  return pantrySorted().map(p => { const d = daysLeft(p.exp); return '- ' + p.name + (p.qty ? ' (' + p.qty + ' ' + (p.unit || '') + ')' : '') + ' — ' + (d == null ? 'onbekend' : d + ' dagen houdbaar'); }).join('\n');
+}
+const ITEM_SHAPE = '[{"name":"Paprika","qty":2,"unit":"st","loc":"koelkast","shelfDays":5,"confidence":0.95}]';
+const ITEM_RULES = '- name: Nederlandse productnaam met hoofdletter, zo specifiek als zichtbaar (bijv. "Griekse yoghurt").\n- unit: st, g, ml, pak, blik, bos of fles.\n- loc: koelkast, vriezer, kast, kruiden of fruit.\n- shelfDays: geschatte resterende houdbaarheid in dagen voor een gemiddeld product van dit type in die bewaarplek.\n- confidence: 0 tot 1; lager dan 0.6 als je twijfelt.';
+function scanPrompt(mode) {
+  if (mode === 'barcode') return 'Op de foto staat één verpakt product, vaak met een barcode of etiket. Lees de productnaam van de verpakking. Antwoord alleen met een JSON-array met één object, zoals ' + ITEM_SHAPE + '. Zie je een THT- of TGT-datum, voeg dan "exp":"YYYY-MM-DD" toe (vandaag is ' + ymd(new Date()) + ').\n' + ITEM_RULES;
+  if (mode === 'product') return 'Op de foto staat één levensmiddel. Herken het. Antwoord alleen met een JSON-array met één object, zoals ' + ITEM_SHAPE + '.\n' + ITEM_RULES;
+  return 'Op de foto staat een geopende koelkast, kast, fruitschaal of aanrecht. Noem elk eetbaar product dat je duidelijk ziet, met het aantal als je dat kunt tellen. Antwoord alleen met een JSON-array, zoals ' + ITEM_SHAPE + '. Lege array als je niets eetbaars ziet. Geen dubbelen.\n' + ITEM_RULES;
+}
+function normItems(arr) {
+  if (!Array.isArray(arr)) arr = arr && Array.isArray(arr.items) ? arr.items : [];
+  return arr.filter(x => x && x.name).slice(0, 40).map(x => {
+    const sd = Math.max(0, Math.min(3650, Math.round(+x.shelfDays || 5)));
+    const hasExp = parseYmd(x.exp);
+    return { id: uid(), name: String(x.name).slice(0, 60), qty: x.qty != null && !isNaN(+x.qty) ? +x.qty : null, unit: String(x.unit || 'st').slice(0, 8),
+      loc: LOCS.includes(x.loc) ? x.loc : 'koelkast', shelfDays: sd, exp: hasExp ? x.exp : addDays(sd), method: hasExp ? 'tht' : 'auto',
+      confidence: +x.confidence || 0.8, checked: (+x.confidence || 0.8) >= 0.6, unsure: (+x.confidence || 0.8) < 0.6 };
+  });
+}
+async function shrink(file) {
+  try {
+    const bmp = await createImageBitmap(file);
+    const k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+    const cv = document.createElement('canvas'); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
+    cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height); bmp.close && bmp.close();
+    const b = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.85));
+    return b || file;
+  } catch (e) { return file; }
+}
+const LIVE_RULES = 'Schrijf per product één regel, precies zo: Naam | aantal | eenheid | plek | dagen | zekerheid | x | y\n- Naam: Nederlandse productnaam met hoofdletter, zo specifiek als zichtbaar.\n- aantal: getal, of - als je het niet kunt tellen.\n- eenheid: st, g, ml, pak, blik, bos of fles.\n- plek: koelkast, vriezer, kast, kruiden of fruit.\n- dagen: geschatte resterende houdbaarheid in dagen.\n- zekerheid: 0 tot 1, lager dan 0.6 als je twijfelt.\n- x en y: het midden van het product op de foto in procenten (0 = links/boven, 100 = rechts/onder).\nBegin direct met de eerste regel. Geen kop, geen uitleg, geen opsommingstekens, geen dubbelen.';
+function liveScanPrompt(mode) {
+  if (mode === 'product' || mode === 'barcode') return 'Op de foto staat één levensmiddel of verpakt product. Herken het (lees zo nodig het etiket) en schrijf precies één regel.\n' + LIVE_RULES;
+  return 'Op de foto staat een geopende koelkast, kast, fruitschaal of aanrecht. Noem elk eetbaar product dat je duidelijk ziet, met het meest opvallende product eerst.\n' + LIVE_RULES;
+}
+function parseLiveLine(l) {
+  const p = String(l).replace(/^[\s*•-]+/, '').split('|').map(t => t.trim());
+  if (p.length < 6 || !p[0] || /^naam$/i.test(p[0])) return null;
+  const num = (v) => { const n = parseFloat(String(v).replace(',', '.')); return isNaN(n) ? null : n; };
+  const pct = (v) => { const n = num(v); return n == null ? null : Math.max(8, Math.min(92, n)); };
+  return { name: p[0], qty: num(p[1]), unit: p[2] || 'st', loc: p[3], shelfDays: num(p[4]) ?? 5, confidence: num(p[5]) ?? 0.8, x: pct(p[6]), y: pct(p[7]) };
+}
+function addScanned(it) {
+  const ex = S.pantry.find(p => norm(p.name) === norm(it.name));
+  const rec = { id: ex ? ex.id : uid(), name: it.name, qty: it.qty, unit: it.unit, loc: it.loc, exp: it.exp, shelfDays: it.shelfDays, method: it.method, addedAt: Date.now() };
+  if (ex) { it.prev = { ...ex }; Object.assign(ex, rec); } else S.pantry.push(rec);
+  it.pid = rec.id;
+}
+function removeScanned(it) {
+  const i = S.pantry.findIndex(p => p.id === it.pid);
+  if (i >= 0) { if (it.prev) S.pantry[i] = it.prev; else S.pantry.splice(i, 1); }
+}
+let liveRaf = 0;
+function liveRender() { if (liveRaf) return; liveRaf = requestAnimationFrame(() => { liveRaf = 0; render(); }); }
+async function runLiveScan(file) {
+  camStop();
+  S.scan.error = ''; S.scan.busy = true; S.scan.auto = true;
+  if (S.scan.photo) URL.revokeObjectURL(S.scan.photo);
+  S.scan.photo = URL.createObjectURL(file); S.scan.items = []; render();
+  let done = 0;
+  const take = (text, final) => {
+    const lines = String(text || '').split('\n');
+    const ready = final ? lines : lines.slice(0, -1);
+    for (let i = done; i < ready.length; i++) {
+      const r = parseLiveLine(ready[i]); if (!r) continue;
+      const [it] = normItems([r]); if (!it) continue;
+      if (S.scan.items.some(x => norm(x.name) === norm(it.name))) continue;
+      it.x = r.x; it.y = r.y; it.t = Date.now(); it.checked = true;
+      addScanned(it); S.scan.items.push(it); liveRender();
+    }
+    done = ready.length;
+  };
+  try {
+    const s = await needSample();
+    const img = await shrink(file);
+    const res = await s(liveScanPrompt(S.scan.mode), { images: [img], onText: ({ text }) => take(text, false), cache: false });
+    take(res && res.text, true);
+    if (!S.scan.items.length) S.scan.error = 'juno zag geen eetbare producten. Probeer een scherpere foto met meer licht.';
+    else persist('pantry');
+  } catch (e) { if (S.scan.items.length) persist('pantry'); if (e && e.text) take(e.text, true); S.scan.error = errCopy(e); }
+  S.scan.busy = false; render();
+}
+// ---------- live camera in de pagina ----------
+const CAM = { state: 'idle', why: '', stream: null, video: null, loop: 0, labels: [], lastNew: 0, thinking: false, paused: false, blocked: new Set() };
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+const LIVE_FRAME_PROMPT = () => 'Dit is een live camerabeeld van iemand die met zijn telefoon langs zijn koelkast, kast of boodschappen beweegt. Noem elk eetbaar product dat je DUIDELIJK ziet, hooguit 12. Zie je niets eetbaars of is het beeld wazig, antwoord dan alleen met: -\n' + LIVE_RULES;
+async function camStart() {
+  if (CAM.state === 'on' || CAM.state === 'starting') return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { CAM.state = 'off'; CAM.why = 'geen camera-toegang in deze weergave'; render(); return; }
+  CAM.state = 'starting'; CAM.paused = false; render();
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } }, audio: false });
+    if (S.ov !== 'scan' || S.scan.mode === 'typen') { st.getTracks().forEach(t => t.stop()); CAM.state = 'idle'; return; }
+    CAM.stream = st;
+    if (!CAM.video) { const v = document.createElement('video'); v.setAttribute('playsinline', ''); v.setAttribute('aria-label', 'Camerabeeld'); v.muted = true; v.autoplay = true; v.className = 'camvideo'; CAM.video = v; }
+    CAM.video.srcObject = st;
+    CAM.state = 'on'; CAM.lastNew = Date.now(); render();
+    await CAM.video.play().catch(() => {});
+    camLoop();
+  } catch (e) {
+    CAM.state = 'off';
+    CAM.why = e && e.name === 'NotAllowedError' ? 'camera niet toegestaan' : e && e.name === 'NotFoundError' ? 'geen camera gevonden' : 'camera kon niet starten' + (e && e.name ? ' (' + e.name + ')' : '');
+    render();
+  }
+}
+function camStop() {
+  CAM.loop++;
+  if (CAM.stream) CAM.stream.getTracks().forEach(t => t.stop());
+  CAM.stream = null; if (CAM.video) CAM.video.srcObject = null;
+  if (CAM.state !== 'off') CAM.state = 'idle';
+  CAM.labels = []; CAM.thinking = false; CAM.paused = false;
+}
+function camAttach() {
+  const slot = document.getElementById('camSlot');
+  if (slot && CAM.video && CAM.video.parentNode !== slot) { slot.prepend(CAM.video); CAM.video.play().catch(() => {}); }
+}
+function grabFrame() {
+  const v = CAM.video, slot = document.getElementById('camSlot');
+  if (!v || !slot || !v.videoWidth) return Promise.resolve(null);
+  const a = slot.clientWidth / Math.max(1, slot.clientHeight), vw = v.videoWidth, vh = v.videoHeight;
+  let sx = 0, sy = 0, sw = vw, sh = vh;
+  if (vw / vh > a) { sw = vh * a; sx = (vw - sw) / 2; } else { sh = vw / a; sy = (vh - sh) / 2; } // zelfde uitsnede als op het scherm
+  const W = 640, H = Math.round(W / a);
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  cv.getContext('2d').drawImage(v, sx, sy, sw, sh, 0, 0, W, H);
+  return new Promise(r => cv.toBlob(r, 'image/jpeg', 0.6));
+}
+async function camLoop() {
+  const me = ++CAM.loop;
+  const alive = () => me === CAM.loop && CAM.state === 'on' && S.ov === 'scan' && !CAM.paused;
+  while (alive()) {
+    if (document.hidden) { await sleep(800); continue; }
+    if (Date.now() - CAM.lastNew > 75000) { CAM.paused = true; render(); break; }
+    try {
+      const blob = await grabFrame();
+      if (!blob) { await sleep(400); continue; }
+      const s = await needSample();
+      CAM.thinking = true; render();
+      const res = await s(LIVE_FRAME_PROMPT(), { images: [blob], modelTier: 'quick', cache: false });
+      if (!alive()) break;
+      const now = Date.now(); let fresh = 0;
+      const hits = String(res && res.text || '').split('\n').map(parseLiveLine).filter(Boolean);
+      for (const r of hits) {
+        const k = norm(r.name);
+        const old = CAM.labels.find(l => l.k === k);
+        if (r.x != null && r.y != null) { if (old) Object.assign(old, { x: r.x, y: r.y, seen: now, name: r.name }); else CAM.labels.push({ k, name: r.name, x: r.x, y: r.y, seen: now, t: now, unsure: r.confidence < 0.6 }); }
+        if (r.confidence < 0.6 || CAM.blocked.has(k) || S.scan.items.some(x => norm(x.name) === k)) continue;
+        const [it] = normItems([r]); if (!it) continue;
+        it.checked = true; it.t = now; addScanned(it); S.scan.items.push(it); fresh++;
+      }
+      CAM.labels = CAM.labels.filter(l => now - l.seen < 4000);
+      S.scan.auto = true; S.scan.error = '';
+      if (fresh) { CAM.lastNew = now; persist('pantry'); if (navigator.vibrate) try { navigator.vibrate(30); } catch (e) {} }
+    } catch (e) {
+      const c = e && e.code;
+      S.scan.error = errCopy(e);
+      if (['not_granted', 'images_unavailable', 'capability_disabled', 'sampling_disabled', 'not_declared', 'session_expired', 'wrong_code', 'no_code', 'config'].includes(c)) { CAM.thinking = false; CAM.paused = true; render(); break; }
+      CAM.thinking = false; render(); await sleep(2500);
+    }
+    CAM.thinking = false; if (alive()) render();
+    await sleep(900);
+  }
+}
+async function runScan(file) {
+  S.scan.error = ''; S.scan.busy = true;
+  if (S.scan.photo) URL.revokeObjectURL(S.scan.photo);
+  S.scan.photo = URL.createObjectURL(file); render();
+  try {
+    const s = await needSample();
+    const res = await s.json(scanPrompt(S.scan.mode), { images: [await shrink(file)] });
+    const items = normItems(res);
+    S.scan.items = mergeItems(S.scan.items, items);
+    if (!items.length) S.scan.error = 'juno zag geen eetbare producten. Probeer een scherpere foto met meer licht.';
+  } catch (e) { S.scan.error = errCopy(e); }
+  S.scan.busy = false; render();
+}
+async function runTyped() {
+  const text = S.scan.text.trim(); if (!text) return;
+  if (S.scan.auto) { S.scan.items = []; S.scan.auto = false; if (S.scan.photo) { URL.revokeObjectURL(S.scan.photo); S.scan.photo = null; } }
+  S.scan.error = ''; S.scan.busy = true; render();
+  let items = [];
+  try {
+    const s = await needSample();
+    const res = await s.json('Zet deze opsomming van producten in iemands keuken om naar een JSON-array zoals ' + ITEM_SHAPE + '.\n' + ITEM_RULES + '\nconfidence altijd 1.\nTekst: """' + text.slice(0, 2000) + '"""', { modelTier: 'quick' });
+    items = normItems(res);
+  } catch (e) {
+    // offline fallback: split by comma / newline
+    items = text.split(/[,\n;]+/).map(t => t.trim()).filter(Boolean).map(t => {
+      const m = /^(\d+(?:[.,]\d+)?)\s*(st|g|ml|pak|blik|bos|fles)?\s+(.+)$/i.exec(t);
+      const name = m ? m[3] : t; const sec = sectionOf(name);
+      return { name: name.charAt(0).toUpperCase() + name.slice(1), qty: m ? +m[1].replace(',', '.') : null, unit: m && m[2] ? m[2].toLowerCase() : 'st', loc: SEC_LOC[sec], shelfDays: SEC_DAYS[sec], confidence: 1 };
+    });
+    items = normItems(items);
+  }
+  S.scan.items = mergeItems(S.scan.items, items); S.scan.text = ''; S.scan.busy = false; render();
+}
+function mergeItems(a, b) { const out = [...a]; for (const it of b) if (!out.some(x => norm(x.name) === norm(it.name))) out.push(it); return out; }
+async function readTht(ctx, id, file) {
+  const it = getItem(ctx, id); if (!it) return;
+  S.thtBusy = id; render();
+  try {
+    const s = await needSample();
+    const res = await s.json('Lees de houdbaarheidsdatum (THT, TGT of "ten minste houdbaar tot") op deze verpakking. Vandaag is ' + ymd(new Date()) + '. Antwoord alleen met JSON: {"date":"YYYY-MM-DD"}, of {"date":null} als je geen datum kunt lezen. Staat er geen jaar, neem dan het eerstvolgende jaar waarin die datum na vandaag valt.', { images: [await shrink(file)], modelTier: 'quick' });
+    if (res && parseYmd(res.date)) { it.exp = res.date; it.method = 'tht'; if (ctx === 'pantry') persist('pantry'); toast('THT gelezen: ' + fmtDate(res.date)); }
+    else toast('Geen datum gevonden. Kies de datum zelf.');
+  } catch (e) { toast(errCopy(e)); }
+  S.thtBusy = null; render();
+}
+const RECIPE_SHAPE = '{"title":"Shakshuka met spinazie","cuisine":"Noord-Afrikaans","minutes":25,"difficulty":"makkelijk","tags":["vega"],"persons":2,"ingredients":[{"name":"Eieren","qty":4,"unit":"st","inPantry":true}],"steps":[{"text":"Fruit ui en paprika 5 minuten in olijfolie.","timerMin":5}],"remixes":[{"add":"feta","name":"Grieks","note":"Verkruimel feta erover en voeg olijven toe."}],"usesExpiring":["Spinazie"],"why":"Gebruikt je spinazie die morgen op moet."}';
+function recipePrompt(n) {
+  const p = S.prefs;
+  return 'Je bent juno, een kookassistent. Bedenk ' + n + ' verschillende recepten voor ' + p.meal.toLowerCase() + ', in het Nederlands, op basis van wat iemand in huis heeft.\n\nVoorraad (naam — houdbaarheid):\n' + pantryText() +
+    '\n\nBasis die iedereen heeft en altijd mag: ' + BASICS.join(', ') + '.\n\nRegels:\n' +
+    (p.mode === 'nu' ? '- Gebruik ALLEEN producten uit de voorraad plus de basis. Geen extra ingrediënten.\n' : '- Elk recept heeft 1 tot 3 ingrediënten nodig die NIET in de voorraad staan. De rest komt uit de voorraad.\n') +
+    '- Totale tijd (voorbereiding + koken) maximaal ' + p.time + ' minuten.\n- Voor ' + p.persons + ' personen, met kloppende hoeveelheden.\n' +
+    '- Dieet: ' + (p.diets.length ? p.diets.join(', ') : 'geen beperkingen') + '.\n' +
+    (p.cuisine !== 'Alle keukens' ? '- Keuken: ' + p.cuisine + '.\n' : '- Varieer in keukens.\n') +
+    (p.level !== 'Elk niveau' ? '- Moeilijkheid: ' + p.level.toLowerCase() + '.\n' : '') +
+    '- Gebruik bij voorkeur producten die binnen 2 dagen op moeten.\n- Recepten moeten echt bestaan of logisch kloppen en lekker zijn.\n\n' +
+    'Antwoord alleen met een JSON-array van objecten, precies in deze vorm:\n' + RECIPE_SHAPE +
+    '\n- inPantry: true als het in de voorraad of de basis staat, anders false.\n- unit: st, g, ml, el, tl, blik, pak, bos, teen of snuf.\n- 4 tot 7 stappen; timerMin alleen bij wachten, bakken of garen.\n- Precies 3 remixes: elk één toevoeging die er een ander soort gerecht van maakt.\n- why: één korte zin waarom dit recept nu past.\n- Sorteer van beste match naar minste.';
+}
+function normRecipe(r) {
+  if (!r || !r.title) return null;
+  return { id: uid(), title: String(r.title).slice(0, 80), cuisine: String(r.cuisine || '').slice(0, 40), minutes: Math.round(+r.minutes || S.prefs.time),
+    difficulty: String(r.difficulty || 'makkelijk').toLowerCase(), tags: Array.isArray(r.tags) ? r.tags.slice(0, 4).map(String) : [], persons: Math.max(1, Math.round(+r.persons || S.prefs.persons)),
+    ingredients: (Array.isArray(r.ingredients) ? r.ingredients : []).slice(0, 20).map(i => ({ name: String(i.name || ''), qty: i.qty, unit: String(i.unit || ''), inPantry: i.inPantry !== false })),
+    steps: (Array.isArray(r.steps) ? r.steps : []).slice(0, 10).map(s => typeof s === 'string' ? { text: s } : { text: String(s.text || ''), timerMin: +s.timerMin > 0 ? +s.timerMin : null }),
+    remixes: (Array.isArray(r.remixes) ? r.remixes : []).slice(0, 3).map(x => ({ add: String(x.add || ''), name: String(x.name || ''), note: String(x.note || '') })),
+    usesExpiring: Array.isArray(r.usesExpiring) ? r.usesExpiring.map(String) : [], why: String(r.why || ''), meal: S.prefs.meal };
+}
+async function generate() {
+  if (S.gen.busy) return;
+  if (!S.pantry.length) { openScan('koelkast'); return; }
+  S.gen = { busy: true, error: '', count: 0, ctl: new AbortController() }; render();
+  try {
+    const s = await needSample();
+    const res = await s.json(recipePrompt(6), { signal: S.gen.ctl.signal, onText: ({ text }) => { const n = (text.match(/"title"\s*:/g) || []).length; if (n !== S.gen.count) { S.gen.count = n; const el = $('#genCount'); if (el) el.textContent = n ? n + ' VAN 6 RECEPTEN' : 'juno denkt na'; } } });
+    const arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
+    if (!arr.length) throw { code: 'invalid_json' };
+    S.recipes = arr; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', arr); ls.set('recipesKey', S.recipesKey);
+  } catch (e) { if (e && e.code !== 'cancelled') S.gen.error = errCopy(e); }
+  S.gen.busy = false; S.gen.ctl = null; render();
+}
+async function remix(idx) {
+  const r = S.detail; const x = r && r.remixes[idx]; if (!x || S.remixBusy) return;
+  S.remixBusy = x.name; render();
+  try {
+    const s = await needSample();
+    const base = Object.assign({}, r); delete base.id; delete base.folder; delete base.rating; delete base.note; delete base.savedAt;
+    const res = await s.json('Maak een nieuwe versie van dit recept met de remix "' + x.name + '": voeg ' + x.add + ' toe (' + x.note + '). Pas titel, ingrediënten, stappen en tijd daarop aan. Geef 3 nieuwe remixes. Voorraad:\n' + pantryText() + '\nBasis: ' + BASICS.join(', ') + '.\nAntwoord alleen met één JSON-object in exact dit formaat:\n' + JSON.stringify(base));
+    const nr = normRecipe(Array.isArray(res) ? res[0] : res);
+    if (!nr) throw { code: 'invalid_json' };
+    S.recipes.unshift(nr); ls.set('recipes', S.recipes);
+    S.detail = nr; S.detailPersons = nr.persons; $('#ov').scrollTop = 0;
+  } catch (e) { toast(errCopy(e)); }
+  S.remixBusy = ''; render();
+}
+async function sendChat(text) {
+  text = String(text || '').trim(); if (!text || S.chat.busy) return;
+  S.chat.turns.push({ role: 'user', content: text }); S.chat.draft = ''; S.chat.busy = true; S.chat.error = ''; render(); scrollChat();
+  const RULES = 'Je bent juno, de kookassistent in een app. Antwoord in het Nederlands, kort (hooguit 120 woorden), concreet en vriendelijk. Geen markdown-koppen; een korte opsomming mag. Stel hooguit één vraag terug. Doe voorstellen op basis van deze voorraad (naam — houdbaarheid):\n' + pantryText() + '\nBasis die er altijd is: ' + BASICS.join(', ') + '. Maaltijd nu: ' + S.prefs.meal.toLowerCase() + '.';
+  const turns = [{ role: 'user', content: RULES }, ...S.chat.turns.slice(-10)];
+  const bubble = { role: 'assistant', content: '' }; S.chat.turns.push(bubble);
+  try {
+    const s = await needSample();
+    const { text: out } = await s(turns, { cache: false, modelTier: 'quick', onText: ({ text }) => { bubble.content = text; const el = $('#lastBubble'); if (el) el.textContent = text; scrollChat(); } });
+    bubble.content = out;
+  } catch (e) {
+    if (e && e.text) bubble.content = e.text; else S.chat.turns.pop();
+    S.chat.error = errCopy(e);
+  }
+  S.chat.busy = false; render(); scrollChat();
+}
+function scrollChat() { const ov = $('#ov'); if (ov && S.ov === 'chat') ov.scrollTop = ov.scrollHeight; }
+
+// ---------- render: shared bits ----------
+function chipsHTML(items, act) { return items.map(([label, on, arg]) => `<button class="chip${on ? ' on' : ''}" data-act="${act}" data-arg="${esc(arg ?? label)}" aria-pressed="${on}">${esc(label)}</button>`).join(''); }
+function matchBar(r) {
+  const st = recipeStats(r); const n = Math.max(1, Math.min(12, st.total));
+  let h = ''; for (let i = 0; i < n; i++) h += `<span class="${i < Math.round(st.have / Math.max(1, st.total) * n) ? 'on' : ''}"></span>`;
+  return `<div class="matchbar" style="grid-template-columns:repeat(${n},minmax(0,1fr))" aria-label="${st.have} van ${st.total} ingrediënten in huis">${h}</div>`;
+}
+function metaLine(r) { const st = recipeStats(r); return `${st.have}/${st.total} IN HUIS · ${esc(r.difficulty)}${r.tags.length ? ' · ' + esc(r.tags.join(' · ')) : ''}`; }
+function expPicker(it, ctx) {
+  const d = daysLeft(it.exp);
+  const busy = S.thtBusy === it.id;
+  const zelf = it.method === 'zelf';
+  return `<div class="exp">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="eyebrow">Houdbaarheid</span><span class="badge ${d != null && d <= 2 ? 'warn' : 'line'}">${expLabel(d)}${it.exp ? ' · ' + fmtDate(it.exp) : ''}</span></div>
+    <div class="seg3">
+      <button class="${it.method === 'auto' ? 'on' : ''}" data-act="expMethod" data-arg="${ctx}|${it.id}|auto">Automatisch</button>
+      ${S.canImg ? `<button class="${it.method === 'tht' ? 'on' : ''}" data-act="pickTht" data-arg="${ctx}|${it.id}">${busy ? 'Lezen…' : 'Scan THT'}</button>` : `<button disabled title="Foto's werken niet in deze weergave">Scan THT</button>`}
+      <button class="${zelf ? 'on' : ''}" data-act="expMethod" data-arg="${ctx}|${it.id}|zelf">Zelf kiezen</button>
+    </div>
+    
+    ${it.method === 'auto' ? `<div style="font-size:14px;color:var(--muted)">juno schat ${it.shelfDays != null ? 'nog ' + it.shelfDays + ' dagen' : 'de houdbaarheid'} voor dit soort product.</div>` : ''}
+    ${it.method === 'tht' ? `<div style="font-size:14px;color:var(--muted)">${busy ? 'juno leest de datum…' : 'Datum van de verpakking: ' + fmtDate(it.exp) + '.'}</div>` : ''}
+    ${zelf ? `<div class="quick">${[['Vandaag',0],['Morgen',1],['3 dagen',3],['1 week',7],['2 weken',14],['1 maand',30]].map(([l, n]) => `<button class="chip${d === n ? ' on' : ''}" data-act="expQuick" data-arg="${ctx}|${it.id}|${n}">${l}</button>`).join('')}</div>
+      <label class="eyebrow" for="date-${it.id}">Of kies een datum</label>
+      <input type="date" id="date-${it.id}" value="${esc(it.exp || '')}" data-change="expDate" data-arg="${ctx}|${it.id}">` : ''}
+  </div>`;
+}
+function getItem(ctx, id) { return (ctx === 'scan' ? S.scan.items : S.pantry).find(x => x.id === id); }
+
+// ---------- views ----------
+function viewRecepten() {
+  const p = S.prefs; const exp = expiring(); const stale = S.recipes.length && S.recipesKey !== prefsKey();
+  const now = new Date();
+  let h = `<div class="top"><div class="wordmark" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#FFD400"/></svg></div><div style="display:flex;gap:6px">
+      <button class="iconbtn${S.recView === 'lijst' ? ' on' : ''}" data-act="recView" data-arg="lijst" aria-label="Lijstweergave" aria-pressed="${S.recView === 'lijst'}">${I.rows}</button>
+      <button class="iconbtn${S.recView === 'swipe' ? ' on' : ''}" data-act="recView" data-arg="swipe" aria-label="Swipeweergave" aria-pressed="${S.recView === 'swipe'}">${I.cards}</button>
+      <button class="iconbtn" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button></div></div>
+    <div><div class="eyebrow">${DAYS[now.getDay()]} ${now.getDate()} ${MONTHS[now.getMonth()]} · ${esc(p.meal)}</div>
+      <h1 class="big" style="margin-top:4px">${S.pantry.length} ${S.pantry.length === 1 ? 'item' : 'items'} in huis.<br><span class="mark">${S.gen.busy ? 'juno kookt iets uit.' : S.recipes.length && !stale ? S.recipes.length + ' recepten klaar.' : 'Wat eten we?'}</span></h1></div>
+    <div class="seg" role="group" aria-label="Maaltijd">${['Ontbijt','Lunch','Diner','Snack'].map(m => `<button class="${p.meal === m ? 'on' : ''}" data-act="meal" data-arg="${m}" aria-pressed="${p.meal === m}">${m}</button>`).join('')}</div>
+    <div class="chips" role="group" aria-label="Filters">
+      ${chipsHTML([['Nu te maken', p.mode === 'nu', 'nu'], ['+1–3 extra', p.mode === 'bijna', 'bijna']], 'mode')}
+      <button class="chip ink" data-act="cycle" data-arg="time">≤ ${p.time} MIN</button>
+      <button class="chip ink" data-act="cycle" data-arg="persons">${p.persons} PERS.</button>
+      <button class="chip${p.cuisine !== 'Alle keukens' ? ' on' : ''}" data-act="cycle" data-arg="cuisine">${esc(p.cuisine)}</button>
+      <button class="chip${p.level !== 'Elk niveau' ? ' on' : ''}" data-act="cycle" data-arg="level">${esc(p.level)}</button>
+      ${chipsHTML(['Vega','Vegan','Glutenvrij','Lactosevrij','Notenvrij'].map(d => [d, p.diets.includes(d), d]), 'diet')}
+    </div>`;
+  if (exp.length) h += `<div class="notice"><b class="mono" style="font-size:11px">Eerst op</b><br>${exp.map(x => esc(x.name) + ' (' + expLabel(daysLeft(x.exp)).toLowerCase() + ')').join(', ')}. juno geeft deze voorrang.</div>`;
+  if (S.ai === 'off') h += `<div class="notice">Recepten en scannen gebruiken Claude, en dat werkt niet in deze weergave. Open juno in de Claude-app of op claude.ai om recepten te laten maken. Je voorraad en lijst werken wel.</div>`;
+
+  if (!S.pantry.length) {
+    h += `<div class="empty"><div class="eyebrow">Begin hier</div><h2 class="big" style="font-size:24px">Scan je koelkast.</h2><p>Maak een foto van je koelkast, kast of fruitschaal. juno herkent wat je hebt en bedenkt wat je ermee kunt maken.</p>
+      <button class="btn" data-act="openScan" data-arg="koelkast"><span>Scan je koelkast</span><span class="mono">START →</span></button>
+      <button class="btn ghost" data-act="openScan" data-arg="typen"><span>Of typ wat je hebt</span><span class="mono">TYPEN</span></button></div>`;
+    return h;
+  }
+  if (S.gen.busy) {
+    h += `<div class="card" style="padding:16px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" id="genCount" style="font-size:11px">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</span><button class="textbtn" data-act="stopGen">Stop</button></div>
+      <div class="skel"></div><div class="skel" style="height:40px"></div><div class="skel" style="height:40px"></div><div style="font-size:14px;color:var(--muted)">Dit duurt meestal 20 tot 60 seconden.</div></div>`;
+    return h;
+  }
+  if (S.gen.error) h += `<div class="err">${esc(S.gen.error)}</div>`;
+  if (!S.recipes.length || stale) {
+    h += `<button class="btn" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>${stale ? 'Nieuwe recepten met deze keuzes' : 'Bedenk 6 recepten'}</span><span class="mono">${p.mode === 'nu' ? 'NU' : '+1–3'} · ≤${p.time}′ →</span></button>`;
+    if (!stale) return h;
+  }
+  if (S.recView === 'swipe') return h + swipeHTML();
+  const [best, ...rest] = S.recipes;
+  h += `<button class="card" data-act="detail" data-arg="${best.id}" style="text-align:left;padding:0;display:flex;flex-direction:column;color:inherit">
+      <div class="cover"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="badge" style="background:var(--on-accent);color:var(--accent)">Beste match</span>${best.usesExpiring.length ? `<span class="badge warn">${esc(best.usesExpiring[0])} op</span>` : ''}</div><div class="words">${esc(coverWords(best))}</div></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:8px;width:100%;box-sizing:border-box">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span style="font-weight:700;font-size:19px;letter-spacing:-.01em">${esc(best.title)}</span><span class="mono" style="font-size:13px">${best.minutes}′</span></div>
+        ${matchBar(best)}<div class="mono" style="font-size:11px;color:var(--muted)">${metaLine(best)}</div>
+        ${best.why ? `<div style="font-size:14px;color:var(--muted);line-height:1.4">${esc(best.why)}</div>` : ''}</div></button>
+    <div class="rows">${rest.map((r, i) => { const st = recipeStats(r); return `<button class="row" data-act="detail" data-arg="${r.id}" style="background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;width:100%;color:inherit">
+      <span class="mono" style="font-size:12px;color:var(--muted)">${pad(i + 2)}</span><span class="name">${esc(r.title)}</span>
+      <span class="mono" style="font-size:12px;${st.missing.length ? 'color:var(--warn)' : ''}">${r.minutes}′ · ${st.missing.length ? '+' + st.missing.length : st.have + '/' + st.total}</span></button>`; }).join('')}</div>
+    <button class="btn ghost" data-act="generate"><span>Andere recepten</span><span class="mono">OPNIEUW</span></button>`;
+  return h;
+}
+function swipeHTML() {
+  const r = S.recipes[S.swipeI];
+  const prog = S.recipes.map((_, i) => `<span style="height:3px;background:${i <= S.swipeI ? 'var(--fg)' : 'var(--line)'}"></span>`).join('');
+  if (!r) return `<div class="empty"><div class="eyebrow">Alles gezien</div><p>Je hebt alle ${S.recipes.length} kaarten bekeken. Bewaarde recepten staan onder Opgeslagen.</p><button class="btn" data-act="swipeReset"><span>Opnieuw bekijken</span><span class="mono">↺</span></button><button class="btn ghost" data-act="generate"><span>Nieuwe recepten</span><span class="mono">→</span></button></div>`;
+  return `<div style="display:grid;grid-template-columns:repeat(${S.recipes.length},minmax(0,1fr));gap:4px">${prog}</div>
+    <div class="card swipecard" id="swipe" style="border:1.5px solid var(--fg)">
+      <div class="cover" style="min-height:200px"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="mono" style="font-size:11px">Kaart ${pad(S.swipeI + 1)} / ${pad(S.recipes.length)}</span>${r.usesExpiring.length ? `<span class="badge warn">${esc(r.usesExpiring[0])} op</span>` : ''}</div><div class="words">${esc(coverWords(r))}</div></div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+        <div style="font-weight:800;font-size:26px;line-height:1.05;letter-spacing:-.03em;text-wrap:balance">${esc(r.title)}</div>
+        <div class="mono" style="font-size:11px;color:var(--muted)">${r.minutes}′ · ${metaLine(r)}</div>
+        ${r.why ? `<div style="font-size:14px;color:var(--muted);line-height:1.4">${esc(r.why)}</div>` : ''}
+        <div class="chips">${r.remixes.map(x => `<span class="badge line" style="font-size:11px">Remix · ${esc(x.name)}</span>`).join('')}</div>
+      </div></div>
+    <div style="display:grid;grid-template-columns:64px minmax(0,1fr) 64px;gap:10px">
+      <button class="iconbtn" style="width:64px;height:64px" data-act="swipe" data-arg="skip" aria-label="Volgende">${I.x}</button>
+      <button class="btn" style="height:64px;justify-content:center;font-size:18px" data-act="detail" data-arg="${r.id}">Koken</button>
+      <button class="iconbtn${isSaved(r) ? ' on' : ''}" style="width:64px;height:64px" data-act="swipe" data-arg="save" aria-label="Bewaren">${isSaved(r) ? I.markf : I.mark}</button></div>
+    <div class="mono" style="font-size:11px;color:var(--muted);text-align:center">← volgende · swipe · bewaren →</div>`;
+}
+function viewVoorraad() {
+  const all = pantrySorted(); const exp = expiring();
+  const items = S.locTab === 'alles' ? all : all.filter(x => x.loc === S.locTab);
+  let h = `<div class="top"><span class="eyebrow">Voorraad · op houdbaarheid</span><button class="btn small ghost" data-act="openScan" data-arg="typen" style="height:40px"><span class="mono">+ Toevoegen</span></button></div>
+    <h1 class="big">${all.length} ${all.length === 1 ? 'item' : 'items'}.<br><span class="mark">${exp.length ? exp.length + ' bijna op.' : 'Alles nog goed.'}</span></h1>
+    <div class="chips" role="group" aria-label="Bewaarplek">${chipsHTML([['Alles', S.locTab === 'alles', 'alles'], ...LOCS.map(l => [LOCNAME[l], S.locTab === l, l])], 'locTab')}</div>`;
+  if (!all.length) return h + `<div class="empty"><p>Nog niets in je voorraad. Scan je koelkast of typ wat je hebt.</p><button class="btn" data-act="openScan" data-arg="koelkast"><span>Scan je koelkast</span><span class="mono">→</span></button></div>`;
+  if (all.some(x => x.example)) h += `<div class="notice" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span>Dit zijn voorbeeldproducten om juno te proberen.</span><button class="btn small" data-act="clearExamples">Wis voorbeelden</button></div>`;
+  h += `<div class="rows">`;
+  for (const it of items) {
+    const d = daysLeft(it.exp); const w = d != null && d <= 2; const pct = d == null ? 50 : Math.max(4, Math.min(100, (d / Math.max(1, it.shelfDays || 7)) * 100));
+    const open = S.expOpen === it.id;
+    h += `<button class="row" data-act="expOpen" data-arg="${it.id}" aria-expanded="${open}" style="background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left;color:inherit">
+        <span class="name">${esc(it.name)} ${it.qty ? `<span class="qty">${fmtQty(it.qty, it.unit)}</span>` : ''} ${it.example ? '<span class="badge line">voorbeeld</span>' : ''}</span>
+        <span class="bar${w ? ' warn' : ''}"><span style="width:${pct}%"></span></span>
+        <span class="mono" style="font-size:12px;min-width:72px;text-align:right;${w ? 'color:var(--warn)' : ''}">${expLabel(d)}</span></button>`;
+    if (open) h += `<div>${expPicker(it, 'pantry')}<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        <label class="sr" for="loc-${it.id}">Bewaarplek</label><select id="loc-${it.id}" data-change="itemLoc" data-arg="${it.id}">${LOCS.map(l => `<option value="${l}"${it.loc === l ? ' selected' : ''}>${LOCNAME[l]}</option>`).join('')}</select>
+        <button class="btn small ghost" data-act="useUp" data-arg="${it.id}">Op</button>
+        <button class="btn small ghost" data-act="delItem" data-arg="${it.id}" style="${S.armDelete === it.id ? 'background:var(--warn);color:#fff;border-color:var(--warn)' : ''}">${S.armDelete === it.id ? 'Zeker weten?' : 'Verwijder'}</button></div></div>`;
+  }
+  h += `</div>`;
+  if (exp.length) h += `<button class="btn" data-act="tab" data-arg="recepten"><span>Recepten met wat eerst op moet</span><span class="mono">→</span></button>`;
+  return h;
+}
+function viewLijst() {
+  const open = S.list.filter(x => !x.checked), done = S.list.filter(x => x.checked);
+  const secs = [...new Set(S.list.map(x => x.section))].sort((a, b) => SECTIONS.findIndex(s => s[0] === a) - SECTIONS.findIndex(s => s[0] === b));
+  let h = `<div class="top"><span class="eyebrow">${S.store === 'db' ? 'Lijst · gedeeld met iedereen die juno opent' : 'Lijst · op dit apparaat'}</span>${S.list.length ? `<button class="btn small ghost" data-act="shareList" style="height:40px"><span class="mono">Kopieer</span></button>` : ''}</div>
+    <h1 class="big">${open.length} ${open.length === 1 ? 'ding' : 'dingen'} halen.${done.length ? `<br><span class="mark">${done.length} in de mand.</span>` : ''}</h1>
+    <form data-submit="addList" style="display:flex;gap:8px"><label class="sr" for="listInput">Product toevoegen</label><input type="text" id="listInput" placeholder="Bijv. citroen" style="flex:1;min-width:0" autocomplete="off"><button class="btn small" type="submit">Voeg toe</button></form>`;
+  if (!S.list.length) return h + `<div class="empty"><p>Je lijst is leeg. Ontbrekende ingrediënten uit een recept zet je hier met één tik op.</p></div>`;
+  for (const s of secs) {
+    const its = S.list.filter(x => x.section === s); if (!its.length) continue;
+    h += `<div><div class="eyebrow" style="margin-bottom:4px">${esc(s)}</div><div class="rows">${its.map(x => `<label class="row" style="cursor:pointer"><input type="checkbox" id="li-${x.id}" data-change="listCheck" data-arg="${x.id}" ${x.checked ? 'checked' : ''} style="width:22px;height:22px;accent-color:var(--fg)">
+      <span class="name" style="${x.checked ? 'color:var(--muted);text-decoration:line-through;font-weight:500' : ''}">${esc(x.name)}</span>${x.recipe ? `<span class="mono" style="font-size:10px;color:var(--muted);max-width:40%;text-align:right;overflow-wrap:anywhere">${esc(x.recipe)}</span>` : ''}</label>`).join('')}</div></div>`;
+  }
+  if (done.length) h += `<button class="btn" data-act="doneToPantry"><span>Afgevinkt naar voorraad</span><span class="mono">${done.length} →</span></button><button class="btn ghost" data-act="clearDone"><span>Wis afgevinkt</span><span class="mono">${done.length}</span></button>`;
+  return h;
+}
+function viewOpgeslagen() {
+  const now = new Date(); const todayIdx = (now.getDay() + 6) % 7;
+  const folders = ['Alle', ...S.saved.folders];
+  const list = S.saved.recipes.filter(r => S.folder === 'Alle' || r.folder === S.folder);
+  const todayPlan = S.saved.week[WEEK[todayIdx]];
+  let h = `<span class="eyebrow">Opgeslagen · weekmenu</span><h1 class="big">Jouw <span class="mark">week.</span></h1>
+    <div class="week" role="group" aria-label="Weekmenu">${WEEK.map((d, i) => { const p = S.saved.week[d]; return `<button class="${i === todayIdx ? 'today' : ''}" data-act="weekDay" data-arg="${d}" aria-label="${d}${p ? ': ' + esc(p.title) : ''}">${d.toUpperCase()}<i class="${p ? 'full' : ''}"></i></button>`; }).join('')}</div>`;
+  if (todayPlan) { const r = S.saved.recipes.find(x => x.id === todayPlan.id); h += `<button class="card" ${r ? `data-act="detailSaved" data-arg="${r.id}"` : ''} style="display:flex;align-items:center;gap:12px;padding:12px;text-align:left;color:inherit"><span style="flex:1;min-width:0"><span class="eyebrow">Vandaag</span><br><b style="font-size:16px">${esc(todayPlan.title)}</b></span>${r ? `<span class="mono" style="font-size:12px">${recipeStats(r).have}/${recipeStats(r).total}</span>` : ''}</button>`; }
+  else h += `<div style="font-size:14px;color:var(--muted)">Nog niets gepland voor vandaag. Plan een recept via de kalenderknop op een recept.</div>`;
+  h += `<div class="chips" role="group" aria-label="Mappen">${chipsHTML(folders.map(f => [f + (f === 'Alle' ? ' · ' + S.saved.recipes.length : ' · ' + S.saved.recipes.filter(r => r.folder === f).length), S.folder === f, f]), 'folder')}</div>
+    <form data-submit="newFolder" style="display:flex;gap:8px"><label class="sr" for="folderInput">Nieuwe map</label><input type="text" id="folderInput" placeholder="Nieuwe map" style="flex:1;min-width:0" autocomplete="off"><button class="btn small ghost" type="submit">+ Map</button></form>`;
+  if (!list.length) return h + `<div class="empty"><p>${S.saved.recipes.length ? 'Geen recepten in deze map.' : 'Nog niets bewaard. Tik op het bladwijzer-icoon bij een recept om het hier te bewaren.'}</p></div>`;
+  h += `<div class="rows">${list.map(r => `<div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
+      <div style="display:flex;gap:10px;align-items:baseline"><button data-act="detailSaved" data-arg="${r.id}" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font-weight:700;font-size:16px;color:inherit">${esc(r.title)}</button><span class="mono" style="font-size:12px">${r.minutes}′</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+        <div class="stars" role="group" aria-label="Beoordeling">${[1,2,3,4,5].map(n => `<button class="${r.rating >= n ? 'on' : ''}" data-act="rate" data-arg="${r.id}|${n}" aria-label="${n} ster${n > 1 ? 'ren' : ''}">${r.rating >= n ? '★' : '☆'}</button>`).join('')}</div>
+        <label class="sr" for="fold-${r.id}">Map</label><select id="fold-${r.id}" data-change="moveFolder" data-arg="${r.id}" style="height:36px;font-size:14px">${S.saved.folders.map(f => `<option${r.folder === f ? ' selected' : ''}>${esc(f)}</option>`).join('')}</select></div>
+      <label class="sr" for="note-${r.id}">Notitie</label><textarea id="note-${r.id}" data-change="note" data-arg="${r.id}" placeholder="Notitie, bijv. volgende keer extra chili" style="min-height:44px;font-size:14px;border-color:var(--line)">${esc(r.note || '')}</textarea></div>`).join('')}</div>`;
+  return h;
+}
+
+// ---------- overlays ----------
+function ovScan() {
+  const sc = S.scan; const modes = [['koelkast','Koelkast'],['product','Product'],['barcode','Barcode'],['typen','Typen']];
+  const imgMode = sc.mode !== 'typen';
+  let h = `<div class="top"><div class="wordmark" style="color:var(--on-cam)" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#FFD400"/></svg></div><button class="camsmall" data-act="close" aria-label="Sluiten">${I.x}</button></div>
+    <div class="camtabs" role="tablist">${modes.map(([m, l]) => `<button role="tab" aria-selected="${sc.mode === m}" class="${sc.mode === m ? 'on' : ''}" data-act="scanMode" data-arg="${m}">${l}</button>`).join('')}</div>`;
+  if (imgMode && !sc.photo && (CAM.state === 'on' || CAM.state === 'starting')) {
+    const now = Date.now();
+    h += `<div class="livecam" id="camSlot">${CAM.labels.map(l => `<span class="tag${l.unsure ? ' unsure' : ''}${now - l.t < 450 ? ' pop' : ''}" style="left:${l.x}%;top:${l.y}%">${esc(l.name)}${l.unsure ? ' ?' : ''}</span>`).join('')}
+      <span class="livepill">${CAM.paused ? 'Gepauzeerd' : `<i></i>${CAM.state === 'starting' ? 'Camera start…' : CAM.thinking ? 'juno kijkt mee…' : 'Live'}`}</span>
+      ${!sc.items.length && !CAM.paused && CAM.state === 'on' ? '<div class="camhint">Beweeg je telefoon rustig langs je koelkast of kast</div>' : ''}
+      ${CAM.paused ? '<button class="resume" data-act="camResume" aria-label="Verder scannen"><span>Tik om verder te scannen</span></button>' : ''}</div>`;
+    h += `<div class="eyebrow" style="color:var(--cam-muted)">${sc.items.length ? sc.items.length + (sc.items.length === 1 ? ' product' : ' producten') + ' in je voorraad gezet · tik × als iets niet klopt' : 'Herkende producten gaan direct in je voorraad'}</div>`;
+    if (sc.items.length) h += `<div class="found">${sc.items.map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
+    h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="gallery" style="color:var(--on-cam);border-color:rgba(255,255,255,.35)"><span>Uit galerij</span></button><button class="btn" data-act="scanDone" ${sc.items.length ? '' : 'disabled'}><span>Klaar</span><span class="mono">Recepten →</span></button></div>`;
+  } else if (imgMode && S.canImg) {
+    if (CAM.state === 'off' && !sc.photo) h += `<div class="notice" style="color:var(--fg)">De live camera werkt niet in deze weergave (${esc(CAM.why)}). Maak hieronder een foto; juno zet de namen er daarna op.<br><button class="chip" data-act="camRetry" style="margin-top:8px">Opnieuw proberen</button></div>`;
+    const hintTxt = sc.mode === 'koelkast' ? 'Richt je camera op je open koelkast, kast of fruitschaal. juno zet de namen op de foto en alles gaat direct in je voorraad.' : sc.mode === 'product' ? 'Fotografeer één product, bijvoorbeeld een courgette of een pak melk.' : 'Fotografeer de verpakking met barcode en etiket. juno leest de productnaam.';
+    if (sc.photo) {
+      h += `<div class="shot"><img src="${sc.photo}" alt="Jouw foto">${sc.items.filter(it => it.x != null && it.y != null).map(it => `<span class="tag${it.unsure ? ' unsure' : ''}${Date.now() - (it.t || 0) < 450 ? ' pop' : ''}" style="left:${it.x}%;top:${it.y}%">${esc(it.name)}</span>`).join('')}${sc.busy ? `<span class="scanline"></span><span class="busytag">${sc.items.length ? sc.items.length + ' gevonden…' : 'juno kijkt mee…'}</span>` : ''}</div>`;
+      if (sc.auto && sc.items.length) h += `<div class="eyebrow" style="color:var(--cam-muted)">${sc.busy ? 'Al in je voorraad gezet' : sc.items.length + (sc.items.length === 1 ? ' product' : ' producten') + ' in je voorraad gezet · tik × als iets niet klopt'}</div>
+        <div class="found">${sc.items.map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''}${it.unsure ? ' ?' : ''} <span>×</span></button>`).join('')}</div>`;
+      if (!sc.busy) h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="camera" style="color:var(--on-cam);border-color:rgba(255,255,255,.35)"><span>Nog een foto</span></button>${sc.items.length ? `<button class="btn" data-act="scanDone"><span>Recepten</span><span class="mono">→</span></button>` : ''}</div>`;
+    } else {
+      h += `<div class="viewfinder"><div class="hint">${hintTxt}</div><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span></div>
+      <div class="shutterrow"><button class="camsmall" data-act="pickPhoto" data-arg="gallery" aria-label="Kies foto uit galerij">${I.img}</button>
+        <button class="shutter" data-act="pickPhoto" data-arg="camera" aria-label="Foto maken"><span></span></button>
+        <button class="camsmall" data-act="scanMode" data-arg="typen" aria-label="Typen">Aa</button></div>`;
+    }
+
+  } else {
+    if (imgMode && !S.canImg) h += `<div class="notice" style="color:var(--fg)">Foto's versturen werkt niet in deze weergave. Open juno via claude.ai in de browser van je telefoon (Safari of Chrome), of typ hieronder wat je hebt.<br><small style="opacity:.6">code ${S.imgWhy||'?'} · v7</small></div>`;
+    h += `<label for="typeInput" class="eyebrow" style="color:var(--cam-muted)">Wat heb je in huis?</label>
+      <textarea id="typeInput" data-input="scanText" placeholder="Bijv. 6 eieren, 2 paprika, melk, spinazie, kipfilet">${esc(sc.text)}</textarea>
+      <button class="btn" data-act="runTyped" ${sc.busy ? 'disabled' : ''}><span>${sc.busy ? 'juno leest mee…' : 'Herken producten'}</span><span class="mono">→</span></button>`;
+  }
+  if (sc.error) h += `<div class="notice" style="color:var(--fg)">${esc(sc.error)}</div>`;
+  if (sc.items.length && !sc.auto) {
+    const n = sc.items.filter(x => x.checked).length;
+    h += `<div class="sheet"><span class="grip"></span>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:10px"><div><span class="eyebrow">Gevonden · controleer even</span><h2 class="big" style="font-size:28px;margin-top:2px">${sc.items.length} items <span class="mark">herkend.</span></h2></div></div>
+      <div class="rows">${sc.items.map(it => { const open = S.expOpen === it.id; const d = daysLeft(it.exp); return `<div class="row" style="${it.unsure ? 'background:var(--warn-bg);margin-inline:-8px;padding-inline:8px' : ''}">
+          <input type="checkbox" id="sc-${it.id}" data-change="scanCheck" data-arg="${it.id}" ${it.checked ? 'checked' : ''} style="width:22px;height:22px;accent-color:var(--fg)" aria-label="${esc(it.name)} toevoegen">
+          <span class="name"><label for="sc-${it.id}">${esc(it.name)}</label> ${it.qty ? `<span class="qty">${fmtQty(it.qty, it.unit)}</span>` : ''} ${it.unsure ? '<span class="badge warn">klopt dit?</span>' : ''}</span>
+          <button class="chip${open ? ' on' : ''}" data-act="expOpen" data-arg="${it.id}" aria-expanded="${open}">${it.method === 'auto' ? 'AUTO · ' : ''}${expLabel(d)}</button></div>
+          ${open ? expPicker(it, 'scan') : ''}`; }).join('')}</div>
+      <div style="font-size:14px;color:var(--muted)">Tik op de houdbaarheid om die aan te passen: automatisch, van de verpakking of zelf kiezen.</div></div>
+      <div class="stickyfoot" style="background:linear-gradient(to top,var(--bg) 70%,transparent)"><button class="btn" data-act="confirmScan" ${n ? '' : 'disabled'}><span>${n} ${n === 1 ? 'item' : 'items'} in voorraad</span><span class="mono">Recepten →</span></button></div>`;
+  }
+  return h;
+}
+function ovDetail() {
+  const r = S.detail; if (!r) return '';
+  const f = S.detailPersons / r.persons; const st = recipeStats(r); const saved = isSaved(r);
+  let h = `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><div style="display:flex;gap:8px">
+      <button class="iconbtn${S.planOpen ? ' on' : ''}" data-act="togglePlan" aria-label="Inplannen in weekmenu" aria-expanded="${S.planOpen}">${I.cal}</button>
+      <button class="iconbtn${saved ? ' on' : ''}" data-act="toggleSave" aria-label="${saved ? 'Niet meer bewaren' : 'Bewaren'}" aria-pressed="${saved}">${saved ? I.markf : I.mark}</button></div></div>`;
+  if (S.planOpen) h += `<div><div class="eyebrow" style="margin-bottom:6px">Plan op</div><div class="week">${WEEK.map(d => `<button class="${S.saved.week[d] && S.saved.week[d].id === r.id ? 'today' : ''}" data-act="planDay" data-arg="${d}">${d.toUpperCase()}<i class="${S.saved.week[d] ? 'full' : ''}"></i></button>`).join('')}</div></div>`;
+  h += `<div class="cover" style="min-height:150px;border-radius:var(--r)"><span class="mono" style="font-size:11px">${esc([r.cuisine, r.meal].filter(Boolean).join(' · '))}</span><div class="words" style="font-size:13px">${esc(coverWords(r))}</div></div>
+    <h1 class="big">${esc(r.title)}</h1>
+    ${r.why ? `<p style="margin:0;color:var(--muted);line-height:1.5">${esc(r.why)}</p>` : ''}
+    <div class="stats"><div><div class="eyebrow">Tijd</div><div class="v">${r.minutes}′</div></div>
+      <div><div class="eyebrow">Pers.</div><div class="stepper"><button data-act="persons" data-arg="-1" aria-label="Minder personen">−</button><span class="v" style="margin:0">${S.detailPersons}</span><button data-act="persons" data-arg="1" aria-label="Meer personen">+</button></div></div>
+      <div class="hi"><div class="eyebrow">Match</div><div class="v">${st.have}/${st.total}</div></div></div>
+    <div><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span class="eyebrow">Ingrediënten</span>${st.missing.length > 1 ? `<button class="textbtn" data-act="allToList">Alles op lijst</button>` : ''}</div><div class="rows">
+      ${r.ingredients.map(i => { const have = i.inPantry !== false || inPantry(i.name); const ex = S.pantry.find(p => norm(i.name).includes(norm(p.name)) || norm(p.name).includes(norm(i.name))); const d = ex ? daysLeft(ex.exp) : null; const onList = S.list.some(x => !x.checked && norm(x.name) === norm(i.name));
+        return `<div class="row"><span class="name" style="${have ? '' : 'color:var(--muted)'}">${esc(i.name)} ${d != null && d <= 2 ? '<span class="badge warn">eerst op</span>' : ''}</span>
+        ${have ? `<span class="qty">${fmtQty(i.qty, i.unit, f)} ✓</span>` : `<span class="qty">${fmtQty(i.qty, i.unit, f)}</span><button class="chip${onList ? ' on' : ''}" data-act="ingToList" data-arg="${esc(i.name)}">${onList ? 'Op lijst' : '+ Lijst'}</button>`}</div>`; }).join('')}</div></div>
+    ${r.remixes.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Remix · maak er iets anders van</div><div class="remix">${r.remixes.map((x, i) => `<button data-act="remix" data-arg="${i}" ${S.remixBusy ? 'disabled' : ''} title="${esc(x.note)}"><span class="mono">+ ${esc(x.add)}</span><b>${S.remixBusy === x.name ? 'Bezig…' : esc(x.name)}</b></button>`).join('')}</div></div>` : ''}
+    <div><div class="eyebrow" style="margin-bottom:4px">Bereiding · ${r.steps.length} stappen</div>${r.steps.map((s, i) => `<div class="step"><span class="mono">${pad(i + 1)}</span><span style="flex:1;min-width:0">${esc(s.text)}${s.timerMin ? ` <span class="badge line">${s.timerMin} min</span>` : ''}</span></div>`).join('')}</div>
+    <div class="stickyfoot"><button class="btn" data-act="cook" style="background:var(--fg);color:var(--bg)"><span>Start koken</span><span class="mono" style="color:var(--accent)">${r.minutes}′ →</span></button></div>`;
+  return h;
+}
+function ovCook() {
+  const r = S.detail; const c = S.cook; const s = r.steps[c.i] || { text: '' };
+  const total = r.steps.length; const last = c.i === total - 1;
+  const ings = r.ingredients.filter(i => norm(s.text).includes(norm(i.name).split(' ')[0])).slice(0, 4);
+  const t = c.left != null ? c.left : (s.timerMin ? s.timerMin * 60 : null);
+  return `<div class="top"><button class="camsmall" data-act="closeCook" aria-label="Kookstand sluiten">${I.x}</button><span class="mono" style="font-size:11px;color:var(--cam-muted)">● Scherm blijft aan</span></div>
+    <div class="progress" style="grid-template-columns:repeat(${total},minmax(0,1fr))">${r.steps.map((_, i) => `<span class="${i <= c.i ? 'on' : ''}"></span>`).join('')}</div>
+    <div class="mono" style="font-size:12px;color:var(--accent)">Stap ${pad(c.i + 1)} / ${pad(total)} · ${esc(r.title)}</div>
+    <p class="cooktext">${esc(s.text)}</p>
+    ${ings.length ? `<div class="chips">${ings.map(i => `<span class="badge" style="border:1px solid #333;color:var(--on-cam);font-size:12px;padding:7px 10px">${fmtQty(i.qty, i.unit, S.detailPersons / r.persons)} ${esc(i.name)}</span>`).join('')}</div>` : ''}
+    ${t != null ? `<div class="timer"><div><div class="mono" style="font-size:11px">${c.done ? 'Klaar!' : 'Timer'}</div><div class="t" id="timerText">${pad(Math.floor(t / 60))}:${pad(t % 60)}</div></div>
+      <button data-act="timer" aria-label="${c.running ? 'Pauzeer timer' : 'Start timer'}">${c.running ? I.pause : I.play}</button></div>` : ''}
+    <div class="stickyfoot"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;width:100%">
+      <button class="btn ghost" style="justify-content:center;color:var(--on-cam);border-color:#444" data-act="cookStep" data-arg="-1" ${c.i === 0 ? 'disabled' : ''}>Vorige</button>
+      <button class="btn" style="justify-content:center;background:var(--on-cam);color:#0A0A0A" data-act="${last ? 'closeCook' : 'cookStep'}" data-arg="1">${last ? 'Eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
+}
+function ovChat() {
+  const c = S.chat;
+  let h = `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><div style="flex:1;min-width:0"><b style="font-size:19px">Vraag juno</b><div class="eyebrow">Kent je voorraad · ${S.pantry.length} items</div></div></div>`;
+  if (!c.turns.length) h += `<div class="bubble juno">Waar heb je zin in? Ik ken je voorraad${expiring().length ? ' en zie dat ' + esc(expiring().map(x => x.name).slice(0, 2).join(' en ')) + ' snel op moet' : ''}.</div>
+    <div class="chips">${['Iets in 15 minuten','Iets pittigs','Zonder vlees','Wat kan ik met restjes?'].map(q => `<button class="chip" data-act="quickAsk" data-arg="${q}">${q}</button>`).join('')}</div>`;
+  c.turns.forEach((t, i) => { const lastJ = i === c.turns.length - 1 && t.role === 'assistant'; h += `<div class="bubble ${t.role === 'user' ? 'me' : 'juno'}" ${lastJ ? 'id="lastBubble"' : ''}>${esc(t.content || (c.busy ? 'juno denkt na…' : ''))}</div>`; });
+  if (c.error) h += `<div class="err">${esc(c.error)}</div>`;
+  h += `<form class="stickyfoot" data-submit="chat"><div style="display:flex;gap:8px;width:100%"><label class="sr" for="chatInput">Bericht aan juno</label>
+      <input type="text" id="chatInput" placeholder="Waar heb je zin in?" style="flex:1;min-width:0;height:52px" value="${esc(c.draft)}" data-input="chatDraft" autocomplete="off" ${S.ai === 'off' ? 'disabled' : ''}>
+      <button class="btn" type="submit" style="width:auto;height:52px" ${c.busy || S.ai === 'off' ? 'disabled' : ''}>Stuur</button></div></form>`;
+  return h;
+}
+function dockHTML() {
+  const tabs = [['recepten', I.grid, 'Recepten'], ['voorraad', I.fridge, 'Voorraad'], ['lijst', I.list, 'Boodschappenlijst'], ['opgeslagen', I.mark, 'Opgeslagen']];
+  const openList = S.list.filter(x => !x.checked).length;
+  return `<div class="dockwrap"><nav class="dock" aria-label="Hoofdmenu">${tabs.map(([t, ic, l]) => `<button class="tab${S.tab === t ? ' on' : ''}" data-act="tab" data-arg="${t}" aria-label="${l}" aria-current="${S.tab === t ? 'page' : 'false'}">${ic}${t === 'voorraad' && expiring().length ? '<span class="dot"></span>' : ''}${t === 'lijst' && openList ? '<span class="dot"></span>' : ''}</button>`).join('')}
+    <button class="scan" data-act="openScan" data-arg="koelkast">${I.scan}Scan</button></nav></div>`;
+}
+
+// ---------- render ----------
+// Eén vaste bestandskiezer buiten de her-getekende schermen, zodat de gekozen foto
+// niet verloren gaat als het scherm intussen opnieuw wordt opgebouwd.
+function pickFile(camera, cb) {
+  let inp = document.getElementById('junoPicker');
+  if (!inp) {
+    inp = document.createElement('input'); inp.type = 'file'; inp.id = 'junoPicker'; inp.accept = 'image/*';
+    inp.setAttribute('aria-hidden', 'true'); inp.tabIndex = -1;
+    inp.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(inp);
+  }
+  if (camera) inp.setAttribute('capture', 'environment'); else inp.removeAttribute('capture');
+  inp.value = '';
+  inp.onchange = () => { const f = inp.files && inp.files[0]; if (f) cb(f); inp.value = ''; };
+  inp.click();
+}
+function render() {
+  const app = $('#app'), ov = $('#ov');
+  app.innerHTML = S.tab === 'voorraad' ? viewVoorraad() : S.tab === 'lijst' ? viewLijst() : S.tab === 'opgeslagen' ? viewOpgeslagen() : viewRecepten();
+  $('#dock').innerHTML = dockHTML();
+  if (S.ov) {
+    const keep = ov.scrollTop;
+    ov.className = S.ov === 'scan' ? 'cam' : S.ov === 'cook' ? 'cook' : '';
+    ov.innerHTML = `<div class="ovin">${S.ov === 'scan' ? ovScan() : S.ov === 'detail' ? ovDetail() : S.ov === 'cook' ? ovCook() : ovChat()}</div>`;
+    ov.hidden = false; ov.scrollTop = keep; document.body.classList.add('lock');
+  } else { ov.hidden = true; ov.innerHTML = ''; document.body.classList.remove('lock'); }
+  bindSwipe();
+  camAttach();
+}
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600); }
+function setPrefs(p) { Object.assign(S.prefs, p); ls.set('prefs', S.prefs); }
+function openScan(mode) { S.scan.mode = mode || 'koelkast'; S.scan.error = ''; S.ov = 'scan'; S.expOpen = null; render(); $('#ov').scrollTop = 0; }
+function openDetail(r) { S.detail = r; S.detailPersons = r.persons; S.planOpen = false; S.ov = 'detail'; render(); $('#ov').scrollTop = 0; }
+
+// ---------- swipe gesture ----------
+function bindSwipe() {
+  const el = $('#swipe'); if (!el) return;
+  let x0 = null, dx = 0;
+  el.addEventListener('pointerdown', e => { x0 = e.clientX; dx = 0; el.classList.add('drag'); el.setPointerCapture(e.pointerId); });
+  el.addEventListener('pointermove', e => { if (x0 == null) return; dx = e.clientX - x0; el.style.transform = `translateX(${dx}px) rotate(${dx / 30}deg)`; });
+  const end = () => { if (x0 == null) return; x0 = null; el.classList.remove('drag');
+    if (dx > 90) act.swipe('save'); else if (dx < -90) act.swipe('skip'); else el.style.transform = ''; };
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+}
+
+// ---------- cook timer & wake lock ----------
+let tick = null, wake = null;
+async function wakeOn() { try { wake = await navigator.wakeLock?.request('screen'); } catch { wake = null; } }
+function wakeOff() { try { wake && wake.release(); } catch {} wake = null; }
+document.addEventListener('visibilitychange', () => { if (S.ov === 'cook' && document.visibilityState === 'visible') wakeOn(); });
+function stopTimer() { clearInterval(tick); tick = null; S.cook.running = false; }
+function beep() { try { const a = new (window.AudioContext || window.webkitAudioContext)(); [0, .35, .7].forEach(t => { const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 880; o.connect(g); g.connect(a.destination); g.gain.setValueAtTime(.2, a.currentTime + t); g.gain.exponentialRampToValueAtTime(.001, a.currentTime + t + .3); o.start(a.currentTime + t); o.stop(a.currentTime + t + .3); }); } catch {} try { navigator.vibrate && navigator.vibrate([200, 100, 200]); } catch {} }
+
+// ---------- actions ----------
+const act = {
+  tab(t) { S.tab = t; ls.set('tab', t); S.ov = null; S.expOpen = null; render(); window.scrollTo(0, 0); },
+  open(o) { S.ov = o; render(); if (o === 'chat') { scrollChat(); setTimeout(() => $('#chatInput')?.focus(), 50); } },
+  pickPhoto(arg) { pickFile(arg === 'camera', f => runLiveScan(f)); },
+  scanRemove(id) { const i = S.scan.items.findIndex(x => x.id === id); if (i < 0) return; CAM.blocked.add(norm(S.scan.items[i].name)); CAM.labels = CAM.labels.filter(l => l.k !== norm(S.scan.items[i].name)); removeScanned(S.scan.items[i]); S.scan.items.splice(i, 1); persist('pantry'); render(); },
+  scanDone() { camStop(); CAM.blocked.clear(); if (S.scan.photo) URL.revokeObjectURL(S.scan.photo); const n = S.scan.items.length; S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' }; S.ov = null; S.tab = 'recepten'; ls.set('tab', 'recepten'); render(); window.scrollTo(0, 0); if (n) toast(n + (n === 1 ? ' product' : ' producten') + ' in je voorraad'); },
+  pickTht(arg) { const [ctx, id] = String(arg).split('|'); pickFile(true, f => readTht(ctx, id, f)); },
+  close() { if (S.ov === 'scan') { camStop(); CAM.blocked.clear(); } if (S.ov === 'scan' && S.scan.photo) { URL.revokeObjectURL(S.scan.photo); S.scan.photo = null; } if (S.ov === 'scan' && S.scan.auto) { const n = S.scan.items.length; S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' }; if (n) toast(n + (n === 1 ? ' product' : ' producten') + ' in je voorraad'); } S.ov = null; S.expOpen = null; render(); },
+  openScan(m) { openScan(m); if ((m || 'koelkast') !== 'typen') camStart(); },
+  camResume() { CAM.paused = false; CAM.lastNew = Date.now(); S.scan.error = ''; render(); if (CAM.state === 'on') camLoop(); else camStart(); },
+  camRetry() { CAM.state = 'idle'; camStart(); },
+  scanMode(m) { S.scan.mode = m; S.scan.error = ''; if (m === 'typen') camStop(); else if (CAM.state === 'idle') setTimeout(camStart, 0); render(); if (m === 'typen') setTimeout(() => $('#typeInput')?.focus(), 50); },
+  runTyped() { runTyped(); },
+  meal(m) { setPrefs({ meal: m }); render(); },
+  mode(m) { setPrefs({ mode: m }); render(); },
+  diet(d) { const ds = S.prefs.diets.includes(d) ? S.prefs.diets.filter(x => x !== d) : [...S.prefs.diets, d]; setPrefs({ diets: ds }); render(); },
+  cycle(k) {
+    const opts = { time: [15, 30, 45, 60, 90], persons: [1, 2, 3, 4, 5, 6], cuisine: ['Alle keukens','Italiaans','Aziatisch','Mexicaans','Hollands','Midden-Oosters','Indiaas','Frans'], level: ['Elk niveau','Makkelijk','Gemiddeld','Uitdagend'] }[k];
+    const i = opts.indexOf(S.prefs[k]); setPrefs({ [k]: opts[(i + 1) % opts.length] }); render();
+  },
+  generate() { generate(); },
+  stopGen() { S.gen.ctl && S.gen.ctl.abort(); },
+  recView(v) { S.recView = v; ls.set('recView', v); render(); },
+  detail(id) { const r = S.recipes.find(x => x.id === id); if (r) openDetail(r); },
+  detailSaved(id) { const r = S.saved.recipes.find(x => x.id === id); if (r) openDetail(r); },
+  swipe(kind) { const r = S.recipes[S.swipeI]; if (!r) return; if (kind === 'save') { saveRecipe(r); toast('Bewaard in Favorieten'); } S.swipeI++; render(); },
+  swipeReset() { S.swipeI = 0; render(); },
+  persons(d) { S.detailPersons = Math.max(1, Math.min(12, S.detailPersons + +d)); render(); },
+  toggleSave() { const r = S.detail; if (isSaved(r)) { unsaveRecipe(r); toast('Niet meer bewaard'); } else { saveRecipe(r); toast('Bewaard in Favorieten'); } render(); },
+  togglePlan() { S.planOpen = !S.planOpen; render(); },
+  planDay(d) { const r = S.detail; saveRecipe(r); const s = S.saved.recipes.find(x => norm(x.title) === norm(r.title)); S.saved.week[d] = { id: s.id, title: r.title }; persist('saved'); toast('Gepland op ' + d); render(); },
+  ingToList(name) { if (addToList(name, S.detail.title)) toast(name + ' staat op je lijst'); render(); },
+  allToList() { const st = recipeStats(S.detail); let n = 0; st.missing.forEach(i => { if (addToList(i.name, S.detail.title)) n++; }); toast(n ? n + ' items op je lijst' : 'Staat al op je lijst'); render(); },
+  remix(i) { remix(+i); },
+  cook() { S.cook = { i: 0, left: null, running: false, end: 0, done: false }; S.ov = 'cook'; wakeOn(); render(); $('#ov').scrollTop = 0; },
+  closeCook() { stopTimer(); wakeOff(); S.ov = 'detail'; render(); },
+  cookStep(d) { stopTimer(); S.cook.i = Math.max(0, Math.min(S.detail.steps.length - 1, S.cook.i + +d)); S.cook.left = null; S.cook.done = false; render(); $('#ov').scrollTop = 0; },
+  timer() {
+    const c = S.cook; const s = S.detail.steps[c.i];
+    if (c.running) { stopTimer(); render(); return; }
+    if (c.left == null || c.left <= 0) c.left = (s.timerMin || 1) * 60;
+    c.done = false; c.running = true; c.end = Date.now() + c.left * 1000;
+    tick = setInterval(() => { c.left = Math.max(0, Math.round((c.end - Date.now()) / 1000)); const el = $('#timerText'); if (el) el.textContent = pad(Math.floor(c.left / 60)) + ':' + pad(c.left % 60);
+      if (c.left <= 0) { stopTimer(); c.done = true; beep(); render(); } }, 500);
+    render();
+  },
+  expOpen(id) { S.expOpen = S.expOpen === id ? null : id; S.armDelete = null; render(); },
+  expMethod(arg) { const [ctx, id, m] = arg.split('|'); const it = getItem(ctx, id); if (!it) return; it.method = m; if (m === 'auto') it.exp = addDays(it.shelfDays ?? 5); if (ctx === 'pantry') persist('pantry'); render(); },
+  expQuick(arg) { const [ctx, id, n] = arg.split('|'); const it = getItem(ctx, id); if (!it) return; it.method = 'zelf'; it.exp = addDays(+n); if (ctx === 'pantry') persist('pantry'); render(); },
+  confirmScan() {
+    const add = S.scan.items.filter(x => x.checked);
+    for (const it of add) {
+      const ex = S.pantry.find(p => norm(p.name) === norm(it.name));
+      const rec = { id: ex ? ex.id : uid(), name: it.name, qty: it.qty, unit: it.unit, loc: it.loc, exp: it.exp, shelfDays: daysLeft(it.exp) ?? it.shelfDays, method: it.method, addedAt: Date.now() };
+      if (ex) Object.assign(ex, rec); else S.pantry.push(rec);
+    }
+    persist('pantry');
+    if (S.scan.photo) URL.revokeObjectURL(S.scan.photo);
+    S.scan = { mode: S.scan.mode, items: [], busy: false, photo: null, error: '', text: '' };
+    S.ov = null; S.tab = 'recepten'; ls.set('tab', 'recepten'); S.expOpen = null;
+    toast(add.length + ' items toegevoegd'); render(); window.scrollTo(0, 0);
+    if (S.ai !== 'off') generate();
+  },
+  locTab(l) { S.locTab = l; S.expOpen = null; render(); },
+  useUp(id) { S.pantry = S.pantry.filter(x => x.id !== id); persist('pantry'); S.expOpen = null; toast('Opgemaakt. Lekker!'); render(); },
+  delItem(id) { if (S.armDelete !== id) { S.armDelete = id; render(); return; } S.pantry = S.pantry.filter(x => x.id !== id); S.armDelete = null; S.expOpen = null; persist('pantry'); render(); },
+  clearExamples() { S.pantry = S.pantry.filter(x => !x.example); persist('pantry'); render(); },
+  shareList() {
+    const open = S.list.filter(x => !x.checked); const txt = 'Boodschappen (juno):\n' + open.map(x => '- ' + x.name).join('\n');
+    try { navigator.clipboard.writeText(txt).then(() => toast('Lijst gekopieerd. Plak hem in WhatsApp of een bericht.'), () => toast('Kopiëren lukte niet in deze weergave.')); } catch { toast('Kopiëren lukte niet in deze weergave.'); }
+  },
+  doneToPantry() {
+    const done = S.list.filter(x => x.checked);
+    for (const x of done) { const days = SEC_DAYS[x.section] || 7; if (!S.pantry.some(p => norm(p.name) === norm(x.name))) S.pantry.push({ id: uid(), name: x.name, qty: null, unit: 'st', loc: SEC_LOC[x.section] || 'kast', exp: addDays(days), shelfDays: days, method: 'auto', addedAt: Date.now() }); }
+    S.list = S.list.filter(x => !x.checked); persist('pantry'); persist('list'); toast(done.length + ' items naar je voorraad'); render();
+  },
+  clearDone() { S.list = S.list.filter(x => !x.checked); persist('list'); render(); },
+  folder(f) { S.folder = f; render(); },
+  weekDay(d) { const p = S.saved.week[d]; const r = p && S.saved.recipes.find(x => x.id === p.id); if (r) openDetail(r); else toast('Nog niets op ' + d + '. Open een recept en tik op de kalender.'); },
+  rate(arg) { const [id, n] = arg.split('|'); const r = S.saved.recipes.find(x => x.id === id); if (!r) return; r.rating = r.rating === +n ? 0 : +n; persist('saved'); render(); },
+  quickAsk(q) { sendChat(q); }
+};
+const onChange = {
+  scanFile(el) { const f = el.files && el.files[0]; el.value = ''; if (f) runScan(f); },
+  tht(el) { const f = el.files && el.files[0]; const [ctx, id] = el.dataset.arg.split('|'); el.value = ''; if (f) readTht(ctx, id, f); },
+  expDate(el) { const [ctx, id] = el.dataset.arg.split('|'); const it = getItem(ctx, id); if (!it || !parseYmd(el.value)) return; it.exp = el.value; it.method = 'zelf'; if (ctx === 'pantry') persist('pantry'); render(); },
+  scanCheck(el) { const it = getItem('scan', el.dataset.arg); if (it) { it.checked = el.checked; render(); } },
+  itemLoc(el) { const it = getItem('pantry', el.dataset.arg); if (it) { it.loc = el.value; persist('pantry'); render(); } },
+  listCheck(el) { const x = S.list.find(i => i.id === el.dataset.arg); if (x) { x.checked = el.checked; persist('list'); render(); } },
+  moveFolder(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.folder = el.value; persist('saved'); render(); } },
+  note(el) { const r = S.saved.recipes.find(x => x.id === el.dataset.arg); if (r) { r.note = el.value.slice(0, 500); persist('saved'); } }
+};
+const onInput = { scanText(el) { S.scan.text = el.value; }, chatDraft(el) { S.chat.draft = el.value; } };
+const onSubmit = {
+  addList(form) { const i = form.querySelector('input'); const v = i.value.trim(); if (!v) return; v.split(/[,\n]+/).forEach(n => addToList(n.trim())); i.value = ''; render(); setTimeout(() => $('#listInput')?.focus(), 30); },
+  newFolder(form) { const i = form.querySelector('input'); const v = i.value.trim().slice(0, 30); if (!v || S.saved.folders.includes(v)) return; S.saved.folders.push(v); persist('saved'); S.folder = v; render(); },
+  chat(form) { sendChat(S.chat.draft || form.querySelector('input').value); }
+};
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el || el.disabled) return; const f = act[el.dataset.act]; if (f) { e.preventDefault(); f(el.dataset.arg, el); } });
+document.addEventListener('change', e => { const el = e.target.closest('[data-change]'); if (el && onChange[el.dataset.change]) onChange[el.dataset.change](el); });
+document.addEventListener('input', e => { const el = e.target.closest('[data-input]'); if (el && onInput[el.dataset.input]) onInput[el.dataset.input](el); });
+document.addEventListener('submit', e => { const f = e.target.closest('[data-submit]'); if (!f) return; e.preventDefault(); onSubmit[f.dataset.submit] && onSubmit[f.dataset.submit](f); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov) { S.ov === 'cook' ? act.closeCook() : act.close(); } });
+
+render();
+initCaps();
+})();
+</script>
+
+</body>
+</html>
