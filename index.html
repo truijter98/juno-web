@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#22261F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,10 +22,11 @@
 <style>
 /* Layout: one-column phone app, max 480px; big highlighted headline per tab, hairline rows, floating black dock with yellow Scan */
 :root{
-  --bg:#FFFDF7; --surface:#F4F2EA; --card:#FFFFFF; --fg:#0A0A0A; --muted:#5E5C55; --line:#E6E3D8;
-  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#7A6100;
-  --warn:#B45309; --warn-bg:#FFF4D6; --ok:#2F6B2F;
-  --bar:#0A0A0A; --on-bar:#FFFFFF; --cam:#0E0F11; --on-cam:#FFFFFF; --cam-muted:#9A9BA1;
+  --bg:#FAF8F2; --surface:#E4EFE3; --card:#FFFFFF; --fg:#22261F; --muted:#5C6356; --line:#D3DFD1;
+  --accent:#2F7D4F; --on-accent:#FAF8F2; --acc-text:#2F7D4F;
+  --pop:#E8622C; --on-pop:#22261F;
+  --warn:#C2491A; --warn-bg:#FBE6DC; --ok:#2F7D4F;
+  --bar:#22261F; --on-bar:#FAF8F2; --cam:#1A1D17; --on-cam:#FAF8F2; --cam-muted:#A9B0A4;
   --font:'Inter', 'Helvetica Neue', Arial, sans-serif;
   --display:'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --logo:'Archivo', 'Helvetica Neue', Arial, sans-serif;
@@ -33,14 +34,13 @@
   --r:6px; --rs:4px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#121210; --surface:#1C1B18; --card:#191815; --fg:#F5F3EA; --muted:#A6A398; --line:#2F2D28;
-  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#FFD400; --warn:#F2A65A; --warn-bg:#33240F; --ok:#8BC48B;
-  --bar:#000000; --on-bar:#F5F3EA; color-scheme:dark } }
+  --bg:#1A1D17; --surface:#262B23; --card:#22261F; --fg:#F2F1EA; --muted:#A8AEA2; --line:#353B31;
+  --accent:#2F7D4F; --on-accent:#FAF8F2; --acc-text:#7CCB97; --pop:#E8622C; --on-pop:#22261F; --warn:#F48A5E; --warn-bg:#3A2218; --ok:#7CCB97;
+  --bar:#15180F; --on-bar:#F2F1EA; color-scheme:dark } }
 :root[data-theme="dark"]{
-  --bg:#121210; --surface:#1C1B18; --card:#191815; --fg:#F5F3EA; --muted:#A6A398; --line:#2F2D28;
-  --accent:#FFD400; --on-accent:#0A0A0A; --acc-text:#FFD400; --warn:#F2A65A; --warn-bg:#33240F; --ok:#8BC48B;
-  --bar:#000000; --on-bar:#F5F3EA; color-scheme:dark }
-
+  --bg:#1A1D17; --surface:#262B23; --card:#22261F; --fg:#F2F1EA; --muted:#A8AEA2; --line:#353B31;
+  --accent:#2F7D4F; --on-accent:#FAF8F2; --acc-text:#7CCB97; --pop:#E8622C; --on-pop:#22261F; --warn:#F48A5E; --warn-bg:#3A2218; --ok:#7CCB97;
+  --bar:#15180F; --on-bar:#F2F1EA; color-scheme:dark }
 html,body{height:100%}
 body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;-webkit-font-smoothing:antialiased}
 body.lock{overflow:hidden}
@@ -55,9 +55,9 @@ a{color:inherit}
 .wordmark{display:inline-flex;align-items:flex-end;line-height:.95}.wordmark svg{width:.56em;height:.56em;margin:0 0 .08em .03em;flex:none}
 .eyebrow{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .big{font-family:var(--display);font-weight:700;font-size:clamp(27px,8vw,32px);line-height:1.12;letter-spacing:-.02em;text-wrap:balance;margin:0}
-.mark{background:var(--accent);color:var(--on-accent);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.mark{background:var(--pop);color:var(--on-pop);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .iconbtn{width:44px;height:44px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);display:inline-flex;align-items:center;justify-content:center;color:var(--fg);flex-shrink:0}
-.iconbtn.on{background:var(--accent);color:var(--on-accent);border-color:var(--fg)}
+.iconbtn.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .iconbtn svg{width:20px;height:20px}
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);border:1px solid var(--fg);border-radius:var(--rs);overflow:hidden}
 .seg button{height:42px;border:0;border-right:1px solid var(--fg);background:var(--card);font-weight:600;font-size:14px}
@@ -65,7 +65,7 @@ a{color:inherit}
 .seg button.on{background:var(--accent);color:var(--on-accent);font-weight:700}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{height:34px;padding:0 10px;border-radius:var(--rs);border:1px solid var(--line);background:var(--card);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
-.chip.on{background:var(--accent);color:var(--on-accent);border-color:var(--fg)}
+.chip.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .chip.ink{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .btn{height:54px;border-radius:var(--r);border:0;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px;width:100%;text-align:left}
 .btn .mono{font-size:12px}
@@ -97,7 +97,7 @@ a{color:inherit}
 @keyframes pulse{50%{opacity:.5}}
 .err{color:var(--warn);font-size:14px;line-height:1.45}
 .bar{height:6px;width:64px;background:var(--line);display:flex;flex-shrink:0}
-.bar span{background:var(--fg)}
+.bar span{background:var(--ok)}
 .bar.warn span{background:var(--warn)}
 
 /* dock */
@@ -121,7 +121,7 @@ a{color:inherit}
 .camtabs{display:flex;gap:16px;overflow-x:auto;scrollbar-width:none}
 .camtabs button{border:0;background:none;color:var(--cam-muted);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 0 8px;border-bottom:2px solid transparent;white-space:nowrap}
 .camtabs button.on{color:var(--on-cam);border-bottom-color:var(--accent)}
-.viewfinder{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:var(--r);overflow:hidden;background:#1A1C20;display:flex;align-items:center;justify-content:center;text-align:center}
+.viewfinder{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:var(--r);overflow:hidden;background:#2B3027;display:flex;align-items:center;justify-content:center;text-align:center}
 .viewfinder img{width:100%;height:100%;object-fit:cover;display:block}
 .viewfinder .hint{padding:24px;color:var(--cam-muted);font-size:15px;line-height:1.5;max-width:28ch}
 .corner{position:absolute;width:26px;height:26px;border-color:var(--accent);border-style:solid;border-width:0}
@@ -133,83 +133,83 @@ a{color:inherit}
 .shutterrow{display:flex;justify-content:space-between;align-items:center}
 .shutter{width:80px;height:80px;padding:0;background:transparent;border-radius:40px;border:3px solid var(--on-cam);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .shutter span{width:62px;height:62px;border-radius:31px;background:var(--accent)}
-.camsmall{width:48px;height:48px;border-radius:var(--rs);border:1px solid rgba(255,255,255,.28);background:transparent;color:var(--on-cam);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.camsmall{width:48px;height:48px;border-radius:var(--rs);border:1px solid rgba(250,248,242,.28);background:transparent;color:var(--on-cam);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .camsmall svg{width:20px;height:20px}
 textarea{width:100%;box-sizing:border-box;border-radius:var(--rs);border:1px solid var(--fg);background:var(--card);padding:12px 14px;font-size:16px;line-height:1.45;resize:vertical;min-height:96px}
 input[type=text],input[type=date],input[type=number],select{height:46px;box-sizing:border-box;border-radius:var(--rs);border:1px solid var(--fg);background:var(--card);padding:0 12px;font-size:16px}
-.shot{position:relative;width:fit-content;max-width:100%;margin:0 auto;border-radius:var(--r);overflow:hidden;background:#1A1C20}
+.shot{position:relative;width:fit-content;max-width:100%;margin:0 auto;border-radius:var(--r);overflow:hidden;background:#2B3027}
 .shot img{display:block;max-width:100%;max-height:56vh}
-.shot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis}
-.shot .tag.unsure{background:#FFFFFF}
+.shot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--pop);color:var(--on-pop);font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis}
+.shot .tag.unsure{background:#FAF8F2}
 .shot .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes pop{from{transform:translate(-50%,-50%) scale(.3);opacity:0}}
 /* ---------- TikTok-indeling: Scan | Recepten, schermvullend ---------- */
 :root{--barh:58px}
 .ttapp{padding:0;margin:0}
-.pager{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px));display:flex;overflow-x:hidden;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:#0A0A0A}
+.pager{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;bottom:calc(var(--barh) + env(safe-area-inset-bottom,0px));display:flex;overflow-x:hidden;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:#22261F}
 .pager::-webkit-scrollbar,.feed::-webkit-scrollbar{display:none}
-.pane{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;color:#fff}
+.pane{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;color:#FAF8F2}
 #ttTop{position:fixed;top:0;left:0;right:0;margin:0 auto;max-width:520px;z-index:20;pointer-events:none}
 .tttop{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;background:linear-gradient(to bottom,rgba(0,0,0,.45),transparent)}
 .tttop > *{pointer-events:auto}
 .tttabs{display:flex;gap:18px}
-.tttabs button{background:none;border:0;color:rgba(255,255,255,.62);font-weight:700;font-size:17px;padding:6px 0;position:relative;text-shadow:0 1px 4px rgba(0,0,0,.4)}
-.tttabs button.on{color:#fff}
+.tttabs button{background:none;border:0;color:rgba(250,248,242,.62);font-weight:700;font-size:17px;padding:6px 0;position:relative;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.tttabs button.on{color:#FAF8F2}
 .tttabs button.on::after{content:"";position:absolute;left:50%;bottom:0;width:22px;height:3px;border-radius:2px;background:var(--accent);transform:translateX(-50%)}
-.ttic{width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.25);color:#fff;display:flex;align-items:center;justify-content:center}
+.ttic{width:40px;height:40px;border:0;border-radius:20px;background:rgba(0,0,0,.25);color:#FAF8F2;display:flex;align-items:center;justify-content:center}
 .ttic svg{width:22px;height:22px}
 /* scan */
-.ttcam{position:absolute;inset:0;background:#111}
+.ttcam{position:absolute;inset:0;background:#1A1D17}
 .ttcam .camvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ttcam .tag,.ttshot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:14px;line-height:1;padding:8px 11px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 12px rgba(0,0,0,.4);max-width:52vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
-.ttcam .tag.unsure,.ttshot .tag.unsure{background:#fff}
+.ttcam .tag,.ttshot .tag{position:absolute;transform:translate(-50%,-50%);background:var(--pop);color:var(--on-pop);font-weight:700;font-size:14px;line-height:1;padding:8px 11px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 12px rgba(0,0,0,.4);max-width:52vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
+.ttcam .tag.unsure,.ttshot .tag.unsure{background:#FAF8F2}
 .ttcam .tag.pop,.ttshot .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 .ttcam .livepill{top:calc(env(safe-area-inset-top,0px) + 62px)}
-.ttshot{position:absolute;inset:0;background:#111}
+.ttshot{position:absolute;inset:0;background:#1A1D17}
 .ttshot img{width:100%;height:100%;object-fit:cover;display:block}
 .ttoff{display:flex;align-items:center;justify-content:center;padding:24px}
-.ttoffmsg{max-width:30ch;text-align:center;display:flex;flex-direction:column;gap:8px;color:#C9C9CE;line-height:1.45;font-size:15px}
-.ttoffmsg b{color:#fff;font-size:18px}
+.ttoffmsg{max-width:30ch;text-align:center;display:flex;flex-direction:column;gap:8px;color:#C9D1C5;line-height:1.45;font-size:15px}
+.ttoffmsg b{color:#FAF8F2;font-size:18px}
 .ttscanfoot{position:absolute;left:0;right:0;bottom:0;padding:40px 14px 14px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(to top,rgba(0,0,0,.72) 55%,transparent)}
 .ttfound{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.ttfound button{flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;font-size:14px;font-weight:600}
+.ttfound button{flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(250,248,242,.3);background:rgba(0,0,0,.35);color:#FAF8F2;font-size:14px;font-weight:600}
 .ttfound button span{opacity:.6}
 .ttshutter{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:10px}
 .ttshutter .mid{display:flex;justify-content:center}
-.ttsmall{width:52px;height:52px;border-radius:14px;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.ttsmall{width:52px;height:52px;border-radius:14px;border:1px solid rgba(250,248,242,.3);background:rgba(0,0,0,.35);color:#FAF8F2;display:flex;align-items:center;justify-content:center;font-weight:700}
 .ttsmall svg{width:22px;height:22px}
 .ttcount{display:flex;flex-direction:column;align-items:center;line-height:1}
 .ttcount b{font-size:40px;font-weight:800;letter-spacing:-.04em}
-.ttcount span{font-size:14px;color:#C9C9CE;margin-top:4px}
-.ttgo{height:52px;border:0;border-radius:12px;background:var(--accent);color:#0A0A0A;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.ttcount span{font-size:14px;color:#C9D1C5;margin-top:4px}
+.ttgo{height:52px;border:0;border-radius:12px;background:var(--accent);color:var(--on-accent);font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
 .ttgo .mono{font-size:15px}
-.ttnote{background:rgba(255,212,0,.16);border:1px solid rgba(255,212,0,.45);color:#fff;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.4}
+.ttnote{background:rgba(228,239,227,.12);border:1px solid rgba(228,239,227,.35);color:#FAF8F2;border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.4}
 /* feed */
 .feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none}
 .slide{height:100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;touch-action:manipulation;cursor:pointer}
-.slide.s-y{background:#FFD400;color:#0A0A0A}
-.slide.s-k{background:#0A0A0A;color:#fff}
-.slide.s-w{background:#F4F2EA;color:#0A0A0A}
+.slide.s-y{background:var(--accent);color:var(--on-accent)}
+.slide.s-k{background:#22261F;color:#FAF8F2}
+.slide.s-w{background:#E4EFE3;color:#22261F}
 .giant{position:absolute;left:-4px;right:0;top:calc(env(safe-area-inset-top,0px) + 70px);display:flex;flex-direction:column;font-weight:800;font-size:clamp(46px,15vw,78px);line-height:.92;letter-spacing:-.05em;text-transform:lowercase;pointer-events:none;padding-left:14px}
 .giant span{white-space:nowrap;overflow:hidden;text-overflow:clip}
-.s-y .giant{color:rgba(10,10,10,.13)} .s-w .giant{color:rgba(10,10,10,.1)} .s-k .giant{color:rgba(255,212,0,.2)}
+.s-y .giant{color:rgba(250,248,242,.18)} .s-w .giant{color:rgba(34,38,31,.1)} .s-k .giant{color:rgba(228,239,227,.2)}
 .cap{position:absolute;left:14px;right:84px;bottom:30px;display:flex;flex-direction:column;gap:8px}
 .cap h2{margin:0;font-weight:800;font-size:clamp(28px,8.6vw,38px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
 .cap p{margin:0;font-size:15px;line-height:1.4;opacity:.85;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .capmeta{font-size:11px;opacity:.8}
 .capbadges{display:flex;gap:6px;flex-wrap:wrap}
-.s-k .capbadges .badge.acc{background:var(--accent);color:#0A0A0A}
-.s-y .capbadges .badge.acc{background:#0A0A0A;color:var(--accent)}
-.s-w .capbadges .badge.acc{background:#0A0A0A;color:var(--accent)}
+.s-k .capbadges .badge.acc{background:var(--accent);color:var(--on-accent)}
+.s-y .capbadges .badge.acc{background:#22261F;color:#E4EFE3}
+.s-w .capbadges .badge.acc{background:#22261F;color:#E4EFE3}
 .caphint{font-size:10px;opacity:.55}
 .rail{position:absolute;right:10px;bottom:30px;display:flex;flex-direction:column;gap:14px;align-items:center}
 .rail button{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;color:inherit;font-family:var(--mono);font-weight:600;font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:0;width:62px}
 .rail button i{width:50px;height:50px;border-radius:25px;display:flex;align-items:center;justify-content:center;font-style:normal}
-.s-y .rail button i{background:rgba(10,10,10,.1)} .s-w .rail button i{background:rgba(10,10,10,.07)} .s-k .rail button i{background:rgba(255,255,255,.12)}
+.s-y .rail button i{background:rgba(250,248,242,.18)} .s-w .rail button i{background:rgba(34,38,31,.07)} .s-k .rail button i{background:rgba(250,248,242,.12)}
 .rail button i svg{width:24px;height:24px}
-.rail button.on i{background:#0A0A0A;color:var(--accent)}
-.s-k .rail button.on i{background:var(--accent);color:#0A0A0A}
-.burst{position:absolute;left:50%;top:44%;width:120px;height:120px;margin:-60px 0 0 -60px;pointer-events:none;color:#FF3D5A;animation:burst .8s ease forwards}
+.rail button.on i{background:#22261F;color:var(--pop)}
+.s-k .rail button.on i{background:var(--pop);color:var(--on-pop)}
+.burst{position:absolute;left:50%;top:44%;width:120px;height:120px;margin:-60px 0 0 -60px;pointer-events:none;color:#E8622C;animation:burst .8s ease forwards}
 @keyframes burst{0%{transform:scale(.2);opacity:0}25%{transform:scale(1.15);opacity:1}60%{transform:scale(1);opacity:1}100%{transform:scale(1.3) translateY(-30px);opacity:0}}
 .slidemsg{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:90px 20px 40px}
 .slidemsg h2{margin:0;font-weight:800;font-size:clamp(32px,10vw,44px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
@@ -218,103 +218,104 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .dots3{display:flex;gap:8px}.dots3 i{width:12px;height:12px;border-radius:6px;background:currentColor;animation:pulse 1s infinite}.dots3 i:nth-child(2){animation-delay:.2s}.dots3 i:nth-child(3){animation-delay:.4s}
 .swipehint{position:absolute;left:0;right:0;bottom:6px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;pointer-events:none}
 /* swipe-kaarten */
-.tfeed{position:absolute;inset:0;background:#0A0A0A;display:flex;flex-direction:column}
+.tfeed{position:absolute;inset:0;background:#22261F;display:flex;flex-direction:column}
 .moods{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:calc(env(safe-area-inset-top,0px) + 66px) 14px 0;flex:none}
 .moods::-webkit-scrollbar{display:none}
-.moods button{flex:none;height:38px;padding:0 14px;border-radius:19px;border:1px solid #3A3B3F;background:none;color:#fff;font-weight:600;font-size:15px}
-.moods button.on{background:#fff;color:#0A0A0A;border-color:#fff;font-weight:700}
+.moods button{flex:none;height:38px;padding:0 14px;border-radius:19px;border:1px solid #454C41;background:none;color:#FAF8F2;font-weight:600;font-size:15px}
+.moods button.on{background:#FAF8F2;color:#22261F;border-color:#FAF8F2;font-weight:700}
 .stack{position:relative;flex:1;min-height:0;margin:12px 14px 0}
 .tcard{position:absolute;inset:0;border-radius:18px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;transition:transform .25s ease}
 .tcard.drag{transition:none;cursor:grabbing}
 .tcard.under{transform:scale(.95) translateY(10px);filter:brightness(.6);pointer-events:none}
-.tcard.s-y{background:#FFD400;color:#0A0A0A}.tcard.s-k{background:#1A1B1E;color:#fff}.tcard.s-w{background:#F4F2EA;color:#0A0A0A}
+.tcard.s-y{background:var(--accent);color:var(--on-accent)}.tcard.s-k{background:#2B3027;color:#FAF8F2}.tcard.s-w{background:#E4EFE3;color:#22261F}
 .tcard .giant{top:16px}
 .tcard .cap{right:16px;bottom:16px;left:16px}
 .tcard .cap h2{font-size:clamp(28px,8.6vw,36px)}
 .stamp{position:absolute;top:26px;padding:4px 12px;border:4px solid;border-radius:8px;font-weight:800;font-size:28px;letter-spacing:.04em;opacity:0;pointer-events:none}
-.stamp.yes{left:20px;color:#2F6B2F;transform:rotate(-16deg)}
-.stamp.no{right:20px;color:#B45309;transform:rotate(16deg)}
-.s-k .stamp.yes{color:#7BD17B}.s-k .stamp.no{color:#F2A65A}
+.stamp.yes{left:20px;color:#2F7D4F;transform:rotate(-16deg)}
+.stamp.no{right:20px;color:#C2491A;transform:rotate(16deg)}
+.s-k .stamp.yes{color:#7CCB97}.s-k .stamp.no{color:#F48A5E}
 .labels{display:flex;gap:6px;flex-wrap:wrap}
-.moods .mysmaak{display:inline-flex;align-items:center;gap:6px;border-color:#FFD400;color:#FFD400;font-weight:700}
+.moods .mysmaak{display:inline-flex;align-items:center;gap:6px;background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
 .moods .mysmaak svg,.ttpill svg{width:18px;height:18px}
-.ttpill{height:40px;padding:0 14px;border-radius:20px;border:0;background:rgba(0,0,0,.45);color:#fff;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px}
-.profcard{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:12px;border:0;background:#0A0A0A;color:#fff;text-align:left}
-.profcard .pi{width:44px;height:44px;border-radius:22px;background:#FFD400;color:#0A0A0A;display:flex;align-items:center;justify-content:center;flex:none}
+.ttpill{height:40px;padding:0 14px;border-radius:20px;border:0;background:rgba(0,0,0,.45);color:#FAF8F2;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px}
+.profcard{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:12px;border:0;background:#22261F;color:#FAF8F2;text-align:left}
+.profcard .pi{width:44px;height:44px;border-radius:22px;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;flex:none}
 .profcard .pi svg{width:22px;height:22px}
 .profcard b{display:block;font-family:var(--display);font-size:17px;font-weight:600}
-.profcard span span,.profcard > span:nth-child(2) span{display:block;font-size:14px;color:#C9C9CE;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.profcard .go{flex:none;font-weight:700;font-size:15px;color:#FFD400}
+.profcard span span,.profcard > span:nth-child(2) span{display:block;font-size:14px;color:#C9D1C5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profcard .go{flex:none;font-weight:700;font-size:15px;color:var(--pop)}
 .clearbar{display:flex;justify-content:flex-end}
 .clearbar .textlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--warn);font-weight:600;font-size:15px;padding:0}
 .clearbar .textlink svg{width:18px;height:18px}
 .clearbar.armed{flex-wrap:wrap;align-items:center;gap:8px;padding:12px;border-radius:10px;background:var(--warn-bg);justify-content:space-between}
 .clearbar.armed span{flex:1 1 180px;font-size:15px;line-height:1.4}
-.btn.danger{background:var(--warn);color:#fff;border-color:var(--warn)}
+.btn.danger{background:var(--warn);color:#FAF8F2;border-color:var(--warn)}
 .flist{flex:1;min-height:0;overflow-y:auto;padding:14px 14px 96px;display:flex;flex-direction:column;gap:18px;scrollbar-width:none;overscroll-behavior:contain}
 .flist::-webkit-scrollbar{display:none}
-.fcard{background:#17181B;border-radius:18px;overflow:hidden;color:#fff;cursor:pointer;position:relative;flex:none}
-.fphoto{position:relative;aspect-ratio:4/3;background:#2A2B2F;overflow:hidden}
+.fcard{background:#2B3027;border-radius:18px;overflow:hidden;color:#FAF8F2;cursor:pointer;position:relative;flex:none}
+.fphoto{position:relative;aspect-ratio:4/3;background:#353B31;overflow:hidden}
 .fphoto img{width:100%;height:100%;object-fit:cover;display:block}
-.fphoto.s-y{background:#FFD400;color:#0A0A0A}.fphoto.s-k{background:#222326;color:#FFD400}.fphoto.s-w{background:#F4F2EA;color:#0A0A0A}
+.fphoto.s-y{background:var(--accent);color:var(--on-accent)}.fphoto.s-k{background:#2B3027;color:#E4EFE3}.fphoto.s-w{background:#E4EFE3;color:#22261F}
 .fgiant{position:absolute;inset:16px;font-family:var(--display);font-weight:700;font-size:44px;line-height:1;letter-spacing:-.02em;opacity:.2;display:flex;flex-direction:column;overflow:hidden;text-transform:lowercase}
-.fheart{position:absolute;right:12px;top:12px;width:48px;height:48px;border-radius:24px;border:0;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center}
-.fheart.on{background:#FFD400;color:#0A0A0A}
+.fheart{position:absolute;right:12px;top:12px;width:48px;height:48px;border-radius:24px;border:0;background:rgba(0,0,0,.5);color:#FAF8F2;display:flex;align-items:center;justify-content:center}
+.fheart.on{background:var(--pop);color:#FAF8F2}
 .fheart svg{width:24px;height:24px}
-.fbest{position:absolute;left:12px;top:12px;background:#FFD400;color:#0A0A0A;font-weight:700;font-size:14px;padding:7px 12px;border-radius:16px}
-.fcredit{position:absolute;right:10px;bottom:10px;font-size:12px;color:#fff;background:rgba(0,0,0,.5);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:75%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fbest{position:absolute;left:12px;top:12px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:14px;padding:7px 12px;border-radius:16px}
+.fcredit{position:absolute;right:10px;bottom:10px;font-size:12px;color:#FAF8F2;background:rgba(0,0,0,.5);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:75%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .finfo{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
-.finfo h2{margin:0;font-size:22px;line-height:1.2;font-weight:600;color:#fff}
-.finfo .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:15px;font-weight:600;color:#D6D6DA}
-.finfo .peppers{color:#FF8A4C}
-.finfo p{margin:0;font-size:15px;line-height:1.45;color:#B9B9BF;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.fskel{height:320px;border-radius:18px;background:#1E1F22;animation:pulse 1.2s infinite;flex:none}
-.fstatus{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#E6E6EA;font-size:15px}
-.fend{min-height:40px;text-align:center;color:#C9C9CE;display:flex;flex-direction:column;align-items:center;gap:8px}
-.surprise{position:absolute;right:16px;bottom:16px;z-index:5;height:50px;padding:0 20px;border-radius:25px;border:0;background:#FFD400;color:#0A0A0A;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.finfo h2{margin:0;font-size:22px;line-height:1.2;font-weight:600;color:#FAF8F2}
+.finfo .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:15px;font-weight:600;color:#D5DDD1}
+.finfo .peppers{color:#F48A5E}
+.finfo p{margin:0;font-size:15px;line-height:1.45;color:#B4BCAF;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fskel{height:320px;border-radius:18px;background:#2B3027;animation:pulse 1.2s infinite;flex:none}
+.fstatus{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#E4EFE3;font-size:15px}
+.fend{min-height:40px;text-align:center;color:#C9D1C5;display:flex;flex-direction:column;align-items:center;gap:8px}
+.fdone{width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;padding:18px 16px;border-radius:18px;background:#2B3027;color:#FAF8F2;text-align:left}.fdone b{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25}.fdone p{margin:0;font-size:15px;line-height:1.45;color:#C9D1C5}
+.surprise{position:absolute;right:16px;bottom:16px;z-index:5;height:50px;padding:0 20px;border-radius:25px;border:0;background:var(--pop);color:var(--on-pop);font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
 .surprise svg{width:20px;height:20px}
-.swipewrap{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#0A0A0A;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 10px) 0 calc(env(safe-area-inset-bottom,0px) + 12px);z-index:40}
-.swipetop{display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#fff}
+.swipewrap{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#22261F;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 10px) 0 calc(env(safe-area-inset-bottom,0px) + 12px);z-index:40}
+.swipetop{display:flex;align-items:center;justify-content:space-between;padding:0 12px;color:#FAF8F2}
 .swipetop b{font-size:19px}
-.swipehelp{margin:0;text-align:center;color:#9A9BA1;font-size:14px}
+.swipehelp{margin:0;text-align:center;color:#A9B0A4;font-size:14px}
 .dphoto{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3}
 .dphoto img{width:100%;height:100%;object-fit:cover;display:block}
-.mealseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1;min-width:0;margin-right:10px;background:rgba(30,31,34,.92);border-radius:22px;padding:3px}
-.mealseg button{height:38px;border:0;border-radius:19px;background:none;color:rgba(255,255,255,.7);font-weight:700;font-size:15px}
-.mealseg button.on{background:#FFD400;color:#0A0A0A}
-.tcard .tphoto{position:absolute;left:0;right:0;top:0;height:56%;background:#2A2B2F}
+.mealseg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));flex:1;min-width:0;margin-right:10px;background:rgba(43,48,39,.92);border-radius:22px;padding:3px}
+.mealseg button{height:38px;border:0;border-radius:19px;background:none;color:rgba(250,248,242,.7);font-weight:700;font-size:15px}
+.mealseg button.on{background:var(--accent);color:var(--on-accent)}
+.tcard .tphoto{position:absolute;left:0;right:0;top:0;height:56%;background:#353B31}
 .tcard .tphoto img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none}
 .tcard.hasimg .cap h2{font-size:clamp(26px,7.6vw,32px)}
 .tcard .meta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:15px;font-weight:600;opacity:.85}
 .tcard .cap p{font-size:16px;-webkit-line-clamp:2}
-.tcard .credit{position:absolute;right:8px;top:calc(56% - 30px);font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcard .credit{position:absolute;right:8px;top:calc(56% - 30px);font-size:12px;color:#FAF8F2;background:rgba(0,0,0,.45);padding:4px 8px;border-radius:10px;text-decoration:none;max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lab{height:30px;padding:0 12px;border-radius:15px;display:inline-flex;align-items:center;font-weight:700;font-size:14px;border:1px solid currentColor}
-.lab.ok{background:#2F6B2F;color:#fff;border-color:#2F6B2F}
-.lab.warn{background:#B45309;color:#fff;border-color:#B45309}
-.lab.acc{background:#0A0A0A;color:#FFD400;border-color:#0A0A0A}
-.s-k .lab.acc{background:#FFD400;color:#0A0A0A;border-color:#FFD400}
-.peppers{display:inline-flex;color:#C2410C}.s-k .peppers{color:#FF8A4C}
+.lab.ok{background:#2F7D4F;color:#FAF8F2;border-color:#2F7D4F}
+.lab.warn{background:#C2491A;color:#FAF8F2;border-color:#C2491A}
+.lab.acc{background:#22261F;color:#E4EFE3;border-color:#22261F}
+.s-k .lab.acc{background:#E4EFE3;color:#22261F;border-color:#E4EFE3}
+.peppers{display:inline-flex;color:#C2491A}.s-k .peppers{color:#F48A5E}
 .tbtns{flex:none;display:flex;justify-content:center;align-items:center;gap:22px;padding:14px 0 6px}
-.tbtns button{border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #3A3B3F;background:#141518;color:#fff}
+.tbtns button{border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #454C41;background:#2B3027;color:#FAF8F2}
 .tbtns .big{width:64px;height:64px}.tbtns .mid{width:48px;height:48px}
-.tbtns .yes{background:#FFD400;border-color:#FFD400;color:#0A0A0A}
+.tbtns .yes{background:var(--pop);border-color:var(--pop);color:#FAF8F2}
 .tbtns svg{width:26px;height:26px}
-.thint{flex:none;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#8A8B90;padding-bottom:10px}
-.mealpill{height:36px;padding:0 12px;border-radius:18px;border:0;background:rgba(30,31,34,.9);color:#fff;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.thint{flex:none;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#9AA295;padding-bottom:10px}
+.mealpill{height:36px;padding:0 12px;border-radius:18px;border:0;background:rgba(43,48,39,.9);color:#FAF8F2;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
 /* scan-modi */
 .modes{display:flex;justify-content:center;gap:4px;font-weight:700;font-size:14px}
-.modes button{padding:9px 12px;border-radius:999px;border:0;background:none;color:#C9C9CE}
-.modes button.on{background:#fff;color:#0A0A0A}
-.ttcam .tag.add{background:#fff;padding:6px 6px 6px 12px;display:inline-flex;align-items:center;gap:6px;border:0;pointer-events:auto}
-.ttcam .tag.add i{width:24px;height:24px;border-radius:12px;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:16px}
-.thtbox{position:absolute;left:50%;top:42%;width:62%;height:76px;transform:translate(-50%,-50%);border:3px solid #FFD400;border-radius:12px;pointer-events:none}
-.thtread{position:absolute;left:50%;top:calc(42% - 64px);transform:translateX(-50%);background:#FFD400;color:#0A0A0A;font-weight:800;font-size:15px;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.modes button{padding:9px 12px;border-radius:999px;border:0;background:none;color:#C9D1C5}
+.modes button.on{background:#FAF8F2;color:#22261F}
+.ttcam .tag.add{background:#FAF8F2;padding:6px 6px 6px 12px;display:inline-flex;align-items:center;gap:6px;border:0;pointer-events:auto}
+.ttcam .tag.add i{width:24px;height:24px;border-radius:12px;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:16px}
+.thtbox{position:absolute;left:50%;top:42%;width:62%;height:76px;transform:translate(-50%,-50%);border:3px solid var(--pop);border-radius:12px;pointer-events:none}
+.thtread{position:absolute;left:50%;top:calc(42% - 64px);transform:translateX(-50%);background:var(--pop);color:var(--on-pop);font-weight:800;font-size:15px;padding:8px 12px;border-radius:999px;white-space:nowrap}
 .pend{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
-.pend button{flex:none;height:36px;padding:0 6px 0 12px;border-radius:999px;border:0;background:#fff;color:#0A0A0A;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
-.pend button i{width:24px;height:24px;border-radius:12px;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center;font-style:normal}
+.pend button{flex:none;height:36px;padding:0 6px 0 12px;border-radius:999px;border:0;background:#FAF8F2;color:#22261F;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.pend button i{width:24px;height:24px;border-radius:12px;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-style:normal}
 /* smaakprofiel */
 .ob{display:flex;flex-direction:column;gap:16px;min-height:100%}
-.obbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.obbar span{height:3px;background:var(--line)}.obbar span.on{background:var(--fg)}
+.obbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.obbar span{height:3px;background:var(--line)}.obbar span.on{background:var(--accent)}
 .pills{display:flex;flex-wrap:wrap;gap:8px}
 .pills button{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--fg);background:none;color:var(--fg);font-weight:600;font-size:15px}
 .pills button.on{background:var(--fg);color:var(--accent);font-weight:700}
@@ -326,43 +327,43 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .cuis button b{font-size:16px}.cuis button span{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;opacity:.7}
 .cuis button.on{background:var(--fg);color:var(--bg)}.cuis button.on span{color:var(--accent);opacity:1}
 .revphoto{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;align-items:center}
-.revphoto button{width:112px;height:112px;border-radius:14px;border:2px dashed #555;background:transparent;color:#C9C9CE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:600;overflow:hidden;padding:0}
+.revphoto button{width:112px;height:112px;border-radius:14px;border:2px dashed #5C6356;background:transparent;color:#C9D1C5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:600;overflow:hidden;padding:0}
 .revphoto img{width:100%;height:100%;object-fit:cover}
 /* onderbalk */
-.ttbar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;z-index:30;background:#000;color:#fff;height:calc(var(--barh) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center}
-.ttbar button{background:none;border:0;color:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;position:relative;height:100%;justify-content:center}
-.ttbar button.on{color:#fff}
+.ttbar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:520px;z-index:30;background:#1A1D17;color:#FAF8F2;height:calc(var(--barh) + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center}
+.ttbar button{background:none;border:0;color:rgba(250,248,242,.55);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;position:relative;height:100%;justify-content:center}
+.ttbar button.on{color:#FAF8F2}
 .ttbar button svg{width:24px;height:24px}
 .ttbar .dot{position:absolute;top:8px;right:calc(50% - 16px);width:8px;height:8px;border-radius:4px;background:var(--accent)}
-.ttbar .plus{width:48px;height:32px;border-radius:9px;background:#fff;color:#0A0A0A;display:flex;align-items:center;justify-content:center;box-shadow:-4px 0 0 var(--accent),4px 0 0 #fff;font-size:24px;font-weight:700;line-height:1}
-.ttbar .plus.on{background:var(--accent);box-shadow:-4px 0 0 #fff,4px 0 0 var(--accent)}
+.ttbar .plus{width:48px;height:32px;border-radius:9px;background:#FAF8F2;color:#22261F;display:flex;align-items:center;justify-content:center;box-shadow:-4px 0 0 var(--accent),4px 0 0 #FAF8F2;font-size:24px;font-weight:700;line-height:1}
+.ttbar .plus.on{background:var(--accent);box-shadow:-4px 0 0 #FAF8F2,4px 0 0 var(--accent)}
 body.tt .app{padding-bottom:calc(var(--barh) + 40px)}
 .review{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
 .thumbs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .thumbs button{height:48px;border-radius:var(--rs);border:1px solid var(--line);background:var(--bg);color:var(--fg);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px}
 .thumbs button svg{width:22px;height:22px}
-.thumbs button.on.up{background:#2F6B2F;border-color:#2F6B2F;color:#fff}
-.thumbs button.on.down{background:#B45309;border-color:#B45309;color:#fff}
-.thumbs.big2 button{height:120px;flex-direction:column;font-size:17px;background:#1A1C20;border-color:#333;color:#fff;border-radius:14px}
+.thumbs button.on.up{background:#2F7D4F;border-color:#2F7D4F;color:#FAF8F2}
+.thumbs button.on.down{background:#C2491A;border-color:#C2491A;color:#FAF8F2}
+.thumbs.big2 button{height:120px;flex-direction:column;font-size:17px;background:#2B3027;border-color:#454C41;color:#FAF8F2;border-radius:14px}
 .thumbs.big2 button svg{width:40px;height:40px}
 h1,h2,h3,.dish{font-family:var(--display);letter-spacing:-.015em}
 .cap h2,.slidemsg h2{font-weight:700;letter-spacing:-.02em;line-height:1.08}
 .ttcount b,.tcard .giant{font-family:var(--display)}
-.codegate{position:fixed;inset:0;z-index:99;background:rgba(10,10,10,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.codegate{position:fixed;inset:0;z-index:99;background:rgba(34,38,31,.55);display:flex;align-items:flex-end;justify-content:center;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .codecard{width:100%;max-width:440px;background:var(--bg);color:var(--fg);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
 .codecard input{height:52px;border:1px solid var(--fg);border-radius:var(--rs);padding:0 14px;font-size:18px;font-family:var(--mono);background:var(--card);color:var(--fg)}
-.livecam{position:relative;width:100%;aspect-ratio:3/4;max-height:62vh;border-radius:var(--r);overflow:hidden;background:#1A1C20}
+.livecam{position:relative;width:100%;aspect-ratio:3/4;max-height:62vh;border-radius:var(--r);overflow:hidden;background:#2B3027}
 .livecam .camvideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.livecam .tag{position:absolute;transform:translate(-50%,-50%);background:var(--accent);color:#0A0A0A;font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
-.livecam .tag.unsure{background:#FFFFFF}
+.livecam .tag{position:absolute;transform:translate(-50%,-50%);background:var(--pop);color:var(--on-pop);font-weight:700;font-size:13px;line-height:1;padding:7px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:46vw;overflow:hidden;text-overflow:ellipsis;transition:left .5s ease,top .5s ease}
+.livecam .tag.unsure{background:#FAF8F2}
 .livecam .tag.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
-.livepill{position:absolute;left:12px;top:12px;display:flex;align-items:center;gap:8px;background:rgba(10,10,10,.6);color:#fff;padding:6px 10px;border-radius:var(--rs);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.livepill i{width:8px;height:8px;border-radius:4px;background:#FF4B3E;animation:pulse 1.2s infinite}
-.livecam .resume{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(10,10,10,.45);border:0;width:100%}
-.livecam .resume span{background:var(--accent);color:#0A0A0A;font-weight:700;padding:12px 16px;border-radius:var(--rs)}
-.livecam .camhint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:14px;text-shadow:0 1px 6px rgba(0,0,0,.7);padding:0 16px}
+.livepill{position:absolute;left:12px;top:12px;display:flex;align-items:center;gap:8px;background:rgba(34,38,31,.6);color:#FAF8F2;padding:6px 10px;border-radius:var(--rs);font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.livepill i{width:8px;height:8px;border-radius:4px;background:#E8622C;animation:pulse 1.2s infinite}
+.livecam .resume{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(34,38,31,.45);border:0;width:100%}
+.livecam .resume span{background:var(--accent);color:var(--on-accent);font-weight:700;padding:12px 16px;border-radius:var(--rs)}
+.livecam .camhint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#FAF8F2;font-size:14px;text-shadow:0 1px 6px rgba(0,0,0,.7);padding:0 16px}
 .found{display:flex;flex-wrap:wrap;gap:6px}
-.found button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:transparent;color:var(--on-cam);font-size:14px;font-weight:600}
+.found button{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 6px 0 12px;border-radius:999px;border:1px solid rgba(250,248,242,.28);background:transparent;color:var(--on-cam);font-size:14px;font-weight:600}
 .found button span{opacity:.55;font-size:16px;line-height:1}
 .livebar{display:flex;gap:8px}
 .livebar .btn{flex:1}
@@ -406,9 +407,9 @@ h1,h2,h3,.dish{font-family:var(--display);letter-spacing:-.015em}
 .cooktext{font-weight:700;font-size:clamp(24px,7.4vw,31px);line-height:1.2;letter-spacing:-.02em;margin:0}
 .timer{display:flex;align-items:center;justify-content:space-between;padding:18px;border-radius:var(--r);background:var(--accent);color:var(--on-accent)}
 .timer .t{font-family:var(--mono);font-weight:600;font-size:46px;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.timer button{width:64px;height:64px;border-radius:32px;border:0;background:#0A0A0A;color:#FFD400;display:flex;align-items:center;justify-content:center}
+.timer button{width:64px;height:64px;border-radius:32px;border:0;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center}
 .progress{display:grid;gap:4px}
-.progress span{height:4px;background:#333}
+.progress span{height:4px;background:#454C41}
 .progress span.on{background:var(--accent)}
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:var(--rs);font-size:14px;z-index:60;max-width:calc(100% - 32px);box-sizing:border-box}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -492,7 +493,7 @@ const S = {
   ov: null, detail: null, detailPersons: 2, planOpen: false, remixBusy: '',
   scan: { mode: 'koelkast', items: [], busy: false, photo: null, error: '', text: '' },
   expOpen: null, thtBusy: null,
-  gen: { busy: false, error: '', count: 0, ctl: null },
+  gen: { busy: false, error: '', count: 0, ctl: null, done: ls.get('recipesDone', '') },
   chat: { turns: [], busy: false, error: '', draft: '' },
   cook: { i: 0, left: null, total: null, running: false, end: 0, done: false },
   locTab: 'alles', folder: 'Alle', armDelete: null,
@@ -629,6 +630,7 @@ function errCopy(e) {
     images_unavailable: 'Foto\'s versturen werkt niet in deze weergave. Typ je producten in.',
     invalid_json: 'Het antwoord kwam niet goed door. Probeer het opnieuw.',
     timeout: 'juno doet er nu te lang over. Probeer het opnieuw.',
+    no_recipes: 'juno vindt hier geen goed recept bij. Probeer een andere maaltijd, of kies in de filters voor een paar extra boodschappen.',
     refused: 'Dit verzoek kon niet worden uitgevoerd. Probeer een andere foto of omschrijving.',
     session_expired: 'Je bent uitgelogd. Log opnieuw in bij Claude en herlaad.',
     prompt_too_large: 'Te veel gegevens in één keer. Verwijder wat oude producten.',
@@ -960,9 +962,12 @@ function tasteText() {
   return sw + (up.length ? '- Smaak: deze recepten vond iemand lekker, maak vergelijkbare keuzes: ' + up.map(fmt).join('; ') + '.\n' : '') +
     (down.length ? '- Smaak: deze recepten vond iemand NIET lekker, vermijd dit soort gerechten: ' + down.map(fmt).join('; ') + '.\n' : '');
 }
-function recipePrompt(n) {
+function recipePrompt(seen) {
   const p = S.prefs;
-  return 'Je bent juno, een kookassistent. Bedenk ' + n + ' verschillende recepten voor ' + p.meal.toLowerCase() + ', in het Nederlands, op basis van wat iemand in huis heeft.\n\nVoorraad (naam — houdbaarheid):\n' + pantryText() +
+  const ask = seen && seen.length
+    ? 'Deze gerechten zijn al voorgesteld: ' + seen.join('; ') + '. Bedenk alleen ANDERE gerechten die nog echt goed passen, geen variaties hierop; zo veel als er echt zijn, hoogstens 8 in dit antwoord. Zijn er geen goede meer, antwoord dan met een lege array: []'
+    : 'Geef ALLE gerechten die echt goed passen: zo veel als er zijn, minstens 1 en hoogstens 8 in dit antwoord. Geen opvulling: liever 3 goede dan 8 matige.';
+  return 'Je bent juno, een kookassistent. Bedenk recepten voor ' + p.meal.toLowerCase() + ', in het Nederlands, op basis van wat iemand in huis heeft. ' + ask + '\n\nVoorraad (naam — houdbaarheid):\n' + pantryText() +
     '\n\nBasis die iedereen heeft en altijd mag: ' + BASICS.join(', ') + '.\n\nRegels:\n' +
     (p.mode === 'nu' ? '- Gebruik ALLEEN producten uit de voorraad plus de basis. Geen extra ingrediënten.\n' : '- Elk recept heeft 1 tot 3 ingrediënten nodig die NIET in de voorraad staan. De rest komt uit de voorraad.\n') +
     '- Totale tijd (voorbereiding + koken) maximaal ' + p.time + ' minuten.\n- Voor ' + p.persons + ' personen, met kloppende hoeveelheden.\n' +
@@ -1021,16 +1026,21 @@ function takeStream(text, st, replace) {
   S.gen.streaming = true; softFeed();
 }
 // Oneindig: bijna onderaan haalt juno op de achtergrond 6 nieuwe recepten op.
+function isDone() { return !!S.gen.done && S.gen.done === prefsKey(); }
+function markDone(v) { S.gen.done = v ? prefsKey() : ''; ls.set('recipesDone', S.gen.done); }
 async function generateMore() {
-  if (S.gen.busy || S.gen.more || S.ai !== 'on' || !S.recipes.length || S.recipesKey !== prefsKey()) return;
+  if (S.gen.busy || S.gen.more || S.ai !== 'on' || !S.recipes.length || S.recipesKey !== prefsKey() || isDone()) return;
   S.gen.more = true; S.gen.moreErr = ''; softFeed();
   const ctl = new AbortController(), w = watchdog(ctl), st = { n: 0, raw: 0, kept: 0, first: true };
   try {
     const s = await needSample();
     const seen = S.recipes.map(r => r.title).slice(-40);
-    const res = await s(recipePrompt(6) + '\n- Deze zijn al voorgesteld; bedenk andere gerechten: ' + seen.join('; ') + '.', { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, false); } });
+    const res = await s(recipePrompt(seen), { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, false); } });
     takeStream(res.text, st, false);
-    if (!st.kept && !st.raw) throw { code: 'invalid_json' };
+    if (!st.kept) {
+      if (!st.raw) { let all = null; try { all = looseJson(res.text); } catch (e) {} if (!(Array.isArray(all) && !all.length)) throw { code: 'invalid_json' }; }
+      markDone(true); // niets nieuws meer: dit waren alle recepten bij deze voorraad en keuzes
+    }
   } catch (e) { S.gen.moreErr = errCopy(w.timedOut ? { code: 'timeout' } : e); }
   w.done(); S.gen.more = false; softFeed();
 }
@@ -1063,14 +1073,14 @@ async function generate() {
   if (S.gen.busy) return;
   if (!S.pantry.length) { openScan('koelkast'); return; }
   const ctl = new AbortController(), w = watchdog(ctl), st = { n: 0, raw: 0, kept: 0, first: false };
-  S.gen = { busy: true, error: '', count: 0, ctl, streaming: false }; render();
+  S.gen = { busy: true, error: '', count: 0, ctl, streaming: false, done: '' }; ls.set('recipesDone', ''); render();
   try {
     const s = await needSample();
-    const res = await s(recipePrompt(6), { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, true); } });
+    const res = await s(recipePrompt(), { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, true); } });
     takeStream(res.text, st, true);
     if (!st.raw) { // geen losse objecten gevonden: probeer het hele antwoord
       const all = looseJson(res.text); const arr = (Array.isArray(all) ? all : all && all.recipes || []).map(normRecipe).filter(Boolean);
-      if (!arr.length) throw { code: 'invalid_json' };
+      if (!arr.length) throw { code: Array.isArray(all) && !all.length ? 'no_recipes' : 'invalid_json' };
       const safe = safeRecipes(arr); if (!safe.length) throw { code: 'allergy_all' };
       S.recipes = safe; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', safe); ls.set('recipesKey', S.recipesKey); safe.forEach(loadImage);
     } else if (!st.kept) throw { code: 'allergy_all' };
@@ -1145,7 +1155,7 @@ function getItem(ctx, id) { return (ctx === 'scan' ? S.scan.items : S.pantry).fi
 function viewRecepten() {
   const p = S.prefs; const exp = expiring(); const stale = S.recipes.length && S.recipesKey !== prefsKey();
   const now = new Date();
-  let h = `<div class="top"><div class="wordmark" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#FFD400"/></svg></div><div style="display:flex;gap:6px">
+  let h = `<div class="top"><div class="wordmark" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#E8622C"/></svg></div><div style="display:flex;gap:6px">
       <button class="iconbtn${S.recView === 'lijst' ? ' on' : ''}" data-act="recView" data-arg="lijst" aria-label="Lijstweergave" aria-pressed="${S.recView === 'lijst'}">${I.rows}</button>
       <button class="iconbtn${S.recView === 'swipe' ? ' on' : ''}" data-act="recView" data-arg="swipe" aria-label="Swipeweergave" aria-pressed="${S.recView === 'swipe'}">${I.cards}</button>
       <button class="iconbtn" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button></div></div>
@@ -1170,13 +1180,13 @@ function viewRecepten() {
     return h;
   }
   if (S.gen.busy) {
-    h += `<div class="card" style="padding:16px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" id="genCount" style="font-size:11px">${S.gen.count ? S.gen.count + ' VAN 6 RECEPTEN' : 'juno denkt na'}</span><button class="textbtn" data-act="stopGen">Stop</button></div>
+    h += `<div class="card" style="padding:16px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" id="genCount" style="font-size:11px">${S.recipes.length ? S.recipes.length + ' RECEPTEN' : 'juno denkt na'}</span><button class="textbtn" data-act="stopGen">Stop</button></div>
       <div class="skel"></div><div class="skel" style="height:40px"></div><div class="skel" style="height:40px"></div><div style="font-size:14px;color:var(--muted)">Dit duurt meestal 20 tot 60 seconden.</div></div>`;
     return h;
   }
   if (S.gen.error) h += `<div class="err">${esc(S.gen.error)}</div>`;
   if (!S.recipes.length || stale) {
-    h += `<button class="btn" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>${stale ? 'Nieuwe recepten met deze keuzes' : 'Bedenk 6 recepten'}</span><span class="mono">${p.mode === 'nu' ? 'NU' : '+1–3'} · ≤${p.time}′ →</span></button>`;
+    h += `<button class="btn" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>${stale ? 'Nieuwe recepten met deze keuzes' : 'Bedenk recepten'}</span><span class="mono">${p.mode === 'nu' ? 'NU' : '+1–3'} · ≤${p.time}′ →</span></button>`;
     if (!stale) return h;
   }
   if (S.recView === 'swipe') return h + swipeHTML();
@@ -1238,7 +1248,7 @@ function viewVoorraad() {
     if (open) h += `<div>${expPicker(it, 'pantry')}<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
         <label class="sr" for="loc-${it.id}">Bewaarplek</label><select id="loc-${it.id}" data-change="itemLoc" data-arg="${it.id}">${LOCS.map(l => `<option value="${l}"${it.loc === l ? ' selected' : ''}>${LOCNAME[l]}</option>`).join('')}</select>
         <button class="btn small ghost" data-act="useUp" data-arg="${it.id}">Op</button>
-        <button class="btn small ghost" data-act="delItem" data-arg="${it.id}" style="${S.armDelete === it.id ? 'background:var(--warn);color:#fff;border-color:var(--warn)' : ''}">${S.armDelete === it.id ? 'Zeker weten?' : 'Verwijder'}</button></div></div>`;
+        <button class="btn small ghost" data-act="delItem" data-arg="${it.id}" style="${S.armDelete === it.id ? 'background:var(--warn);color:#FAF8F2;border-color:var(--warn)' : ''}">${S.armDelete === it.id ? 'Zeker weten?' : 'Verwijder'}</button></div></div>`;
   }
   h += `</div>`;
   if (exp.length) h += `<button class="btn" data-act="tab" data-arg="recepten"><span>Recepten met wat eerst op moet</span><span class="mono">→</span></button>`;
@@ -1286,7 +1296,7 @@ function viewOpgeslagen() {
 function ovScan() {
   const sc = S.scan; const modes = [['koelkast','Koelkast'],['product','Product'],['barcode','Barcode'],['typen','Typen']];
   const imgMode = sc.mode !== 'typen';
-  let h = `<div class="top"><div class="wordmark" style="color:var(--on-cam)" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#FFD400"/></svg></div><button class="camsmall" data-act="close" aria-label="Sluiten">${I.x}</button></div>
+  let h = `<div class="top"><div class="wordmark" style="color:var(--on-cam)" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#E8622C"/></svg></div><button class="camsmall" data-act="close" aria-label="Sluiten">${I.x}</button></div>
     <div class="camtabs" role="tablist">${modes.map(([m, l]) => `<button role="tab" aria-selected="${sc.mode === m}" class="${sc.mode === m ? 'on' : ''}" data-act="scanMode" data-arg="${m}">${l}</button>`).join('')}</div>`;
   if (imgMode && !sc.photo && (CAM.state === 'on' || CAM.state === 'starting')) {
     const now = Date.now();
@@ -1296,7 +1306,7 @@ function ovScan() {
       ${CAM.paused ? '<button class="resume" data-act="camResume" aria-label="Verder scannen"><span>Tik om verder te scannen</span></button>' : ''}</div>`;
     h += `<div class="eyebrow" style="color:var(--cam-muted)">${sc.items.length ? sc.items.length + (sc.items.length === 1 ? ' product' : ' producten') + ' in je voorraad gezet · tik × als iets niet klopt' : 'Herkende producten gaan direct in je voorraad'}</div>`;
     if (sc.items.length) h += `<div class="found">${sc.items.map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
-    h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="gallery" style="color:var(--on-cam);border-color:rgba(255,255,255,.35)"><span>Uit galerij</span></button><button class="btn" data-act="scanDone" ${sc.items.length ? '' : 'disabled'}><span>Klaar</span><span class="mono">Recepten →</span></button></div>`;
+    h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="gallery" style="color:var(--on-cam);border-color:rgba(250,248,242,.35)"><span>Uit galerij</span></button><button class="btn" data-act="scanDone" ${sc.items.length ? '' : 'disabled'}><span>Klaar</span><span class="mono">Recepten →</span></button></div>`;
   } else if (imgMode && S.canImg) {
     if (CAM.state === 'off' && !sc.photo) h += `<div class="notice" style="color:var(--fg)">De live camera werkt niet in deze weergave (${esc(CAM.why)}). Maak hieronder een foto; juno zet de namen er daarna op.<br><button class="chip" data-act="camRetry" style="margin-top:8px">Opnieuw proberen</button></div>`;
     const hintTxt = sc.mode === 'koelkast' ? 'Richt je camera op je open koelkast, kast of fruitschaal. juno zet de namen op de foto en alles gaat direct in je voorraad.' : sc.mode === 'product' ? 'Fotografeer één product, bijvoorbeeld een courgette of een pak melk.' : 'Fotografeer de verpakking met barcode en etiket. juno leest de productnaam.';
@@ -1304,7 +1314,7 @@ function ovScan() {
       h += `<div class="shot"><img src="${sc.photo}" alt="Jouw foto">${sc.items.filter(it => it.x != null && it.y != null).map(it => `<span class="tag${it.unsure ? ' unsure' : ''}${Date.now() - (it.t || 0) < 450 ? ' pop' : ''}" style="left:${it.x}%;top:${it.y}%">${esc(it.name)}</span>`).join('')}${sc.busy ? `<span class="scanline"></span><span class="busytag">${sc.items.length ? sc.items.length + ' gevonden…' : 'juno kijkt mee…'}</span>` : ''}</div>`;
       if (sc.auto && sc.items.length) h += `<div class="eyebrow" style="color:var(--cam-muted)">${sc.busy ? 'Al in je voorraad gezet' : sc.items.length + (sc.items.length === 1 ? ' product' : ' producten') + ' in je voorraad gezet · tik × als iets niet klopt'}</div>
         <div class="found">${sc.items.map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''}${it.unsure ? ' ?' : ''} <span>×</span></button>`).join('')}</div>`;
-      if (!sc.busy) h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="camera" style="color:var(--on-cam);border-color:rgba(255,255,255,.35)"><span>Nog een foto</span></button>${sc.items.length ? `<button class="btn" data-act="scanDone"><span>Recepten</span><span class="mono">→</span></button>` : ''}</div>`;
+      if (!sc.busy) h += `<div class="livebar"><button class="btn ghost" data-act="pickPhoto" data-arg="camera" style="color:var(--on-cam);border-color:rgba(250,248,242,.35)"><span>Nog een foto</span></button>${sc.items.length ? `<button class="btn" data-act="scanDone"><span>Recepten</span><span class="mono">→</span></button>` : ''}</div>`;
     } else {
       h += `<div class="viewfinder"><div class="hint">${hintTxt}</div><span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span></div>
       <div class="shutterrow"><button class="camsmall" data-act="pickPhoto" data-arg="gallery" aria-label="Kies foto uit galerij">${I.img}</button>
@@ -1356,14 +1366,14 @@ function ovReview() {
   const r = S.detail; const rv = reviewOf(r);
   return `<div class="top"><span class="mono" style="font-size:11px;color:var(--cam-muted)">Eet smakelijk</span><button class="camsmall" data-act="reviewDone" aria-label="Sluiten">${I.x}</button></div>
     <div class="eyebrow" style="color:var(--accent)">${esc(r.title)}</div>
-    <h1 class="big" style="color:#fff">Hoe was het?</h1>
+    <h1 class="big" style="color:#FAF8F2">Hoe was het?</h1>
     <p style="margin:0;color:var(--cam-muted);line-height:1.5">Met jouw duimpje leert juno wat je lekker vindt en worden je volgende recepten beter.</p>
     <div class="thumbs big2">
       <button class="${rv && rv.v === 'up' ? 'on up' : ''}" data-act="thumb" data-arg="up" aria-pressed="${!!(rv && rv.v === 'up')}">${I.up}<span>Lekker!</span></button>
       <button class="${rv && rv.v === 'down' ? 'on down' : ''}" data-act="thumb" data-arg="down" aria-pressed="${!!(rv && rv.v === 'down')}">${I.down}<span>Liever niet</span></button></div>
     <div class="revphoto"><button data-act="revPhoto" aria-label="Foto van je gerecht maken">${S.reviewPhoto || (rv && rv.photo) ? `<img src="${S.reviewPhoto || rv.photo}" alt="Jouw gerecht">` : `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Foto`}</button><span style="font-size:15px;line-height:1.45;color:var(--cam-muted)">Maak een foto van wat je gemaakt hebt. Hij komt bij het recept onder Bewaard.</span></div>
     <label class="eyebrow" for="reviewNote" style="color:var(--cam-muted)">Iets toevoegen? (mag leeg)</label>
-    <textarea id="reviewNote" data-input="reviewNote" placeholder="Bijv. volgende keer meer kruiden, of: de kinderen vonden het top" style="min-height:80px;background:#1A1C20;color:#fff;border-color:#333">${esc(S.reviewDraft != null ? S.reviewDraft : (rv && rv.note) || '')}</textarea>
+    <textarea id="reviewNote" data-input="reviewNote" placeholder="Bijv. volgende keer meer kruiden, of: de kinderen vonden het top" style="min-height:80px;background:#2B3027;color:#FAF8F2;border-color:#454C41">${esc(S.reviewDraft != null ? S.reviewDraft : (rv && rv.note) || '')}</textarea>
     <div class="stickyfoot"><button class="btn" data-act="reviewDone" style="justify-content:center">${rv ? 'Klaar' : 'Overslaan'}</button></div>`;
 }
 function ovDetail() {
@@ -1398,12 +1408,12 @@ function ovCook() {
     <div class="progress" style="grid-template-columns:repeat(${total},minmax(0,1fr))">${r.steps.map((_, i) => `<span class="${i <= c.i ? 'on' : ''}"></span>`).join('')}</div>
     <div class="mono" style="font-size:12px;color:var(--accent)">Stap ${pad(c.i + 1)} / ${pad(total)} · ${esc(r.title)}</div>
     <p class="cooktext">${esc(s.text)}</p>
-    ${ings.length ? `<div class="chips">${ings.map(i => `<span class="badge" style="border:1px solid #333;color:var(--on-cam);font-size:12px;padding:7px 10px">${fmtQty(i.qty, i.unit, S.detailPersons / r.persons)} ${esc(i.name)}</span>`).join('')}</div>` : ''}
+    ${ings.length ? `<div class="chips">${ings.map(i => `<span class="badge" style="border:1px solid #454C41;color:var(--on-cam);font-size:12px;padding:7px 10px">${fmtQty(i.qty, i.unit, S.detailPersons / r.persons)} ${esc(i.name)}</span>`).join('')}</div>` : ''}
     ${t != null ? `<div class="timer"><div><div class="mono" style="font-size:11px">${c.done ? 'Klaar!' : 'Timer'}</div><div class="t" id="timerText">${pad(Math.floor(t / 60))}:${pad(t % 60)}</div></div>
       <button data-act="timer" aria-label="${c.running ? 'Pauzeer timer' : 'Start timer'}">${c.running ? I.pause : I.play}</button></div>` : ''}
     <div class="stickyfoot"><div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:10px;width:100%">
-      <button class="btn ghost" style="justify-content:center;color:var(--on-cam);border-color:#444" data-act="cookStep" data-arg="-1" ${c.i === 0 ? 'disabled' : ''}>Vorige</button>
-      <button class="btn" style="justify-content:center;background:var(--on-cam);color:#0A0A0A" data-act="${last ? 'cookDone' : 'cookStep'}" data-arg="1">${last ? 'Klaar · eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
+      <button class="btn ghost" style="justify-content:center;color:var(--on-cam);border-color:#4F574B" data-act="cookStep" data-arg="-1" ${c.i === 0 ? 'disabled' : ''}>Vorige</button>
+      <button class="btn" style="justify-content:center;background:var(--on-cam);color:#22261F" data-act="${last ? 'cookDone' : 'cookStep'}" data-arg="1">${last ? 'Klaar · eet smakelijk' : 'Volgende stap →'}</button></div></div>`;
 }
 function profSummary() { const p = S.prefs; return [p.allergies.length ? 'zonder ' + p.allergies.join(', ').toLowerCase() : 'geen allergieën', ...p.diets.map(d => d.toLowerCase()), SPICE[p.spice || 0].toLowerCase(), p.cuisines.length ? p.cuisines.join(', ') : '', p.persons + ' personen'].filter(Boolean).join(' · '); }
 function ovFilters() {
@@ -1514,7 +1524,7 @@ function viewScanTT() {
       ${CAM.paused ? '<button class="resume" data-act="camResume" aria-label="Verder scannen"><span>Tik om verder te scannen</span></button>' : ''}</div>`;
   } else {
     h += `<div class="ttcam ttoff"><div class="ttoffmsg">${CAM.state === 'off'
-      ? `<b>Live camera staat uit</b><span>${esc(CAM.why)}. Maak een foto, dan zet juno de namen erop.</span><button class="chip" data-act="camRetry" style="align-self:center;margin-top:6px;color:#fff;border-color:rgba(255,255,255,.35);background:transparent">Opnieuw proberen</button>`
+      ? `<b>Live camera staat uit</b><span>${esc(CAM.why)}. Maak een foto, dan zet juno de namen erop.</span><button class="chip" data-act="camRetry" style="align-self:center;margin-top:6px;color:#FAF8F2;border-color:rgba(250,248,242,.35);background:transparent">Opnieuw proberen</button>`
       : '<b>Camera start…</b><span>Sta de camera toe als je telefoon erom vraagt.</span>'}</div></div>`;
   }
   h += `<div class="ttscanfoot">`;
@@ -1522,15 +1532,15 @@ function viewScanTT() {
   if (sc.error) h += `<div class="ttnote">${esc(sc.error)}</div>`;
   if (mode === 'tht') {
     const cands = [...S.pantry].sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0)).slice(0, 8);
-    h += S.tht ? `<div style="font-size:15px;color:#E6E6EA">Bij welk product hoort <b style="color:#fff">${esc(fmtDate(S.tht.date))}</b>?</div><div class="ttfound">${cands.map(p => `<button data-act="thtAssign" data-arg="${p.id}">${esc(p.name)}</button>`).join('')}${cands.length ? '' : '<span style="color:#C9C9CE;font-size:14px">Je voorraad is nog leeg. Scan eerst je producten.</span>'}</div>`
-      : `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Houd de datum op de verpakking in het gele kader</div>`;
+    h += S.tht ? `<div style="font-size:15px;color:#E4EFE3">Bij welk product hoort <b style="color:#FAF8F2">${esc(fmtDate(S.tht.date))}</b>?</div><div class="ttfound">${cands.map(p => `<button data-act="thtAssign" data-arg="${p.id}">${esc(p.name)}</button>`).join('')}${cands.length ? '' : '<span style="color:#C9D1C5;font-size:14px">Je voorraad is nog leeg. Scan eerst je producten.</span>'}</div>`
+      : `<div style="text-align:center;font-size:15px;color:#E4EFE3;text-shadow:0 1px 6px rgba(0,0,0,.6)">Houd de datum op de verpakking in het oranje kader</div>`;
   } else if (mode === 'confirm') {
-    h += S.pending.length ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:14px;color:#E6E6EA">juno ziet ${S.pending.length} ${S.pending.length === 1 ? 'product' : 'producten'} · tik om toe te voegen</span><button class="chip" data-act="addAllPending" style="color:#0A0A0A;background:#fff;border-color:#fff">Alles erbij</button></div><div class="pend">${S.pending.map(it => `<button data-act="addPending" data-arg="${it.id}" aria-label="${esc(it.name)} toevoegen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''}<i>+</i></button>`).join('')}</div>`
-      : `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Voorstellen verschijnen hier. Jij kiest wat erin gaat.</div>`;
+    h += S.pending.length ? `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:14px;color:#E4EFE3">juno ziet ${S.pending.length} ${S.pending.length === 1 ? 'product' : 'producten'} · tik om toe te voegen</span><button class="chip" data-act="addAllPending" style="color:#22261F;background:#FAF8F2;border-color:#FAF8F2">Alles erbij</button></div><div class="pend">${S.pending.map(it => `<button data-act="addPending" data-arg="${it.id}" aria-label="${esc(it.name)} toevoegen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''}<i>+</i></button>`).join('')}</div>`
+      : `<div style="text-align:center;font-size:15px;color:#E4EFE3;text-shadow:0 1px 6px rgba(0,0,0,.6)">Voorstellen verschijnen hier. Jij kiest wat erin gaat.</div>`;
     if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)} <span>×</span></button>`).join('')}</div>`;
   } else {
     if (sc.items.length) h += `<div class="ttfound" aria-label="Toegevoegd aan voorraad">${[...sc.items].reverse().map(it => `<button data-act="scanRemove" data-arg="${it.id}" aria-label="${esc(it.name)} weghalen">${esc(it.name)}${it.qty ? ' · ' + fmtQty(it.qty, it.unit) : ''} <span>×</span></button>`).join('')}</div>`;
-    else if (live && !CAM.paused) h += `<div style="text-align:center;font-size:15px;color:#E6E6EA;text-shadow:0 1px 6px rgba(0,0,0,.6)">Beweeg je telefoon rustig langs je koelkast of kast</div>`;
+    else if (live && !CAM.paused) h += `<div style="text-align:center;font-size:15px;color:#E4EFE3;text-shadow:0 1px 6px rgba(0,0,0,.6)">Beweeg je telefoon rustig langs je koelkast of kast</div>`;
   }
   h += `<div class="ttshutter"><button class="ttsmall" data-act="pickPhoto" data-arg="gallery" aria-label="Foto uit galerij">${I.img}</button><div class="mid">`;
   if (live && mode !== 'tht') h += `<div class="ttcount" aria-live="polite"><b>${sc.items.length}</b><span>${sc.items.length === 1 ? 'product erbij' : 'producten erbij'}</span></div>`;
@@ -1582,14 +1592,19 @@ function cardHTML(r, i, under) {
       ${r.why ? `<p>${esc(r.why)}</p>` : ''}</div>
     ${img && !under ? `<a class="credit" href="${esc(r.img.page)}" target="_blank" rel="noopener">${r.img.source === 'Unsplash' ? `Foto: ${esc(r.img.by || 'onbekend')} op Unsplash` : `Voorbeeldfoto${r.img.by ? ' · ' + esc(r.img.by) : ''} · Wikimedia`}</a>` : ''}</article>`;
 }
+function endCard() {
+  return `<div class="fdone"><b>Dit zijn alle recepten bij je voorraad.</b>${S.prefs.mode === 'nu'
+    ? `<p>Met 1 tot 3 extra boodschappen kan juno meer bedenken.</p><button class="ttgo" data-act="modeExtra"><span>Toon ideeën met wat extra's</span><span class="mono">→</span></button>`
+    : `<p>Scan er wat bij, of kies een andere maaltijd of stemming.</p><button class="btn small ghost" data-act="moreAgain" style="color:#FAF8F2;border-color:rgba(250,248,242,.4)">Zoek nog eens</button>`}</div>`;
+}
 function msgCard(cls, inner) { return `<div class="stack"><div class="tcard s-${cls}" style="cursor:default;touch-action:auto"><div class="slidemsg" style="padding:24px 20px;height:100%;box-sizing:border-box;overflow:auto">${inner}</div></div></div>`; }
 function viewFeedTT() {
   const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
   let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?"><button class="mysmaak" data-act="editProfile" aria-label="Mijn smaakprofiel aanpassen">${I.user}Mijn smaak</button>${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
   if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
-  else if (S.gen.busy && !S.gen.streaming) h += `<div class="flist"><div class="fstatus"><span>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten…</span><button class="btn small ghost" data-act="stopGen" style="color:#fff;border-color:rgba(255,255,255,.4)">Stop</button></div><div class="fskel"></div><div class="fskel"></div></div>`;
+  else if (S.gen.busy && !S.gen.streaming) h += `<div class="flist"><div class="fstatus"><span>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten…</span><button class="btn small ghost" data-act="stopGen" style="color:#FAF8F2;border-color:rgba(250,248,242,.4)">Stop</button></div><div class="fskel"></div><div class="fskel"></div></div>`;
   else if (!S.recipes.length || stale || S.gen.error) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak ${esc(p.meal.toLowerCase())}-recepten</span><span class="mono">→</span></button>`);
-  else h += `<div class="flist" id="flist">${S.recipes.map(listCard).join('')}${S.gen.more || S.gen.busy ? '<div class="fskel"></div>' : ''}<div id="fsentinel" class="fend">${S.gen.moreErr ? `<p>${esc(S.gen.moreErr)}</p><button class="btn small ghost" data-act="moreRetry" style="color:#fff;border-color:rgba(255,255,255,.4)">Opnieuw proberen</button>` : ''}</div></div>
+  else h += `<div class="flist" id="flist">${S.recipes.map(listCard).join('')}${S.gen.more || S.gen.busy ? '<div class="fskel"></div>' : ''}<div id="fsentinel" class="fend">${isDone() ? endCard() : S.gen.moreErr ? `<p>${esc(S.gen.moreErr)}</p><button class="btn small ghost" data-act="moreRetry" style="color:#FAF8F2;border-color:rgba(250,248,242,.4)">Opnieuw proberen</button>` : ''}</div></div>
     <button class="surprise" data-act="surprise">${I.shuffle}Verras me</button>`;
   return h + '</div>';
 }
@@ -1597,7 +1612,7 @@ function viewFeedTT() {
 function deckHTML() {
   const r = S.recipes[S.swipeI], nx = S.recipes[S.swipeI + 1];
   if (!r) {
-    if (S.gen.more || (S.ai === 'on' && !S.gen.moreErr)) { if (!S.gen.more) setTimeout(generateMore, 0); return msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt nog meer recepten…</h2>`); }
+    if (!isDone() && (S.gen.more || (S.ai === 'on' && !S.gen.moreErr))) { if (!S.gen.more) setTimeout(generateMore, 0); return msgCard('y', `<div class="dots3" aria-hidden="true"><i></i><i></i><i></i></div><h2>juno zoekt nog meer recepten…</h2>`); }
     return msgCard('k', `<h2>Alles gezien</h2><p>Je bewaarde recepten staan onder Bewaard.</p><button class="ttgo" data-act="close"><span>Terug naar de feed</span><span class="mono">→</span></button>`);
   }
   return `<div class="stack">${nx ? cardHTML(nx, S.swipeI + 1, true) : ''}${cardHTML(r, S.swipeI, false)}</div>
@@ -1611,7 +1626,7 @@ function bindFeedList() {
   list.addEventListener('scroll', () => { FEED.scroll = list.scrollTop; }, { passive: true });
   if (FEED.io) FEED.io.disconnect();
   if (sen && 'IntersectionObserver' in window) {
-    FEED.io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && !S.gen.more && !S.gen.moreErr) generateMore(); }, { root: list, rootMargin: '700px' });
+    FEED.io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting) && !S.gen.more && !S.gen.moreErr && !isDone()) generateMore(); }, { root: list, rootMargin: '700px' });
     FEED.io.observe(sen);
   }
 }
@@ -1629,7 +1644,7 @@ function bindTinder() {
   el.addEventListener('keydown', e => { if (e.key === 'ArrowRight') act.tSwipe('save'); else if (e.key === 'ArrowLeft') act.tSwipe('skip'); else if (e.key === 'Enter') act.detail(el.dataset.rid); });
 }
 function feedKey() {
-  return JSON.stringify([S.prefs.mood, S.prefs.meal, S.gen.busy, S.gen.more, S.gen.moreErr, S.gen.error, S.recipesKey === prefsKey(), S.pantry.length > 0, S.ai, S.recipes.map(r => r.id + (isSaved(r) ? 's' : '') + (r.img ? 'i' : '') + ((reviewOf(r) || {}).v || '') + recipeStats(r).missing.length)]);
+  return JSON.stringify([S.prefs.mood, S.prefs.meal, S.gen.busy, S.gen.more, S.gen.moreErr, S.gen.error, S.recipesKey === prefsKey(), isDone(), S.pantry.length > 0, S.ai, S.recipes.map(r => r.id + (isSaved(r) ? 's' : '') + (r.img ? 'i' : '') + ((reviewOf(r) || {}).v || '') + recipeStats(r).missing.length)]);
 }
 function bindPager() {
   const pg = $('#pager'); let t = 0;
@@ -1724,6 +1739,8 @@ const act = {
   toScan() { act.tab('scan'); },
   surprise() { S.swipeI = 0; while (S.recipes[S.swipeI] && isSaved(S.recipes[S.swipeI])) S.swipeI++; S.ov = 'swipe'; render(); },
   moreRetry() { S.gen.moreErr = ''; generateMore(); },
+  moreAgain() { markDone(false); S.gen.moreErr = ''; softFeed(); generateMore(); },
+  modeExtra() { setPrefs({ mode: 'bijna' }); markDone(false); FEED.autoKey = ''; render(); },
   fSave(id) {
     const r = S.recipes.find(x => x.id === id); if (!r) return;
     if (isSaved(r)) { unsaveRecipe(r); toast('Niet meer bewaard'); }
