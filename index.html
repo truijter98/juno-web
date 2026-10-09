@@ -293,7 +293,7 @@ function persist(key) {
   });
 }
 // ---------- website-modus: AI via de juno-ai functie ----------
-const WEB_AI_URL = '__JUNO_AI_URL__';
+const WEB_AI_URL = 'https://uthjjnucsvfrlfdhbiwo.supabase.co/functions/v1/Juni-AI';
 const WEB_READY = !WEB_AI_URL.startsWith('__');
 function lsRaw(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return ''; } }
 let codeAsk = null;
