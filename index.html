@@ -570,7 +570,7 @@ function makeWebSample() {
       throw { code: j.code || 'network', message: j.message || '' };
     }
     const rd = res.body.getReader(), dec = new TextDecoder(); let text = '';
-    for (;;) { const { done, value } = await rd.read(); if (done) break; const d = dec.decode(value, { stream: true }); if (!d) continue; text += d; if (opts.onText) try { opts.onText({ text, delta: d }); } catch (e) {} }
+    for (;;) { let r; try { r = await rd.read(); } catch (e) { throw { code: e && e.name === 'AbortError' ? 'cancelled' : 'network' }; } const { done, value } = r; if (done) break; const d = dec.decode(value, { stream: true }); if (!d) continue; text += d; if (opts.onText) try { opts.onText({ text, delta: d }); } catch (e) {} }
     if (!text.trim()) throw { code: 'empty_completion' };
     return { text, truncated: false };
   };
@@ -620,6 +620,7 @@ function errCopy(e) {
     image_rejected: 'Deze foto kan niet worden gelezen. Probeer een andere JPG- of PNG-foto.',
     images_unavailable: 'Foto\'s versturen werkt niet in deze weergave. Typ je producten in.',
     invalid_json: 'Het antwoord kwam niet goed door. Probeer het opnieuw.',
+    timeout: 'juno doet er nu te lang over. Probeer het opnieuw.',
     refused: 'Dit verzoek kon niet worden uitgevoerd. Probeer een andere foto of omschrijving.',
     session_expired: 'Je bent uitgelogd. Log opnieuw in bij Claude en herlaad.',
     prompt_too_large: 'Te veel gegevens in één keer. Verwijder wat oude producten.',
@@ -978,19 +979,52 @@ function safeRecipes(arr) {
   const bad = S.prefs.allergies.map(a => a.toLowerCase());
   return arr.filter(r => !r.allergens.some(a => bad.includes(a)) && !r.ingredients.some(i => bad.some(b => allergenHit(b, i.name))));
 }
-// Oneindig swipen: bijna aan het eind haalt juno op de achtergrond 6 nieuwe recepten op.
+// Recepten komen één voor één binnen: elk af JSON-object in de stroom is meteen een kaart.
+function streamObjs(t) {
+  const out = []; let i = t.indexOf('['); if (i < 0) return out;
+  let depth = 0, str = false, esc = false, start = -1;
+  for (i++; i < t.length; i++) {
+    const c = t[i];
+    if (str) { if (esc) esc = false; else if (c === '\\') esc = true; else if (c === '"') str = false; continue; }
+    if (c === '"') str = true;
+    else if (c === '{') { if (depth === 0) start = i; depth++; }
+    else if (c === '}') { depth--; if (depth === 0 && start >= 0) { try { out.push(JSON.parse(t.slice(start, i + 1))); } catch (e) {} start = -1; } }
+    else if (c === ']' && depth === 0) break;
+  }
+  return out;
+}
+// Houdt een AI-verzoek in de gaten: geen eerste tekst binnen 45 s of niet klaar binnen 150 s = stoppen met een duidelijke melding.
+function watchdog(ctl) {
+  const w = { timedOut: false, got: false };
+  const stop = () => { w.timedOut = true; ctl.abort(); };
+  const t1 = setTimeout(() => { if (!w.got) stop(); }, 45000), t2 = setTimeout(stop, 150000);
+  w.done = () => { clearTimeout(t1); clearTimeout(t2); };
+  return w;
+}
+// Voegt nieuwe recepten uit de stroom toe; geeft terug hoeveel er binnen waren (vóór de allergiecontrole).
+function takeStream(text, st, replace) {
+  const objs = streamObjs(text); if (objs.length <= st.n) return;
+  const fresh = objs.slice(st.n).map(normRecipe).filter(Boolean); st.n = objs.length; st.raw += fresh.length;
+  const ok = safeRecipes(fresh).filter(r => !S.recipes.some(x => norm(x.title) === norm(r.title)) || (replace && !st.first));
+  if (replace && !st.first) { S.recipes = []; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipesKey', S.recipesKey); }
+  st.first = true;
+  if (!ok.length) return;
+  S.recipes = S.recipes.concat(ok); st.kept += ok.length; ls.set('recipes', S.recipes); ok.forEach(loadImage);
+  S.gen.streaming = true; softFeed();
+}
+// Oneindig: bijna onderaan haalt juno op de achtergrond 6 nieuwe recepten op.
 async function generateMore() {
   if (S.gen.busy || S.gen.more || S.ai !== 'on' || !S.recipes.length || S.recipesKey !== prefsKey()) return;
   S.gen.more = true; S.gen.moreErr = ''; softFeed();
+  const ctl = new AbortController(), w = watchdog(ctl), st = { n: 0, raw: 0, kept: 0, first: true };
   try {
     const s = await needSample();
     const seen = S.recipes.map(r => r.title).slice(-40);
-    const res = await s.json(recipePrompt(6) + '\n- Deze zijn al voorgesteld; bedenk andere gerechten: ' + seen.join('; ') + '.', {});
-    let arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
-    arr = safeRecipes(arr).filter(r => !S.recipes.some(x => norm(x.title) === norm(r.title)));
-    if (arr.length) { S.recipes = S.recipes.concat(arr); ls.set('recipes', S.recipes); arr.forEach(loadImage); }
-  } catch (e) { S.gen.moreErr = errCopy(e); }
-  S.gen.more = false; softFeed();
+    const res = await s(recipePrompt(6) + '\n- Deze zijn al voorgesteld; bedenk andere gerechten: ' + seen.join('; ') + '.', { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, false); } });
+    takeStream(res.text, st, false);
+    if (!st.kept && !st.raw) throw { code: 'invalid_json' };
+  } catch (e) { S.gen.moreErr = errCopy(w.timedOut ? { code: 'timeout' } : e); }
+  w.done(); S.gen.more = false; softFeed();
 }
 // Voorbeeldfoto's: een echte foto van dit soort gerecht van Wikimedia Commons (vrij te gebruiken, met naamsvermelding).
 function stripTags(h) { const d = document.createElement('div'); d.innerHTML = String(h || ''); return (d.textContent || '').trim().slice(0, 60); }
@@ -1020,18 +1054,23 @@ function softFeed() { if (document.querySelector('#tcard.drag')) return; if (S.o
 async function generate() {
   if (S.gen.busy) return;
   if (!S.pantry.length) { openScan('koelkast'); return; }
-  S.gen = { busy: true, error: '', count: 0, ctl: new AbortController() }; render();
+  const ctl = new AbortController(), w = watchdog(ctl), st = { n: 0, raw: 0, kept: 0, first: false };
+  S.gen = { busy: true, error: '', count: 0, ctl, streaming: false }; render();
   try {
     const s = await needSample();
-    const res = await s.json(recipePrompt(6), { signal: S.gen.ctl.signal, onText: ({ text }) => { const n = (text.match(/"title"\s*:/g) || []).length; if (n !== S.gen.count) { S.gen.count = n; const el = $('#genCount'); if (el) el.textContent = n ? n + ' VAN 6 RECEPTEN' : 'juno denkt na'; } } });
-    let arr = (Array.isArray(res) ? res : res && res.recipes || []).map(normRecipe).filter(Boolean);
-    if (!arr.length) throw { code: 'invalid_json' };
-    const safe = safeRecipes(arr);
-    if (arr.length && !safe.length) throw { code: 'allergy_all' };
-    arr = safe; arr.forEach(loadImage);
-    S.recipes = arr; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', arr); ls.set('recipesKey', S.recipesKey);
-  } catch (e) { if (e && e.code !== 'cancelled') S.gen.error = errCopy(e); }
-  S.gen.busy = false; S.gen.ctl = null; render();
+    const res = await s(recipePrompt(6), { signal: ctl.signal, onText: ({ text }) => { w.got = true; takeStream(text, st, true); } });
+    takeStream(res.text, st, true);
+    if (!st.raw) { // geen losse objecten gevonden: probeer het hele antwoord
+      const all = looseJson(res.text); const arr = (Array.isArray(all) ? all : all && all.recipes || []).map(normRecipe).filter(Boolean);
+      if (!arr.length) throw { code: 'invalid_json' };
+      const safe = safeRecipes(arr); if (!safe.length) throw { code: 'allergy_all' };
+      S.recipes = safe; S.recipesKey = prefsKey(); S.swipeI = 0; ls.set('recipes', safe); ls.set('recipesKey', S.recipesKey); safe.forEach(loadImage);
+    } else if (!st.kept) throw { code: 'allergy_all' };
+  } catch (e) {
+    if (w.timedOut) { if (!st.kept) S.gen.error = errCopy({ code: 'timeout' }); }
+    else if (e && e.code !== 'cancelled') { if (!st.kept) S.gen.error = errCopy(e); }
+  }
+  w.done(); S.gen.busy = false; S.gen.streaming = false; S.gen.ctl = null; render();
 }
 async function remix(idx) {
   const r = S.detail; const x = r && r.remixes[idx]; if (!x || S.remixBusy) return;
@@ -1540,9 +1579,9 @@ function viewFeedTT() {
   const p = S.prefs, stale = S.recipes.length && S.recipesKey !== prefsKey();
   let h = `<div class="tfeed"><div class="moods" role="group" aria-label="Waar heb je zin in?"><button class="mysmaak" data-act="editProfile" aria-label="Mijn smaakprofiel aanpassen">${I.user}Mijn smaak</button>${MOODS.map(([m]) => `<button class="${p.mood === m ? 'on' : ''}" data-act="mood" data-arg="${esc(m)}" aria-pressed="${p.mood === m}">${esc(m)}</button>`).join('')}</div>`;
   if (!S.pantry.length) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">Begin hier</div><h2>Eerst even kijken wat je hebt.</h2><p>Scan je koelkast of kast; daarna verschijnen hier recepten die je kunt maken.</p><button class="ttgo" data-act="toScan"><span>Scan je koelkast</span><span class="mono">→</span></button>`);
-  else if (S.gen.busy) h += `<div class="flist"><div class="fstatus"><span>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten…</span><button class="btn small ghost" data-act="stopGen" style="color:#fff;border-color:rgba(255,255,255,.4)">Stop</button></div><div class="fskel"></div><div class="fskel"></div></div>`;
+  else if (S.gen.busy && !S.gen.streaming) h += `<div class="flist"><div class="fstatus"><span>juno zoekt ${esc(p.meal.toLowerCase())} bij jouw ${S.pantry.length} producten…</span><button class="btn small ghost" data-act="stopGen" style="color:#fff;border-color:rgba(255,255,255,.4)">Stop</button></div><div class="fskel"></div><div class="fskel"></div></div>`;
   else if (!S.recipes.length || stale || S.gen.error) h += msgCard('k', `<div class="eyebrow" style="color:var(--accent)">${S.pantry.length} producten in huis</div><h2>${S.gen.error ? 'Dat ging even mis.' : 'Wat eten we?'}</h2>${S.gen.error ? `<p>${esc(S.gen.error)}</p>` : ''}${S.ai === 'off' ? '<p>Recepten maken werkt hier niet: geen verbinding met de AI.</p>' : ''}<button class="ttgo" data-act="generate" ${S.ai === 'off' ? 'disabled' : ''}><span>Maak ${esc(p.meal.toLowerCase())}-recepten</span><span class="mono">→</span></button>`);
-  else h += `<div class="flist" id="flist">${S.recipes.map(listCard).join('')}${S.gen.more ? '<div class="fskel"></div>' : ''}<div id="fsentinel" class="fend">${S.gen.moreErr ? `<p>${esc(S.gen.moreErr)}</p><button class="btn small ghost" data-act="moreRetry" style="color:#fff;border-color:rgba(255,255,255,.4)">Opnieuw proberen</button>` : ''}</div></div>
+  else h += `<div class="flist" id="flist">${S.recipes.map(listCard).join('')}${S.gen.more || S.gen.busy ? '<div class="fskel"></div>' : ''}<div id="fsentinel" class="fend">${S.gen.moreErr ? `<p>${esc(S.gen.moreErr)}</p><button class="btn small ghost" data-act="moreRetry" style="color:#fff;border-color:rgba(255,255,255,.4)">Opnieuw proberen</button>` : ''}</div></div>
     <button class="surprise" data-act="surprise">${I.shuffle}Verras me</button>`;
   return h + '</div>';
 }
