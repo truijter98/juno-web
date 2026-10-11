@@ -52,7 +52,7 @@ a{color:inherit}
 .app{max-width:480px;margin:0 auto;padding-inline:16px;padding-block:16px 128px;display:flex;flex-direction:column;gap:18px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .wordmark{font-family:var(--logo);font-weight:800;font-size:24px;letter-spacing:-.04em}
-.wordmark{display:inline-flex;align-items:flex-end;line-height:.95}.wordmark svg{width:.56em;height:.56em;margin:0 0 .08em .03em;flex:none}
+.wordmark{display:inline-flex;align-items:center;gap:.14em;line-height:1}.wordmark svg{width:1.25em;height:1.25em;flex:none}
 .eyebrow{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .big{font-family:var(--display);font-weight:700;font-size:clamp(27px,8vw,32px);line-height:1.12;letter-spacing:-.02em;text-wrap:balance;margin:0}
 .mark{background:var(--pop);color:var(--on-pop);padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -245,6 +245,8 @@ input[type=text],input[type=date],input[type=number],select{height:46px;box-sizi
 .profcard b{display:block;font-family:var(--display);font-size:17px;font-weight:600}
 .profcard span span,.profcard > span:nth-child(2) span{display:block;font-size:14px;color:#C9D1C5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .profcard .go{flex:none;font-weight:700;font-size:15px;color:var(--pop)}
+.kipbox{display:flex}.kipbox svg{width:100%;height:100%}
+.hallo{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface)}.hallo-kip{width:64px;height:64px;flex:none;border-radius:16px;background:var(--accent);display:flex;align-items:center;justify-content:center}.hallo-kip svg{width:54px;height:54px}.hallo b{display:block;font-family:var(--display);font-size:17px;font-weight:600}.hallo span{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:2px}
 .rmlink{display:inline-flex;align-items:center;gap:5px;min-height:36px;border:0;background:none;color:var(--warn);font-weight:600;font-size:14px;padding:0 4px}.rmlink svg{width:16px;height:16px}.rmlink.armed{background:var(--warn);color:#FAF8F2;border-radius:18px;padding:0 12px}
 .clearbar{display:flex;justify-content:flex-end}
 .clearbar .textlink{display:inline-flex;align-items:center;gap:6px;min-height:44px;border:0;background:none;color:var(--warn);font-weight:600;font-size:15px;padding:0}
@@ -426,6 +428,9 @@ h1,h2,h3,.dish{font-family:var(--display);letter-spacing:-.015em}
 (() => {
 'use strict';
 // ---------- helpers ----------
+// juni, de kip van juno (logo): koksmuts, blosjes, van voren.
+const JUNI = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="gb" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.6" stop-color="#FAF8F2"/><stop offset="1" stop-color="#E9E5D8"/></radialGradient><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EEF5EC"/><stop offset="1" stop-color="#CFDFCD"/></linearGradient><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F58A5A"/><stop offset="1" stop-color="#C2491A"/></linearGradient></defs><ellipse cx="60" cy="113" rx="30" ry="4.5" fill="rgba(0,0,0,0.22)"/><path d="M47 103v9M40 112h14M73 103v9M66 112h14" stroke="#E8622C" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><ellipse cx="60" cy="76" rx="37" ry="33" fill="url(#gb)"/><ellipse cx="60" cy="91" rx="19" ry="12" fill="url(#gs)"/><path d="M32 80q6 4 12 0M46 86q6 4 12 0M38 92q6 4 12 0" stroke="#E9E5D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><ellipse cx="25" cy="82" rx="8" ry="13" transform="rotate(22 25 82)" fill="#E4EFE3"/><ellipse cx="95" cy="82" rx="8" ry="13" transform="rotate(-22 95 82)" fill="#E4EFE3"/><circle cx="83" cy="46" r="5.5" fill="url(#gc)"/><circle cx="89" cy="40" r="4.5" fill="url(#gc)"/><circle cx="45" cy="27" r="12" fill="url(#gb)"/><circle cx="60" cy="20" r="14" fill="url(#gb)"/><circle cx="75" cy="27" r="12" fill="url(#gb)"/><rect x="41" y="33" width="38" height="14" rx="5" fill="url(#gs)"/><circle cx="40" cy="72" r="5.5" fill="#F3B8A2"/><circle cx="80" cy="72" r="5.5" fill="#F3B8A2"/><circle cx="49" cy="63" r="5" fill="#22261F"/><circle cx="51" cy="61" r="1.9" fill="#FAF8F2"/><circle cx="47.4" cy="65" r="0.9" fill="#FAF8F2"/><circle cx="71" cy="63" r="5" fill="#22261F"/><circle cx="73" cy="61" r="1.9" fill="#FAF8F2"/><circle cx="69.4" cy="65" r="0.9" fill="#FAF8F2"/><path d="M60 67l7.5 5.5-7.5 6.5-7.5 -6.5z" fill="#E8622C"/></svg>';
+const wordmark = (style) => `<div class="wordmark"${style ? ' style="' + style + '"' : ''} role="heading" aria-label="juno">${JUNI}<span>juno</span></div>`;
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -1156,7 +1161,7 @@ function getItem(ctx, id) { return (ctx === 'scan' ? S.scan.items : S.pantry).fi
 function viewRecepten() {
   const p = S.prefs; const exp = expiring(); const stale = S.recipes.length && S.recipesKey !== prefsKey();
   const now = new Date();
-  let h = `<div class="top"><div class="wordmark" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#E8622C"/></svg></div><div style="display:flex;gap:6px">
+  let h = `<div class="top">${wordmark()}<div style="display:flex;gap:6px">
       <button class="iconbtn${S.recView === 'lijst' ? ' on' : ''}" data-act="recView" data-arg="lijst" aria-label="Lijstweergave" aria-pressed="${S.recView === 'lijst'}">${I.rows}</button>
       <button class="iconbtn${S.recView === 'swipe' ? ' on' : ''}" data-act="recView" data-arg="swipe" aria-label="Swipeweergave" aria-pressed="${S.recView === 'swipe'}">${I.cards}</button>
       <button class="iconbtn" data-act="open" data-arg="chat" aria-label="Vraag juno">${I.chat}</button></div></div>
@@ -1298,7 +1303,7 @@ function viewOpgeslagen() {
 function ovScan() {
   const sc = S.scan; const modes = [['koelkast','Koelkast'],['product','Product'],['barcode','Barcode'],['typen','Typen']];
   const imgMode = sc.mode !== 'typen';
-  let h = `<div class="top"><div class="wordmark" style="color:var(--on-cam)" role="heading" aria-label="juno">jun<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="49" fill="none" stroke="currentColor" stroke-width="18"/><circle cx="66" cy="54" r="22" fill="#E8622C"/></svg></div><button class="camsmall" data-act="close" aria-label="Sluiten">${I.x}</button></div>
+  let h = `<div class="top">${wordmark('color:var(--on-cam)')}<button class="camsmall" data-act="close" aria-label="Sluiten">${I.x}</button></div>
     <div class="camtabs" role="tablist">${modes.map(([m, l]) => `<button role="tab" aria-selected="${sc.mode === m}" class="${sc.mode === m ? 'on' : ''}" data-act="scanMode" data-arg="${m}">${l}</button>`).join('')}</div>`;
   if (imgMode && !sc.photo && (CAM.state === 'on' || CAM.state === 'starting')) {
     const now = Date.now();
@@ -1433,7 +1438,8 @@ function ovOnboard() {
   const p = S.prefs, st = S.ob || 1;
   let h = `<div class="ob"><div class="obbar">${[1,2,3].map(i => `<span class="${i <= st ? 'on' : ''}"></span>`).join('')}</div>
     <div class="top"><span class="eyebrow">${st > 1 ? `<button class="textbtn" data-act="obBack" style="font:inherit;color:inherit;letter-spacing:inherit;padding:0">← </button>` : ''}Smaakprofiel · ${st} van 3</span><button class="textbtn" data-act="obDone">Later</button></div>`;
-  if (st === 1) h += `<h1 class="big">Waar moet juno <span class="mark">altijd</span> rekening mee houden?</h1>
+  if (st === 1) h += `<div class="hallo"><div class="hallo-kip">${JUNI}</div><div><b>Hoi, ik ben juni.</b><span>Ik kijk mee in je koelkast en bedenk wat je kunt koken.</span></div></div>
+    <h1 class="big">Waar moet juno <span class="mark">altijd</span> rekening mee houden?</h1>
     <p style="margin:0;color:var(--muted);line-height:1.5">Kies je allergieën, of die van iemand in je huis. juno stelt nooit een recept voor waar dit in zit.</p>
     <div class="pills" role="group" aria-label="Allergieën">${ALLERGENS.map(a => `<button class="${p.allergies.includes(a) ? 'on' : ''}" data-act="obTog" data-arg="allergies|${a}" aria-pressed="${p.allergies.includes(a)}">${a}${p.allergies.includes(a) ? ' ✓' : ''}</button>`).join('')}</div>
     <div><label class="eyebrow" for="avoidIn">Lust of mag je iets anders niet?</label><input id="avoidIn" type="text" data-input="avoid" value="${esc(p.avoid || '')}" placeholder="Bijv. koriander, champignons" style="width:100%;box-sizing:border-box;margin-top:6px" autocomplete="off"></div>
@@ -1453,7 +1459,7 @@ function ovOnboard() {
 }
 function ovChat() {
   const c = S.chat;
-  let h = `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><div style="flex:1;min-width:0"><b style="font-size:19px">Vraag juno</b><div class="eyebrow">Kent je voorraad · ${S.pantry.length} items</div></div></div>`;
+  let h = `<div class="top"><button class="iconbtn" data-act="close" aria-label="Terug">${I.back}</button><div style="width:44px;height:44px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex:none"><span class="kipbox" style="width:36px;height:36px">${JUNI}</span></div><div style="flex:1;min-width:0"><b style="font-size:19px">Vraag juno</b><div class="eyebrow">Kent je voorraad · ${S.pantry.length} items</div></div></div>`;
   if (!c.turns.length) h += `<div class="bubble juno">Waar heb je zin in? Ik ken je voorraad${expiring().length ? ' en zie dat ' + esc(expiring().map(x => x.name).slice(0, 2).join(' en ')) + ' snel op moet' : ''}.</div>
     <div class="chips">${['Iets in 15 minuten','Iets pittigs','Zonder vlees','Wat kan ik met restjes?'].map(q => `<button class="chip" data-act="quickAsk" data-arg="${q}">${q}</button>`).join('')}</div>`;
   c.turns.forEach((t, i) => { const lastJ = i === c.turns.length - 1 && t.role === 'assistant'; h += `<div class="bubble ${t.role === 'user' ? 'me' : 'juno'}" ${lastJ ? 'id="lastBubble"' : ''}>${esc(t.content || (c.busy ? 'juno denkt na…' : ''))}</div>`; });
